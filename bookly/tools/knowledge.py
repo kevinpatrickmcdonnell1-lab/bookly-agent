@@ -21,6 +21,9 @@ _HEADING = re.compile(r"^##\s+(.+?)\s*\{#([a-z0-9-]+)\}\s*$")
 _WORD = re.compile(r"[a-z0-9$]+")
 _STOP = set("a an and are as at be but by can do does for from how i if in is it my of on or our so that the "
             "to we what when with you your".split())
+# Every doc here is a policy, so "policy" says nothing about the topic. Left in, it is rare
+# enough to score high and pulled "return policy" to the one section that says "normal return policy".
+_STOP |= {"policy", "policie"}
 
 
 def tokenize(text: str) -> list[str]:

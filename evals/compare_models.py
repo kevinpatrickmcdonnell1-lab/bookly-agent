@@ -22,7 +22,7 @@ SETUPS = [
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--set", default="core", choices=["core", "extended", "all"])
+    ap.add_argument("--set", default="core", choices=["core", "extended", "hard", "all"])
     ap.add_argument("--runs", type=int, default=3)
     args = ap.parse_args()
     require_key()

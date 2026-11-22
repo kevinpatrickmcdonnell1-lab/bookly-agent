@@ -157,17 +157,29 @@ class OutputCheck:
     issues: list[str] = field(default_factory=list)
     needs_supervisor: bool = False
     checked: dict = field(default_factory=dict)
+    echoed_amounts: list[str] = field(default_factory=list)  # customer-typed amounts quoted back; supervisor must run
 
 
 def code_checks(reply: str, s: Session, customer_texts: list[str]) -> OutputCheck:
     corpus = " ".join(s.grounding) + " " + " ".join(s.policy_texts.values())
     issues: list[str] = []
 
+    typed = " ".join(customer_texts).lower()
     known_cents = {_cents(m) for m in _MONEY.finditer(corpus)}
+    typed_cents = {_cents(m) for m in _MONEY.finditer(typed)}
     amounts = [m.group(0) for m in _MONEY.finditer(reply)]
-    for m in _MONEY.finditer(reply):
-        if _cents(m) not in known_cents:
-            issues.append(f"amount {m.group(0)} isn't in any tool result")
+    reply_cents = [(m.group(0), _cents(m)) for m in _MONEY.finditer(reply)]
+    # An amount the customer typed may be quoted back ("I can't refund $35; the refund is $20.00"), but only
+    # alongside a tool-backed amount, and the supervisor then checks it isn't promised.
+    has_backed = any(c in known_cents for _, c in reply_cents)
+    echoed = []
+    for written, c in reply_cents:
+        if c in known_cents:
+            continue
+        if c in typed_cents and has_backed:
+            echoed.append(written)
+        else:
+            issues.append(f"amount {written} isn't in any tool result")
 
     known_dates = {md for _, md in _dates(corpus)}
     dates = _dates(reply)
@@ -185,7 +197,6 @@ def code_checks(reply: str, s: Session, customer_texts: list[str]) -> OutputChec
         if t not in corpus:
             issues.append(f"tracking number {t} isn't in any tool result")
 
-    typed = " ".join(customer_texts).lower()
     for e in _EMAIL.findall(reply):
         if e.lower() not in typed:
             issues.append("reply contains a full email address the customer didn't give")
@@ -196,8 +207,11 @@ def code_checks(reply: str, s: Session, customer_texts: list[str]) -> OutputChec
     if _POLICY_ID.search(reply):
         issues.append("reply shows an internal policy id; name the policy in plain words instead")
 
-    return OutputCheck(ok=not issues, issues=issues, needs_supervisor=bool(_POLICY_CLAIM.search(reply)),
-                       checked={"amounts": amounts, "dates": [w for w, _ in dates] + relative, "tracking": tracking})
+    return OutputCheck(ok=not issues, issues=issues,
+                       needs_supervisor=bool(_POLICY_CLAIM.search(reply)) or bool(echoed),
+                       checked={"amounts": amounts, "dates": [w for w, _ in dates] + relative, "tracking": tracking,
+                                "echoed_customer_amounts": echoed},
+                       echoed_amounts=echoed)
 
 
 class SupervisorOutput(BaseModel):
@@ -213,7 +227,10 @@ SUPERVISOR_SCHEMA = {
 }
 
 
-async def supervise(llm, model: str, reply: str, s: Session, kb) -> tuple[SupervisorOutput, object]:
+async def supervise(llm, model: str, reply: str, s: Session, kb,
+                    only_amounts: list[str] | None = None) -> tuple[SupervisorOutput, object]:
+    """only_amounts: the policy engine already backs this turn's policy statements, so check only whether the
+    draft promises these customer-typed amounts."""
     texts = dict(s.policy_texts)
     for ref in s.policy_refs:
         if ref in kb.by_id:
@@ -222,6 +239,8 @@ async def supervise(llm, model: str, reply: str, s: Session, kb) -> tuple[Superv
     tool_results = "\n".join(s.grounding[-8:]) or "(none)"
     user = (f"<policy_texts>\n{facts}\n</policy_texts>\n<tool_results>\n{tool_results}\n</tool_results>\n"
             f"<draft_reply>{reply}</draft_reply>")
+    if only_amounts:
+        user += f"\n<check_only>customer_amounts: {', '.join(only_amounts)}</check_only>"
     data, call = await llm.structured(model=model, system=SUPERVISOR_PROMPT, user=user, schema=SUPERVISOR_SCHEMA,
                                       max_tokens=512)
     return SupervisorOutput.model_validate(data), call

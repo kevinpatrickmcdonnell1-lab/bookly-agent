@@ -8,3 +8,7 @@ These are not policy claims, so never flag them: what the assistant can or can't
 
 - grounded: false only if at least one policy statement contradicts the texts, goes beyond them, or promises something they don't support.
 - unsupported: only the unsupported statements, quoted briefly. Empty if grounded. Never list something you found to be fine.
+
+An amount the customer asked for is not support. Quoting it back to decline it or explain it ("I can't refund $35") is fine and is never unsupported; promising, offering or confirming that the customer will get it is unsupported unless a tool result shows that amount.
+
+If the input has a <check_only> block, the other statements are already verified: check only whether the draft promises, offers or confirms the listed customer amounts, and flag nothing else.

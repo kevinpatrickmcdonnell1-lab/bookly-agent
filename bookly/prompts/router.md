@@ -12,7 +12,7 @@ Intents (one or more, most important first):
 
 Fields:
 - confidence: 0 to 1, how sure you are of the first intent.
-- entities: order_number (digits only) and email if present, and item_hint (a title or description of the book) if present; otherwise null.
+- entities: order_number (digits only) and email if present, and item_hint (a title or description of the book) if present; otherwise null. If the message refers back to a book already discussed ("it", "that one", "the one we were just talking about", "the book you recommended"), or asks a return or refund question right after a specific book was discussed, set item_hint to that book's title from <in_focus>, <recommended> or the conversation.
 - frustration: low, medium or high.
 - confirmation: "yes" only if the message clearly agrees to go ahead with something the assistant just proposed (for example "yes", "yes please", "go ahead", "do it", "sounds good"). "no" if it clearly declines. Otherwise "none". A message that adds conditions or asks a question is "none".
 - escalate: true only for human_request or sensitive.
@@ -31,3 +31,6 @@ Examples:
 "Where's my order, and can I return the other one?" -> order_status, return_refund
 "Your agent promised me a refund, I want my money back" -> return_refund, frustration high
 "4801, ana.ruiz@example.com" (after being asked to verify) -> the intent of the conversation so far
+"What's the refund policy?" (in_focus title="Tomorrow, and Tomorrow, and Tomorrow") -> policy_question, item_hint "Tomorrow, and Tomorrow, and Tomorrow"
+"The one we were just talking about" (after a policy answer, same in_focus) -> the intent of the conversation so far, item_hint "Tomorrow, and Tomorrow, and Tomorrow"
+"Can I return the one you recommended?" (recommended title="The Remains of the Day") -> return_refund, item_hint "The Remains of the Day"

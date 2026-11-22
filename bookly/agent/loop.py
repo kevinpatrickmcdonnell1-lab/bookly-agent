@@ -155,6 +155,7 @@ class Agent:
     def _finish(self, s: Session, events: list, reply: str, route: str, ticket_id: int | None,
                 content: list[dict] | None = None) -> TurnResult:
         s.messages.append({"role": "assistant", "content": content or [{"type": "text", "text": reply}]})
+        s.last_reply = reply
         self._event(s, events, "reply", "reply", {"text": reply, "route": route, "ticket_id": ticket_id})
         return TurnResult(reply=reply, route=route, events=list(events), ticket_id=ticket_id)
 
@@ -194,6 +195,8 @@ class Agent:
             "confirmation": decision.confirmation, "frustration": decision.frustration,
             "write_tools": sorted(decision.write_tools), "queued": decision.queued_intents,
             "escalate": decision.escalate, "rules": {"human_request": rules.human_request},
+            "item_hint": rout.entities.item_hint if rout else None,
+            "focus": (router.resolve_focus(rout.entities.item_hint, s) or {}).get("title") if rout else None,
             "error": repr(route_res) if isinstance(route_res, BaseException) else None,
         }, route_call)
 
@@ -201,6 +204,9 @@ class Agent:
             {"type": "text", "text": f"<customer_message>{text}</customer_message>"}]})
         s.ctx.frustration = decision.frustration
         notes = list(decision.notes)
+        referent = router.focus_note(rout, s)
+        if referent:
+            notes.append(referent)
 
         # 3. Escalations decided by code, before the executor sees the message.
         if guard.sensitive != "none":
@@ -315,12 +321,16 @@ class Agent:
             check = guards.code_checks(reply, s, customer_texts)
             sup_payload = None
             skip_reason = supervisor_skip_reason(s)
-            if check.ok and check.needs_supervisor and skip_reason:
+            # A customer-typed amount in the reply is never covered by the engine, so the supervisor checks it
+            # even on an engine-backed turn, but then only for that amount.
+            only_amounts = check.echoed_amounts if skip_reason and check.echoed_amounts else None
+            if check.ok and check.needs_supervisor and skip_reason and not only_amounts:
                 self._event(s, events, "output_guard", "output_check",
                             {"stage": "supervisor", "skipped": True, "reason": skip_reason})
             elif check.ok and check.needs_supervisor:
                 try:
-                    sup, sup_call = await guards.supervise(self.llm, st.supervisor_model, reply, s, self.kb)
+                    sup, sup_call = await guards.supervise(self.llm, st.supervisor_model, reply, s, self.kb,
+                                                           only_amounts=only_amounts)
                     sup_payload = sup.model_dump()
                     if not sup.grounded:
                         check.ok = False

@@ -94,6 +94,23 @@ class Settings:
     business_open_hour_et: int = 9
     business_close_hour_et: int = 18
 
+    # Voice (optional). Speech-to-text and text-to-speech are ElevenLabs; set the key to show the mic.
+    elevenlabs_api_key: str = field(default_factory=lambda: os.environ.get("ELEVENLABS_API_KEY", "").strip(),
+                                    repr=False)
+    # Default voice is "George", one of ElevenLabs' premade voices; any Voice Library id works.
+    elevenlabs_voice_id: str = field(default_factory=lambda: _env("ELEVENLABS_VOICE_ID", "JBFqnCBsd6RMkjVDRZzb"))
+    elevenlabs_tts_model: str = field(default_factory=lambda: _env("ELEVENLABS_TTS_MODEL", "eleven_flash_v2_5"))
+    elevenlabs_stt_model: str = field(default_factory=lambda: _env("ELEVENLABS_STT_MODEL", "scribe_v1"))
+    # Live transcription while the customer talks (browser streams straight to ElevenLabs with a
+    # single-use token; the API key never leaves the server).
+    elevenlabs_realtime_model: str = field(default_factory=lambda: _env("ELEVENLABS_REALTIME_MODEL",
+                                                                        "scribe_v2_realtime"))
+    max_audio_bytes: int = 5 * 1024 * 1024
+
+    @property
+    def voice_enabled(self) -> bool:
+        return bool(self.elevenlabs_api_key)
+
     def executor_model_for(self, aop: str) -> str:
         if self.executor_model_override:
             return self.executor_model_override

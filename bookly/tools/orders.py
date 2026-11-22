@@ -56,18 +56,30 @@ def lookup_orders(s: Session, args: dict, deps: ToolDeps) -> dict:
             "items": _items(deps, o["order_number"]),
             "gift_note": untrusted(o["gift_note"]),
         })
+    if len(orders) == 1:
+        o = orders[0]
+        _focus_order(s, o["order_number"], o["status"], o["items"])
     return {"orders": orders, "count": len(orders)}
+
+
+def _focus_order(s: Session, order_number: str, status: str, items: list[dict]) -> None:
+    """Focus on the order; on its item too when there's only one, so "it" is unambiguous."""
+    only = items[0] if len(items) == 1 else None
+    s.set_focus(order_number=order_number, status=status, source="order_status",
+                title=only["title"] if only else None, item_id=only["item_id"] if only else None)
 
 
 def get_order_status(s: Session, args: dict, deps: ToolDeps) -> dict:
     o = deps.repo.order(str(args["order_number"]))
     assert o is not None  # the gate already checked ownership
+    items = _items(deps, o["order_number"])
     result = {
         "order_number": o["order_number"],
         "status": STATUS_TEXT[o["status"]],
         "placed_on": nice_date(o["placed_at"]),
-        "items": [i["title"] for i in _items(deps, o["order_number"])],
+        "items": [i["title"] for i in items],
     }
+    _focus_order(s, o["order_number"], STATUS_TEXT[o["status"]], items)
     if o["status"] == "delivered":
         result["delivered_on"] = nice_date(o["delivered_at"])
     else:

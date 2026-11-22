@@ -322,7 +322,7 @@ def save(records: list[RunRecord], summary: dict) -> Path:
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--set", default="core", choices=["core", "extended", "all"])
+    ap.add_argument("--set", default="core", choices=["core", "extended", "hard", "all"])
     ap.add_argument("--only", nargs="*")
     ap.add_argument("--runs", type=int, default=3)
     ap.add_argument("--judge", action="store_true", help="grade transcripts with the Opus tone rubric")
@@ -332,7 +332,7 @@ def main() -> None:
     require_key()
     settings = get_settings()
     scenarios = load(args.set, args.only)
-    label = f"{args.set}-{settings.executor_preset}" + (f"-{settings.executor_model_override}"
+    label = f"{'only' if args.only else args.set}-{settings.executor_preset}" + (f"-{settings.executor_model_override}"
                                                        if settings.executor_model_override else "")
     t0 = time.time()
     records = asyncio.run(run_suite(scenarios, args.runs, settings, args.judge, args.concurrency))

@@ -25,10 +25,15 @@ def _decide(s: Session, deps: ToolDeps, item_id: str, reason: str, is_unread: bo
     return it, decision
 
 
+def _focus_item(s: Session, it, source: str) -> None:
+    s.set_focus(title=it["title"], order_number=it["order_number"], item_id=it["item_id"], source=source)
+
+
 def check_return_eligibility(s: Session, args: dict, deps: ToolDeps) -> dict:
     item_id, reason, is_unread = args["item_id"], args["reason"], bool(args.get("is_unread"))
     it = deps.repo.item(item_id)
     assert it is not None
+    _focus_item(s, it, "eligibility")
     if deps.repo.return_for_item(item_id) is not None:
         result = {"item_id": item_id, "title": it["title"], "eligible": False, "resolution": None,
                   "amount_display": None, "requires_approval": False, "policy_ref": "returns#one-per-item",
@@ -98,6 +103,9 @@ def initiate_return(s: Session, args: dict, deps: ToolDeps) -> dict:
         raise ToolError("database_rejected", f"The return couldn't be recorded ({exc}).",
                         "Tell the customer this item can't be returned again, and offer a bookseller.") from exc
     s.pending_action = None
+    it = deps.repo.item(item_id)
+    if it is not None:
+        _focus_item(s, it, "return")
     s.returns_done.append({"item_id": item_id, "return_id": return_id, "resolution": resolution,
                            "amount_cents": fresh.amount_cents})
     return {"return_id": return_id, "status": "completed", "resolution": resolution,

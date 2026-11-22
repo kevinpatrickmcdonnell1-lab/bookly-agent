@@ -131,6 +131,12 @@ def test_search_policy_finds_right_section(deps, query, expected):
     assert deps.kb.search(query)[0].id == expected
 
 
+@pytest.mark.parametrize("query", ["refund return policy", "what's the refund policy", "can I get a refund"])
+def test_refund_questions_retrieve_the_refund_window(deps, query):
+    # The model gets the top 3. "refund return policy" is what it actually sends for "what's the refund policy?".
+    assert "returns#window" in [s.id for s in deps.kb.search(query)]
+
+
 def test_every_engine_policy_ref_exists_in_kb(deps):
     for ref in ("returns#window", "returns#damaged", "returns#approval", "returns#one-per-item",
                 "ebooks#downloaded", "guarantee#staff-picks", "account#password"):
@@ -143,3 +149,36 @@ def test_verify_returns_recent_orders_summary_without_gift_notes(call, session):
     assert out["recent_orders"][0]["items"][0]["item_id"].startswith("I-48")
     assert "gift_note" not in str(out) and "tracking" not in str(out)
     assert out["more_orders"] == 0
+
+
+# ---- conversation focus ----------------------------------------------------------
+
+def test_order_status_focuses_single_item_order(call, session):
+    verify(call, session, "4821", "chloe.park@example.com")
+    call(session, "get_order_status", order_number="4821")
+    f = session.snapshot()["in_focus"]
+    assert f["order_number"] == "4821" and f["title"] == "Tomorrow, and Tomorrow, and Tomorrow"
+    assert f["item_id"] == "I-4821-1"
+
+
+def test_eligibility_moves_focus_and_keeps_history(call, session):
+    verify(call, session, "4821", "chloe.park@example.com")
+    call(session, "get_order_status", order_number="4821")
+    call(session, "check_return_eligibility", item_id="I-4822-1", reason="damaged", is_unread=False)
+    snap = session.snapshot()
+    assert snap["in_focus"]["item_id"] == "I-4822-1"
+    assert [m["order_number"] for m in snap["recently_discussed"]] == ["4821"]
+
+
+def test_recommendation_stores_title_and_still_blocks_a_second(call, session):
+    verify(call, session)
+    unlock(session, "returns")
+    call(session, "check_return_eligibility", item_id="I-4801-1", reason="didnt_enjoy", is_unread=False)
+    call(session, "propose_return", item_id="I-4801-1", resolution="store_credit")
+    session.turn += 1
+    session.ctx.confirmation = "yes"
+    assert call(session, "initiate_return", item_id="I-4801-1", resolution="store_credit").kind == "ok"
+    r = call(session, "get_recommendation").result
+    assert session.recommendation_given and session.recommended["title"] == r["title"]
+    assert session.snapshot()["in_focus"]["item_id"] == "I-4801-1"   # recommending doesn't steal focus
+    assert call(session, "get_recommendation").kind == "denied"

@@ -40,6 +40,8 @@ CUSTOMERS = [
     ("C-1042", "Ben Okafor", "ben.okafor@example.com"),
     ("C-1077", "Chloe Park", "chloe.park@example.com"),
     ("C-1090", "Dev Shah", "dev.shah@example.com"),
+    # Eval-only: two orders in transit and a two-item order, for item-identification evals.
+    ("C-1105", "Elena Vasquez", "elena.vasquez@example.com"),
 ]
 
 INJECTED_GIFT_NOTE = (
@@ -62,6 +64,9 @@ def orders_for(today: date) -> list[tuple]:
         ("4821", "C-1077", _d(today, 3), "in_transit", None, _d(today, -2), "UPS", "1Z999AA10123456784", None),
         ("4822", "C-1077", _d(today, 8), "delivered", _d(today, 5), None, "USPS", "9400111899223817465036", None),
         ("4831", "C-1090", _d(today, 10), "delivered", _d(today, 7), None, "FedEx", "786512349870", None),
+        ("4841", "C-1105", _d(today, 2), "in_transit", None, _d(today, -3), "FedEx", "786512349887", None),
+        ("4842", "C-1105", _d(today, 4), "in_transit", None, _d(today, -1), "USPS", "9400111899223817465043", None),
+        ("4843", "C-1105", _d(today, 8), "delivered", _d(today, 6), None, "USPS", "9400111899223817465050", None),
     ]
 
 
@@ -74,6 +79,11 @@ ITEMS = [
     ("I-4821-1", "4821", "BK-TOMORROW", 2900, 0),
     ("I-4822-1", "4822", "BK-SWEETGRASS", 2000, 0),
     ("I-4831-1", "4831", "BK-EXPANSE", 9000, 0),
+    ("I-4841-1", "4841", "BK-STATION11", 1700, 0),
+    ("I-4841-2", "4841", "BK-CIRCE", 1800, 0),
+    ("I-4842-1", "4842", "BK-REMAINS", 1600, 0),
+    ("I-4843-1", "4843", "BK-PIRANESI", 1700, 0),
+    ("I-4843-2", "4843", "BK-HAILMARY", 1499, 0),
 ]
 
 # Shown on the scenario cards in the UI and printed by `make reset`.

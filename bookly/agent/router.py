@@ -104,18 +104,31 @@ def rule_signals(text: str) -> RuleSignals:
 
 # ---- model call -----------------------------------------------------------------
 
+def _text_of(content) -> str:
+    return content if isinstance(content, str) else " ".join(
+        b.get("text", "") for b in content if b.get("type") == "text")
+
+
+_TAG = re.compile(r"</?customer_message>")
+
+
 def _context_for_router(s: Session, text: str) -> str:
     last_assistant = ""
     for m in reversed(s.messages):
         if m["role"] == "assistant":
-            content = m["content"]
-            last_assistant = content if isinstance(content, str) else " ".join(
-                b.get("text", "") for b in content if b.get("type") == "text")
+            last_assistant = _text_of(m["content"])
             break
+    earlier = [_TAG.sub("", _text_of(m["content"])) for m in s.messages if m["role"] == "user"]
+    earlier = [e for e in earlier if e.strip()][-2:]
     pending = s.pending_action.resolution if s.pending_action else None
+    focus = s.focus or {}
+    focus_attrs = " ".join(f'{k}="{v}"' for k, v in focus.items() if k in ("title", "order_number", "status"))
+    rec = f'<recommended title="{s.recommended["title"]}"/>\n' if s.recommended else ""
     return (
         f"<conversation_state active_procedure=\"{s.active_aop or 'none'}\" "
         f"verified=\"{s.verified_customer_id is not None}\" pending_proposal=\"{pending or 'none'}\"/>\n"
+        f"<in_focus {focus_attrs}/>\n" + rec +
+        "".join(f"<earlier_customer_message>{e[:300]}</earlier_customer_message>\n" for e in earlier) +
         f"<last_assistant_message>{last_assistant[:800]}</last_assistant_message>\n"
         f"<customer_message>{text}</customer_message>"
     )
@@ -128,6 +141,50 @@ async def classify(llm, model: str, s: Session, text: str) -> tuple[RouterOutput
         return RouterOutput.model_validate(data), call
     except ValidationError as exc:
         raise ValueError(f"router output failed validation: {exc}") from exc
+
+
+# ---- focus resolution (pure) ----------------------------------------------------
+
+_WORDS = re.compile(r"[a-z0-9]+")
+_FILLER = {"the", "a", "an", "of", "and", "book", "one", "that", "this", "it"}
+
+
+def _title_words(title: str) -> set[str]:
+    return set(_WORDS.findall(title.lower())) - _FILLER
+
+
+def resolve_focus(hint: str | None, s: Session) -> dict | None:
+    """Match the router's item_hint to something already discussed. Code, not the model,
+    decides the match: the hint must share a title word with a recorded item."""
+    if not hint:
+        return None
+    words = _title_words(hint)
+    candidates = [*reversed(s.mentioned)]
+    if s.recommended:
+        candidates.append({**s.recommended, "source": "recommendation"})
+    for c in candidates:
+        if c.get("title") and words & _title_words(c["title"]):
+            return c
+    return None
+
+
+def focus_note(out: RouterOutput | None, s: Session) -> str | None:
+    """A note for the executor naming the item the customer is referring to."""
+    if out is None:
+        return None
+    hit = resolve_focus(out.entities.item_hint, s)
+    if hit is None:
+        return None
+    where = []
+    if hit.get("order_number"):
+        where.append(f"order {hit['order_number']}")
+    if hit.get("status"):
+        where.append(hit["status"])
+    if hit.get("source") == "recommendation":
+        where.append("the staff pick you recommended")
+    detail = f" ({', '.join(where)})" if where else ""
+    return (f"The customer is referring to {hit['title']}{detail}. Answer for that item; don't ask which one "
+            "they mean.")
 
 
 # ---- decision (pure) -----------------------------------------------------------

@@ -1,6 +1,6 @@
 # Returns and refunds
 
-## Return window {#window}
+## Return and refund window {#window}
 Unread physical books (paperbacks, hardcovers and box sets) can be returned for a full refund within 30 days of delivery. Ebooks that have not been downloaded can also be refunded within 30 days. Books that have been read can't be returned for a refund, except staff picks under the Bookseller's Guarantee. Refunds go back to the original payment method within 5 to 7 business days.
 
 ## Damaged or wrong items {#damaged}

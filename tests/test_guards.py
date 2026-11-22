@@ -49,6 +49,24 @@ def test_invented_amount_fails():
     assert not c.ok and "$25.00" in c.issues[0]
 
 
+def test_customer_amount_echo_allowed_beside_backed_amount_and_sent_to_supervisor():
+    s = grounded_session(amount_display="$20.00")
+    c = code_checks("I can't refund $35, but I can refund the $20.00 you paid.", s, ["I want $35 back."])
+    assert c.ok and c.echoed_amounts == ["$35"] and c.needs_supervisor
+
+
+def test_customer_amount_echo_alone_fails():
+    s = grounded_session(amount_display="$20.00")
+    c = code_checks("Sure, I'll get $35 back to you.", s, ["I want $35 back."])
+    assert not c.ok and "$35" in c.issues[0]
+
+
+def test_amount_customer_never_typed_still_fails_beside_backed_amount():
+    s = grounded_session(amount_display="$20.00")
+    c = code_checks("You'll get $20.00 now and $15 later.", s, ["I want $35 back."])
+    assert not c.ok and "$15" in c.issues[0] and not c.echoed_amounts
+
+
 def test_amount_formats_normalised():
     s = grounded_session(explanation="Returns over $75 need a bookseller's approval.")
     assert code_checks("Anything over $75.00 needs approval.", s, []).ok

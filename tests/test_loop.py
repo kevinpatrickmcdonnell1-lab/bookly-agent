@@ -260,3 +260,19 @@ def test_broken_listener_does_not_break_the_turn(agent, llm):
     llm.replies += [[text("Happy to help, what would you like to know?")]]
     r = asyncio.run(agent.run_turn(Session(), "hi", on_event=boom))
     assert r.reply.startswith("Happy to help")
+
+
+def test_customer_amount_echo_forces_supervisor_even_when_engine_backed(agent, llm):
+    s = Session()
+    llm.supervisor = {"grounded": False, "unsupported": ["promises $35"]}
+    llm.routes.append(route(["return_refund"]))
+    llm.replies += [
+        [tool("verify_customer", order_number="4822", email="chloe.park@example.com")],
+        [tool("check_return_eligibility", item_id="I-4822-1", reason="damaged", is_unread=True)],
+        [text("You'll get $35 back, which includes the $20.00 you paid.")],
+        [text("I can refund the $20.00 you paid for it. Shall I go ahead?")],
+    ]
+    r = run(agent, s, "Order 4822, chloe.park@example.com. Braiding Sweetgrass arrived damaged. I want $35 back.")
+    assert r.reply == "I can refund the $20.00 you paid for it. Shall I go ahead?"
+    sup = [e["payload"] for e in r.events if e["type"] == "output_check" and e["payload"].get("stage") == "supervisor"]
+    assert sup[0]["grounded"] is False and not sup[0].get("skipped")

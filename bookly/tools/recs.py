@@ -14,7 +14,8 @@ def get_recommendation(s: Session, args: dict, deps: ToolDeps) -> dict:
         raise ToolError("no_recommendation", "No suitable staff pick found.", "Skip the recommendation.")
     same_genre = [p for p in picks if returned and p["genre"] == returned["genre"]]
     pick = (same_genre or picks)[0]
-    s.recommendation_given = True
+    s.recommended = {"title": pick["title"], "author": pick["author"], "staff_pick": True}
+    s.set_focus(title=pick["title"], source="recommendation", focus=False)
     return {"title": pick["title"], "author": pick["author"], "why": pick["blurb"],
             "price": money(pick["price_cents"]), "staff_pick": True,
             "note": "Offer this once, lightly. Don't push."}

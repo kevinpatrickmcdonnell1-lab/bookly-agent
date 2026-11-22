@@ -6,7 +6,7 @@ else
   RUN := uv run
 endif
 
-.PHONY: setup reset web chat test evals evals-extended compare-models
+.PHONY: setup reset web chat test evals evals-hard evals-extended compare-models
 
 setup:
 ifeq ($(UV),)
@@ -29,6 +29,9 @@ test:
 
 evals:
 	$(RUN) python -m evals.run_evals --set core --runs 3
+
+evals-hard:
+	$(RUN) python -m evals.run_evals --set hard --runs 3
 
 evals-extended:
 	$(RUN) python -m evals.run_evals --set all --runs 3

@@ -11,7 +11,7 @@ from test_loop import ScriptedLLM, route
 
 def test_scenarios_load_and_use_known_assertions(repo):
     scenarios = load("all", None)
-    assert len(scenarios) == 18 and sum(s["set"] == "core" for s in scenarios) == 8
+    assert len(scenarios) == 31 and sum(s["set"] == "core" for s in scenarios) == 8
     for sc in scenarios:
         failures = check(sc["expect"], events=[], replies=[""] * len(sc["turns"]), repo=repo, session=Session())
         assert not any(f.startswith("unknown assertion") for f in failures), (sc["id"], failures)

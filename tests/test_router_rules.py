@@ -99,3 +99,48 @@ def test_multi_intent_queues_second():
 def test_out_of_scope():
     d = decide(out(["out_of_scope"], conf=0.9), Session(), rule_signals("x"), S)
     assert d.aop == "general" and d.mode == "out_of_scope"
+
+
+# ---- focus resolution ---------------------------------------------------------------
+
+from bookly.agent.router import Entities, _context_for_router, focus_note, resolve_focus  # noqa: E402
+
+
+def _focused():
+    s = Session()
+    s.set_focus(title="Tomorrow, and Tomorrow, and Tomorrow", order_number="4821", item_id="I-4821-1",
+                status="on its way", source="order_status")
+    return s
+
+
+def test_focus_note_names_the_item_in_focus():
+    o = out(["policy_question"])
+    o.entities = Entities(item_hint="Tomorrow, and Tomorrow, and Tomorrow")
+    note = focus_note(o, _focused())
+    assert "Tomorrow, and Tomorrow, and Tomorrow" in note and "4821" in note and "don't ask" in note
+
+
+def test_focus_note_absent_without_hint_or_match():
+    s = _focused()
+    assert focus_note(out(["policy_question"]), s) is None
+    o = out(["return_refund"])
+    o.entities = Entities(item_hint="Piranesi")
+    assert focus_note(o, s) is None
+    assert focus_note(None, s) is None
+
+
+def test_resolve_focus_finds_recommendation():
+    s = _focused()
+    s.recommended = {"title": "The Remains of the Day", "author": "Kazuo Ishiguro", "staff_pick": True}
+    hit = resolve_focus("remains of the day", s)
+    assert hit["title"] == "The Remains of the Day" and hit["source"] == "recommendation"
+
+
+def test_router_context_carries_focus_and_earlier_messages():
+    s = _focused()
+    s.messages = [{"role": "user", "content": [{"type": "text", "text": "<customer_message>Where's my order?"
+                                                                       "</customer_message>"}]},
+                  {"role": "assistant", "content": [{"type": "text", "text": "It's on its way."}]}]
+    ctx = _context_for_router(s, "What's the refund policy?")
+    assert 'title="Tomorrow, and Tomorrow, and Tomorrow"' in ctx and 'order_number="4821"' in ctx
+    assert "<earlier_customer_message>Where's my order?</earlier_customer_message>" in ctx

@@ -56,6 +56,10 @@ form { display: flex; gap: 8px; padding: 12px; border-top: 1px solid var(--line)
 textarea { flex: 1; resize: none; height: 44px; padding: 10px; border-radius: 8px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); font: inherit; }
 form button { background: var(--accent); color: var(--accent-ink); border: 0; border-radius: 8px; padding: 0 16px; font: inherit; cursor: pointer; }
 form button:disabled { opacity: .5; cursor: wait; }
+#mic { background: var(--bg); color: var(--ink); border: 1px solid var(--line); padding: 0 12px; }
+#mic.rec { background: var(--deny); color: #fff; border-color: var(--deny); animation: pulse 1.4s ease-in-out infinite; }
+.speak { display: flex; align-items: center; gap: 4px; font-size: 12px; color: var(--muted); white-space: nowrap; }
+[hidden] { display: none !important; }
 #trace { padding: 14px; background: var(--panel); }
 .turn { border: 1px solid var(--line); border-radius: 8px; margin-bottom: 12px; overflow: hidden; }
 .turn > .head { padding: 7px 10px; background: var(--bg); font-size: 12px; font-family: var(--mono); display: flex; gap: 10px; flex-wrap: wrap; }
@@ -78,7 +82,57 @@ form button:disabled { opacity: .5; cursor: wait; }
 .ticket dd { margin: 0; overflow-wrap: anywhere; }
 body.inbox #inbox { display: block; }
 body.inbox #chat, body.inbox #trace { display: none; }
+#evals { display: none; padding: 20px 24px 40px; overflow-y: auto; height: calc(100vh - 51px); }
+body.evals main { display: block; }
+body.evals main > aside, body.evals #chat, body.evals #trace, body.evals #inbox { display: none; }
+body.evals #evals { display: block; }
+#evals h2 { font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin: 28px 0 10px; }
+#evals > h2:first-child { margin-top: 0; }
+#evals .sub { color: var(--muted); font-size: 13px; margin: -4px 0 12px; }
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+.kpi { border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; background: var(--panel); }
+.kpi .v { font-size: 26px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.kpi .l { color: var(--muted); font-size: 12px; }
+.kpi .n { color: var(--muted); font-size: 12px; margin-top: 2px; }
+.panel { border: 1px solid var(--line); border-radius: 8px; padding: 14px; background: var(--panel); }
+.cmp { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; }
+.cmp h3 { font-size: 13px; margin: 0 0 10px; font-weight: 600; }
+.bar-row { display: grid; grid-template-columns: 70px 1fr 74px; gap: 8px; align-items: center; font-size: 13px; margin: 6px 0; }
+.bar-row .track { height: 14px; position: relative; }
+.bar-row .fill { height: 100%; background: var(--accent); border-radius: 0 4px 4px 0; min-width: 2px; }
+.bar-row .val { font-family: var(--mono); font-size: 12px; text-align: right; font-variant-numeric: tabular-nums; }
+.filters { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-bottom: 10px; font-size: 13px; }
+.filters select { font: inherit; padding: 4px 8px; border-radius: 6px; border: 1px solid var(--line); background: var(--panel); color: var(--ink); }
+#trend svg { width: 100%; height: 200px; display: block; overflow: visible; }
+#trend .grid { stroke: var(--line); stroke-width: 1; }
+#trend .axis { fill: var(--muted); font-size: 11px; font-family: var(--mono); }
+#trend .dot { fill: var(--accent); stroke: var(--panel); stroke-width: 2; }
+#trend .dot.miss { fill: var(--panel); stroke: var(--deny); stroke-width: 2; }
+#trend .hit { fill: transparent; cursor: pointer; }
+#trend .lbl { fill: var(--ink); font-size: 11px; font-family: var(--mono); }
+.tip { position: fixed; pointer-events: none; background: var(--ink); color: var(--bg); padding: 6px 9px; border-radius: 6px; font-size: 12px; font-family: var(--mono); z-index: 10; display: none; white-space: pre; }
+.tbl-wrap { overflow-x: auto; }
+table.runs { width: 100%; border-collapse: collapse; font-size: 13px; font-variant-numeric: tabular-nums; }
+table.runs th { text-align: left; font-weight: 500; color: var(--muted); font-size: 12px; padding: 6px 8px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+table.runs td { padding: 7px 8px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+table.runs tbody tr { cursor: pointer; }
+table.runs tbody tr:hover, table.runs tbody tr.sel { background: var(--me); }
+.st { font-weight: 600; } .st.pass { color: var(--ok); } .st.fail { color: var(--deny); }
+.matrix { display: grid; grid-template-columns: minmax(160px, max-content) repeat(var(--n), 30px) 1fr; gap: 4px 6px; align-items: center; font-size: 13px; }
+.matrix .sid { font-family: var(--mono); font-size: 12px; overflow-wrap: anywhere; }
+.cell { width: 28px; height: 24px; border-radius: 4px; border: 1px solid var(--line); background: var(--bg); font-size: 13px; cursor: pointer; color: var(--ok); font-weight: 700; padding: 0; }
+.cell.fail { color: var(--deny); border-color: var(--deny); }
+.cell.sel { outline: 2px solid var(--accent); outline-offset: 1px; }
+.matrix .why { color: var(--deny); font-size: 12px; overflow-wrap: anywhere; }
+.convo { margin-top: 14px; }
+.convo .line { padding: 6px 10px; border-radius: 8px; margin: 6px 0; max-width: 760px; white-space: pre-wrap; font-size: 14px; }
+.convo .line.customer { background: var(--me); margin-left: auto; }
+.convo .line.bookly { background: var(--bot); border: 1px solid var(--line); }
+.convo .meta { font-family: var(--mono); font-size: 12px; color: var(--muted); }
 @media (max-width: 900px) {
+  #evals { padding: 16px; height: auto; }
+  .matrix { grid-template-columns: minmax(120px, max-content) repeat(var(--n), 30px); }
+  .matrix .why { grid-column: 1 / -1; }
   main { grid-template-columns: 1fr; height: auto; }
   aside { border-right: 0; border-bottom: 1px solid var(--line); padding: 12px 16px; }
   .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
@@ -97,6 +151,7 @@ body.inbox #chat, body.inbox #trace { display: none; }
   <div class="tabs">
     <button class="tab active" id="tab-chat">Chat</button>
     <button class="tab" id="tab-inbox">Agent Inbox <span id="inbox-count"></span></button>
+    <button class="tab" id="tab-evals">Evals</button>
   </div>
   <div class="meta" id="models"></div>
 </header>
@@ -111,6 +166,8 @@ body.inbox #chat, body.inbox #trace { display: none; }
     <div id="log"><div class="empty" id="empty">Pick a scenario card to fill in a first message, or type your own. Verify with an order number and the email on the order.</div></div>
     <form id="form">
       <textarea id="input" placeholder="Message Bookly…" aria-label="Message"></textarea>
+      <button id="mic" type="button" aria-label="Speak a message" title="Tap to talk, tap again to send" hidden>🎙</button>
+      <label class="speak" id="speak-wrap" hidden><input type="checkbox" id="speak"> Speak replies</label>
       <button id="send" type="submit">Send</button>
     </form>
   </section>
@@ -119,6 +176,25 @@ body.inbox #chat, body.inbox #trace { display: none; }
     <div id="turns"><p class="t-muted" style="font-size:13px">Each turn shows the input guard, the route, every tool call and gate verdict, the output checks, the model, latency and cost.</p></div>
   </section>
   <section id="inbox"><div id="tickets"></div></section>
+  <section id="evals">
+    <h2>Latest full run</h2>
+    <p class="sub" id="ev-latest-sub"></p>
+    <div class="kpis" id="ev-kpis"></div>
+    <h2>Executor comparison</h2>
+    <p class="sub" id="ev-cmp-sub">Latest full run for each executor setup. Router, input guard and supervisor are Haiku in every setup.</p>
+    <div class="cmp" id="ev-cmp"></div>
+    <h2>Pass rate by run</h2>
+    <div class="filters">
+      <label>Suite <select id="ev-suite"><option value="">All suites</option></select></label>
+      <label>Executor <select id="ev-exec"><option value="">All executors</option></select></label>
+      <label><input type="checkbox" id="ev-partial"> Include spot checks (runs of under half the suite)</label>
+    </div>
+    <div class="panel" id="trend"></div>
+    <h2>Runs</h2>
+    <div class="panel tbl-wrap"><table class="runs"><thead><tr><th>Started</th><th>Suite</th><th>Executor</th><th>Passed</th><th>Pass rate</th><th>Scenarios clean</th><th>Leakage</th><th>p50 / p95 turn</th><th>Cost / conv</th><th>Escalated</th></tr></thead><tbody id="ev-rows"></tbody></table></div>
+    <div id="ev-detail"></div>
+  </section>
+  <div class="tip" id="tip"></div>
 </main>
 <script>
 const $ = (id) => document.getElementById(id);
@@ -263,6 +339,7 @@ async function send(text) {
     if (!done) throw new Error("The connection closed before the reply arrived.");
     typing.remove();
     addMsg("bot", done.reply, `${done.route}${done.ticket_id ? " · ticket #" + done.ticket_id : ""} · ${((performance.now() - t0) / 1000).toFixed(1)} s`);
+    if ($("speak").checked) speakReply();
     if (done.ticket_id) loadTickets();
   } catch (err) {
     typing.remove();
@@ -290,8 +367,151 @@ async function loadTickets() {
   }
 }
 
+// ---- voice: speech is transcribed, then sent through send() exactly like typed text ----
+let recorder = null, player = null;
+
+function stopPlayback() { if (player) { player.pause(); player = null; } }
+
+async function speakReply() {
+  try {
+    const res = await fetch("/api/voice/speak", { method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ session_id: sessionId }) });
+    if (!res.ok) throw new Error((await res.json().catch(() => ({}))).detail || res.statusText);
+    stopPlayback();
+    player = new Audio(URL.createObjectURL(await res.blob()));
+    await player.play();
+  } catch (err) { addMsg("bot", "⚠ " + err.message, "voice"); }
+}
+
+let live = null;
+
+async function toggleMic() {
+  if (live) { const l = live; live = null; return l.stop(); }
+  if (recorder) { recorder.stop(); return; }
+  stopPlayback();  // talking over the agent stops it, like a person would
+  if (!sessionId) await newSession();
+  let stream;
+  try { stream = await navigator.mediaDevices.getUserMedia({ audio: { channelCount: 1, echoCancellation: true, noiseSuppression: true } }); }
+  catch { addMsg("bot", "⚠ Microphone access was blocked.", "voice"); return; }
+  $("mic").disabled = true;
+  try { live = await startLive(stream); }
+  catch (err) { console.warn("live transcription unavailable, recording instead:", err); startBatch(stream); }
+  finally { $("mic").disabled = false; }
+  $("mic").classList.add("rec");
+}
+
+// Live: 16 kHz PCM from an AudioWorklet, streamed straight to ElevenLabs Scribe realtime with a
+// single-use token from our server. Partial words appear in the message box as you speak.
+const PCM_TAP = `class PcmTap extends AudioWorkletProcessor {
+  process(inputs) { const ch = inputs[0][0]; if (ch) this.port.postMessage(ch.slice(0)); return true; }
+}
+registerProcessor("pcm-tap", PcmTap);`;
+const CHUNK = 1600;  // 100 ms at 16 kHz
+
+function b64(pcm) {
+  const bytes = new Uint8Array(pcm.buffer, pcm.byteOffset, pcm.byteLength);
+  let s = "";
+  for (let i = 0; i < bytes.length; i += 0x8000) s += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000));
+  return btoa(s);
+}
+
+async function startLive(stream) {
+  const { url } = await api("/api/voice/live", { session_id: sessionId });
+  const ws = new WebSocket(url);
+  await new Promise((ok, fail) => {
+    const t = setTimeout(() => fail(new Error("timed out connecting")), 5000);
+    ws.onopen = () => { clearTimeout(t); ok(); };
+    ws.onerror = ws.onclose = () => { clearTimeout(t); fail(new Error("couldn't connect")); };
+  });
+
+  const ctx = new AudioContext({ sampleRate: 16000 });
+  await ctx.audioWorklet.addModule(URL.createObjectURL(new Blob([PCM_TAP], { type: "text/javascript" })));
+  const src = ctx.createMediaStreamSource(stream);
+  const tap = new AudioWorkletNode(ctx, "pcm-tap");
+  const mute = ctx.createGain(); mute.gain.value = 0;  // keeps the graph pulling audio without playing it back
+  src.connect(tap).connect(mute).connect(ctx.destination);
+
+  const sendPcm = (pcm, commit) => ws.readyState === WebSocket.OPEN && ws.send(JSON.stringify(
+    { message_type: "input_audio_chunk", audio_base_64: b64(pcm), commit, sample_rate: 16000 }));
+  let buf = new Int16Array(CHUNK), n = 0;
+  tap.port.onmessage = (e) => {
+    for (const x of e.data) {
+      const v = Math.max(-1, Math.min(1, x));
+      buf[n++] = v < 0 ? v * 32768 : v * 32767;
+      if (n === CHUNK) { sendPcm(buf, false); buf = new Int16Array(CHUNK); n = 0; }
+    }
+  };
+
+  const input = $("input");
+  input.value = ""; input.readOnly = true; input.placeholder = "Listening…";
+  let committed = "", partial = "", finished;
+  const final = new Promise((r) => (finished = r));
+  const render = () => { input.value = (committed + " " + partial).trim(); };
+  ws.onmessage = (m) => {
+    const d = JSON.parse(m.data);
+    if (d.message_type === "partial_transcript") { partial = d.text || ""; render(); }
+    else if (d.message_type === "committed_transcript") { committed = (committed + " " + (d.text || "")).trim(); partial = ""; render(); finished(); }
+    else if (d.message_type !== "session_started" && !d.message_type?.startsWith("committed_")) {
+      console.warn("scribe:", d); if (d.error) { addMsg("bot", "⚠ Transcription: " + d.error, "voice"); finished(); }
+    }
+  };
+  ws.onclose = () => { finished(); if (live && live.ws === ws) toggleMic(); };  // e.g. session time limit
+
+  const handle = { ws, stop: async () => {
+    $("mic").classList.remove("rec");
+    $("mic").disabled = true;
+    try {
+      sendPcm(n ? buf.slice(0, n) : new Int16Array(CHUNK), true);  // flush the tail and commit
+      await Promise.race([final, new Promise((r) => setTimeout(r, 3000))]);
+    } finally {
+      ws.onclose = null; ws.close();
+      tap.port.onmessage = null; src.disconnect(); ctx.close();
+      stream.getTracks().forEach((t) => t.stop());
+      input.readOnly = false; input.placeholder = "Message Bookly…";
+    }
+    const said = input.value.trim(); input.value = "";
+    try {
+      if (!said) throw new Error("I didn't catch that. Try again?");
+      const { text } = await api("/api/voice/normalize", { text: said });
+      $("speak").checked = true;  // spoke to us, so speak back
+      await send(text);
+    } catch (err) { addMsg("bot", "⚠ " + err.message, "voice"); }
+    finally { $("mic").disabled = false; }
+  } };
+  return handle;
+}
+
+// Fallback: record the whole message, then transcribe it in one go.
+function startBatch(stream) {
+  const mime = ["audio/webm;codecs=opus", "audio/webm", "audio/mp4"].find((m) => MediaRecorder.isTypeSupported(m)) || "";
+  const chunks = [];
+  recorder = new MediaRecorder(stream, mime ? { mimeType: mime } : {});
+  recorder.ondataavailable = (e) => e.data.size && chunks.push(e.data);
+  recorder.onstop = async () => {
+    stream.getTracks().forEach((t) => t.stop());
+    $("mic").classList.remove("rec");
+    const type = recorder.mimeType || "audio/webm";
+    recorder = null;
+    if (!sessionId) await newSession();
+    $("mic").disabled = true;
+    try {
+      const res = await fetch(`/api/voice/transcribe?session_id=${encodeURIComponent(sessionId)}`,
+        { method: "POST", headers: { "Content-Type": type }, body: new Blob(chunks, { type }) });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.detail || res.statusText);
+      if (!data.text.trim()) throw new Error("I didn't catch that. Try again?");
+      $("speak").checked = true;  // spoke to us, so speak back
+      await send(data.text);
+    } catch (err) { addMsg("bot", "⚠ " + err.message, "voice"); }
+    finally { $("mic").disabled = false; }
+  };
+  recorder.start();
+}
+
 async function init() {
-  const { scenarios, models } = await api("/api/scenarios");
+  const { scenarios, models, voice } = await api("/api/scenarios");
+  if (voice && window.MediaRecorder && navigator.mediaDevices) { $("mic").hidden = false; $("speak-wrap").hidden = false; }
+  $("mic").onclick = toggleMic;
   $("models").textContent = `router ${models.router} · executor ${models.executor_returns}${models.executor_other !== models.executor_returns ? " / " + models.executor_other : ""}`;
   for (const s of scenarios) {
     const el = document.createElement("div");
@@ -307,9 +527,207 @@ $("form").onsubmit = (e) => { e.preventDefault(); const t = $("input").value.tri
 $("input").onkeydown = (e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); $("form").requestSubmit(); } };
 $("new").onclick = newSession;
 $("reset").onclick = async () => { await api("/api/reset", {}); await newSession(); loadTickets(); };
-$("tab-chat").onclick = () => { document.body.classList.remove("inbox"); $("tab-chat").classList.add("active"); $("tab-inbox").classList.remove("active"); };
-$("tab-inbox").onclick = () => { document.body.classList.add("inbox"); $("tab-inbox").classList.add("active"); $("tab-chat").classList.remove("active"); loadTickets(); };
+function showTab(name) {
+  document.body.classList.remove("inbox", "evals");
+  if (name !== "chat") document.body.classList.add(name);
+  for (const t of ["chat", "inbox", "evals"]) $("tab-" + t).classList.toggle("active", t === name);
+  history.replaceState(null, "", name === "chat" ? location.pathname : "#" + name);
+}
+$("tab-chat").onclick = () => showTab("chat");
+$("tab-inbox").onclick = () => { showTab("inbox"); loadTickets(); };
+$("tab-evals").onclick = () => { showTab("evals"); loadEvals().catch((err) => { $("evals").innerHTML = `<p class="t-deny">${esc(err.message)}</p>`; }); };
+
+// ---- Evals dashboard -------------------------------------------------------------
+let evalRuns = [], evalSel = null;
+const pct = (x) => Math.round(x * 100) + "%";
+const secs = (ms) => (ms / 1000).toFixed(1) + " s";
+const usd = (x) => "$" + x.toFixed(4);
+const dollars = (cents) => "$" + (cents / 100).toFixed(2);
+const when = (iso) => { const d = new Date(iso); return d.toLocaleDateString(undefined, { month: "short", day: "numeric" }) + " " + d.toLocaleTimeString(undefined, { hour: "2-digit", minute: "2-digit" }); };
+function tip(ev, text) {
+  const t = $("tip");
+  if (!text) { t.style.display = "none"; return; }
+  t.textContent = text; t.style.display = "block";
+  t.style.left = Math.min(ev.clientX + 12, innerWidth - t.offsetWidth - 8) + "px";
+  t.style.top = (ev.clientY + 14) + "px";
+}
+
+async function loadEvals() {
+  const { runs } = await api("/api/evals");
+  evalRuns = runs;
+  if (!runs.length) {
+    $("evals").innerHTML = '<p class="t-muted">No eval results yet. Run <code>make evals</code> or <code>make compare-models</code>. Results land in <code>evals/results/</code> and show up here.</p>';
+    return;
+  }
+  for (const [id, key] of [["ev-suite", "suite"], ["ev-exec", "executor"]]) {
+    const sel = $(id), cur = sel.value;
+    sel.length = 1;
+    for (const v of [...new Set(runs.map((r) => r[key]))].sort()) sel.add(new Option(v, v));
+    sel.value = cur;
+  }
+  renderLatest(); renderCompare(); renderRuns();
+  showRun(evalSel && runs.some((r) => r.id === evalSel) ? evalSel : (runs.find((r) => !r.spot_check) || runs[0]).id, false);
+}
+
+function renderLatest() {
+  const r = evalRuns.find((x) => !x.spot_check) || evalRuns[0];
+  $("ev-latest-sub").textContent = `${r.label} · ${when(r.started)} · ${r.scenario_count} scenarios × ${r.runs_per_scenario} runs · executor ${r.executor_models.join(", ") || r.executor}`;
+  const k = [
+    [`${r.passed}/${r.conversations}`, "Conversations passed", pct(r.pass_rate) + " pass rate"],
+    [`${r.all_runs_pass}/${r.scenario_count}`, "Scenarios passing every run", ""],
+    [dollars(r.refund_leakage_cents), "Refund leakage", "target $0.00"],
+    [secs(r.turn_latency_ms.p50), "Turn latency p50", "p95 " + secs(r.turn_latency_ms.p95)],
+    [usd(r.cost_per_conversation_usd), "Cost per conversation", ""],
+    [pct(r.conversations_escalated), "Conversations escalated", Object.entries(r.escalations_by_trigger).map(([a, b]) => `${a} ${b}`).join(" · ")],
+  ];
+  $("ev-kpis").innerHTML = k.map(([v, l, n]) => `<div class="kpi"><div class="l">${esc(l)}</div><div class="v">${esc(v)}</div>${n ? `<div class="n">${esc(n)}</div>` : ""}</div>`).join("");
+}
+
+function renderCompare() {
+  // Prefer the all-suite comparison (it includes the hard set); fall back to core.
+  // Compare like with like: runs with the same scenario count, choosing the count
+  // that covers the most executors (ties: the most recent).
+  const latestBy = (suite) => {
+    const groups = {};
+    for (const r of evalRuns) {
+      if (r.suite !== suite || r.spot_check) continue;
+      const g = (groups[r.scenario_count] ||= { latest: r.started, runs: {} });
+      if (!g.runs[r.executor]) g.runs[r.executor] = r;
+    }
+    const best = Object.values(groups).sort((a, b) =>
+      Object.keys(b.runs).length - Object.keys(a.runs).length || b.latest.localeCompare(a.latest))[0];
+    return best ? best.runs : {};
+  };
+  let suite = "all", latest = latestBy("all");
+  if (Object.keys(latest).length < 2) { suite = "core"; latest = latestBy("core"); }
+  const order = ["haiku", "sonnet", "hybrid"];
+  const rows = order.filter((e) => latest[e]).map((e) => latest[e])
+    .concat(Object.values(latest).filter((r) => !order.includes(r.executor)));
+  if (!rows.length) { $("ev-cmp").innerHTML = '<p class="t-muted">No full runs yet. Run <code>make compare-models</code>.</p>'; return; }
+  const chart = (title, get, fmt) => {
+    const max = Math.max(...rows.map(get)) || 1;
+    return `<div class="panel"><h3>${esc(title)}</h3>${rows.map((r) => `<div class="bar-row" title="${esc(r.label + " · " + when(r.started) + " · " + fmt(get(r)))}"><span>${esc(r.executor)}</span><div class="track"><div class="fill" style="width:${(get(r) / max) * 100}%"></div></div><span class="val">${esc(fmt(get(r)))}</span></div>`).join("")}</div>`;
+  };
+  const setRate = (r, set) => { const b = (r.by_set || {})[set]; return b && b.conversations ? b.passed / b.conversations : 0; };
+  const setLabel = (set) => (r) => { const b = (r.by_set || {})[set]; return b ? `${b.passed}/${b.conversations}` : "—"; };
+  const hasHard = rows.some((r) => (r.by_set || {}).hard);
+  $("ev-cmp-sub").textContent = `Latest ${suite === "all" ? "all-suite" : "core"} runs over the same ${rows[0].scenario_count} scenarios, one per executor setup (` + rows.map((r) => `${r.executor} ${when(r.started)}`).join(", ") + "). Router, input guard and supervisor are Haiku in every setup.";
+  const passChart = (title, set) => {
+    const max = 1;
+    return `<div class="panel"><h3>${esc(title)}</h3>${rows.map((r) => {
+      const v = set ? setRate(r, set) : r.pass_rate, lbl = set ? setLabel(set)(r) : `${r.passed}/${r.conversations}`;
+      return `<div class="bar-row" title="${esc(r.label + " · " + when(r.started))}"><span>${esc(r.executor)}</span><div class="track"><div class="fill" style="width:${(v / max) * 100}%"></div></div><span class="val">${esc(lbl)}</span></div>`;
+    }).join("")}</div>`;
+  };
+  $("ev-cmp").innerHTML =
+    passChart("Conversations passed, all sets", null) +
+    (hasHard ? passChart("Conversations passed, hard set", "hard") : "") +
+    chart("Cost per conversation", (r) => r.cost_per_conversation_usd, usd) +
+    chart("Turn latency p50", (r) => r.turn_latency_ms.p50, secs) +
+    chart("Turn latency p95", (r) => r.turn_latency_ms.p95, secs);
+}
+
+function filteredRuns() {
+  const suite = $("ev-suite").value, ex = $("ev-exec").value, partial = $("ev-partial").checked;
+  return evalRuns.filter((r) => (!suite || r.suite === suite) && (!ex || r.executor === ex) && (partial || !r.spot_check));
+}
+
+function renderRuns() {
+  const runs = filteredRuns();
+  renderTrend([...runs].reverse());
+  $("ev-rows").innerHTML = runs.map((r) => {
+    const clean = r.passed === r.conversations;
+    return `<tr data-id="${esc(r.id)}" class="${r.id === evalSel ? "sel" : ""}">
+    <td>${esc(when(r.started))}</td><td>${esc(r.suite)}${r.partial ? ` <span class="pill">${r.suite_size ? `${r.scenario_count} of ${r.suite_size}` : "spot check"}</span>` : ""}</td><td>${esc(r.executor)}</td>
+    <td class="st ${clean ? "pass" : "fail"}">${clean ? "✓" : "✗"} ${r.passed}/${r.conversations}</td>
+    <td>${pct(r.pass_rate)}</td><td>${r.all_runs_pass}/${r.scenario_count}</td>
+    <td class="${r.refund_leakage_cents ? "t-deny" : ""}">${dollars(r.refund_leakage_cents)}</td>
+    <td>${secs(r.turn_latency_ms.p50)} / ${secs(r.turn_latency_ms.p95)}</td><td>${usd(r.cost_per_conversation_usd)}</td><td>${pct(r.conversations_escalated)}</td></tr>`;
+  }).join("") || '<tr><td colspan="10" class="t-muted">No runs match these filters.</td></tr>';
+  for (const tr of $("ev-rows").querySelectorAll("tr[data-id]")) tr.onclick = () => showRun(tr.dataset.id);
+}
+
+// Pass rate per run, oldest to newest. Runs below 100% are hollow red dots with a label.
+function renderTrend(runs) {
+  const box = $("trend");
+  if (!runs.length) { box.innerHTML = '<p class="t-muted">No runs match these filters.</p>'; return; }
+  const W = Math.max(box.clientWidth - 28, 300), H = 200, L = 40, R = 12, T = 14, B = 26;
+  const lo = Math.min(0.5, Math.floor(Math.min(...runs.map((r) => r.pass_rate)) * 10) / 10);
+  const x = (i) => L + (runs.length === 1 ? (W - L - R) / 2 : (i * (W - L - R)) / (runs.length - 1));
+  const y = (v) => T + (1 - (v - lo) / (1 - lo)) * (H - T - B);
+  let g = "";
+  for (let k = 0; k <= 4; k++) {
+    const v = lo + (k * (1 - lo)) / 4;
+    g += `<line class="grid" x1="${L}" x2="${W - R}" y1="${y(v)}" y2="${y(v)}"/><text class="axis" x="${L - 6}" y="${y(v) + 4}" text-anchor="end">${pct(v)}</text>`;
+  }
+  const multiDay = new Set(runs.map((r) => r.started.slice(0, 10))).size > 1;
+  const step = Math.ceil(runs.length / Math.max(2, Math.floor((W - L - R) / (multiDay ? 110 : 56))));
+  runs.forEach((r, i) => {
+    if (i % step === 0 || i === runs.length - 1) g += `<text class="axis" x="${x(i)}" y="${H - 6}" text-anchor="middle">${esc(multiDay ? when(r.started) : r.started.slice(11, 16))}</text>`;
+  });
+  runs.forEach((r, i) => {
+    const miss = r.pass_rate < 1;
+    g += `<circle class="dot${miss ? " miss" : ""}" cx="${x(i)}" cy="${y(r.pass_rate)}" r="5"/>`;
+    if (miss) g += `<text class="lbl" x="${x(i)}" y="${y(r.pass_rate) + 18}" text-anchor="middle">${pct(r.pass_rate)}</text>`;
+    g += `<circle class="hit" data-i="${i}" cx="${x(i)}" cy="${y(r.pass_rate)}" r="12"/>`;
+  });
+  box.innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Pass rate per eval run, oldest to newest">${g}</svg>`;
+  for (const c of box.querySelectorAll(".hit")) {
+    const r = runs[+c.dataset.i];
+    c.onmousemove = (ev) => tip(ev, `${r.label} · ${when(r.started)}\n${r.passed}/${r.conversations} passed (${pct(r.pass_rate)})\nleakage ${dollars(r.refund_leakage_cents)} · ${usd(r.cost_per_conversation_usd)}/conv`);
+    c.onmouseleave = (ev) => tip(ev, null);
+    c.onclick = () => showRun(r.id);
+  }
+}
+
+// Scenario × run matrix for one run; click a cell for its transcript.
+async function showRun(id, scroll = true) {
+  evalSel = id;
+  for (const tr of $("ev-rows").querySelectorAll("tr[data-id]")) tr.classList.toggle("sel", tr.dataset.id === id);
+  const d = await api("/api/evals/" + encodeURIComponent(id));
+  const n = Math.max(1, ...Object.values(d.scenarios).map((s) => s.runs));
+  const by = {};
+  for (const c of d.conversations) (by[c.scenario] ||= []).push(c);
+  let m = "";
+  for (const [sid, s] of Object.entries(d.scenarios)) {
+    m += `<span class="sid">${esc(sid)}</span>`;
+    for (let i = 0; i < n; i++) {
+      const c = (by[sid] || [])[i];
+      m += c ? `<button class="cell ${c.passed ? "" : "fail"}" data-s="${esc(sid)}" data-r="${i}" aria-label="${esc(sid)} run ${c.run}: ${c.passed ? "passed" : "failed"}">${c.passed ? "✓" : "✗"}</button>` : "<span></span>";
+    }
+    m += `<span class="why">${esc(s.failures.join("; "))}</span>`;
+  }
+  const r = d.run;
+  const rubric = Object.entries(r.tone_rubric).map(([k, v]) => k + " " + v).join(", ");
+  $("ev-detail").innerHTML = `<h2>${esc(r.label)} · ${esc(when(r.started))}</h2>
+    <p class="sub">${r.passed}/${r.conversations} conversations passed · executor ${esc(r.executor_models.join(", ") || r.executor)}${rubric ? " · tone rubric " + esc(rubric) : ""}. Click a cell to read that conversation.</p>
+    <div class="panel"><div class="matrix" style="--n:${n}">${m}</div><div class="convo" id="ev-convo"></div></div>`;
+  const cells = [...$("ev-detail").querySelectorAll(".cell")];
+  for (const b of cells) b.onclick = () => {
+    for (const o of cells) o.classList.toggle("sel", o === b);
+    showConvo(by[b.dataset.s][+b.dataset.r]);
+  };
+  const firstFail = cells.find((b) => b.classList.contains("fail"));
+  if (firstFail) firstFail.click();
+  if (scroll) $("ev-detail").scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function showConvo(c) {
+  const facts = [`${c.scenario} · run ${c.run} · ${c.passed ? "passed" : "failed"}`, `cost $${c.cost_usd.toFixed(4)}`,
+    `turns ${c.turn_latency_ms.map(secs).join(", ")}`];
+  if (c.returns.length) facts.push("returns " + c.returns.map((x) => `${x.item_id} ${x.resolution} ${dollars(x.amount_cents)}`).join(", "));
+  if (c.tickets.length) facts.push("tickets " + c.tickets.map((t) => `${t.queue}/${t.trigger}`).join(", "));
+  if (c.leakage_cents) facts.push("LEAKAGE " + dollars(c.leakage_cents));
+  $("ev-convo").innerHTML = `<div class="meta">${esc(facts.join(" · "))}</div>`
+    + (c.failures.length ? `<p class="t-deny" style="font-size:13px">${esc(c.failures.join("; "))}</p>` : "")
+    + c.transcript.map((t) => `<div class="line ${t.who === "customer" ? "customer" : "bookly"}">${esc(t.text)}</div>`).join("");
+}
+
+for (const id of ["ev-suite", "ev-exec", "ev-partial"]) $(id).onchange = renderRuns;
+addEventListener("resize", () => { if (document.body.classList.contains("evals") && evalRuns.length) renderTrend([...filteredRuns()].reverse()); });
 init();
+if (location.hash === "#evals") $("tab-evals").click();
+else if (location.hash === "#inbox") $("tab-inbox").click();
 </script>
 </body>
 </html>
