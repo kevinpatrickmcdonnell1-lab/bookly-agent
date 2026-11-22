@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bookly Support</title>
+<style>
+:root {
+  --bg: #f6f3ee; --panel: #fffdf9; --ink: #1f1b16; --muted: #6f665b; --line: #e4ddd2;
+  --accent: #7a3e1d; --accent-ink: #fff; --me: #efe6da; --bot: #ffffff;
+  --ok: #2f7d4f; --deny: #b3261e; --warn: #a66300; --info: #2f5f8a; --esc: #6b3fa0;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #161412; --panel: #1f1c19; --ink: #efe9e1; --muted: #a59b8f; --line: #35302a;
+    --accent: #d98b5f; --accent-ink: #1a1410; --me: #2c2621; --bot: #24201c;
+    --ok: #6cc28f; --deny: #f08a82; --warn: #e5a54b; --info: #86b6e0; --esc: #b99be0;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #161412; --panel: #1f1c19; --ink: #efe9e1; --muted: #a59b8f; --line: #35302a;
+  --accent: #d98b5f; --accent-ink: #1a1410; --me: #2c2621; --bot: #24201c;
+  --ok: #6cc28f; --deny: #f08a82; --warn: #e5a54b; --info: #86b6e0; --esc: #b99be0;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; }
+header { display: flex; align-items: center; gap: 16px; padding: 10px 16px; border-bottom: 1px solid var(--line); background: var(--panel); }
+header h1 { font-size: 17px; margin: 0; font-family: Georgia, serif; }
+header .tabs { display: flex; gap: 4px; margin-left: 8px; }
+.tab { border: 1px solid var(--line); background: transparent; color: var(--ink); padding: 5px 12px; border-radius: 6px; cursor: pointer; font: inherit; }
+.tab.active { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+header .meta { margin-left: auto; color: var(--muted); font-size: 12px; font-family: var(--mono); }
+main { display: grid; grid-template-columns: 250px minmax(0, 1fr) minmax(0, 1.1fr); height: calc(100vh - 51px); }
+aside, section { overflow-y: auto; }
+aside { border-right: 1px solid var(--line); padding: 14px; background: var(--panel); }
+aside h2, #trace h2 { font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin: 4px 0 10px; }
+.card { border: 1px solid var(--line); border-radius: 8px; padding: 10px; margin-bottom: 10px; cursor: pointer; background: var(--bg); }
+.card:hover { border-color: var(--accent); }
+.card b { display: block; }
+.card .creds { font-family: var(--mono); font-size: 12px; color: var(--muted); margin: 2px 0 4px; }
+.card .shows { font-size: 12px; color: var(--muted); }
+.btn { border: 1px solid var(--line); background: var(--panel); color: var(--ink); padding: 7px 10px; border-radius: 6px; cursor: pointer; font: inherit; width: 100%; margin-top: 6px; }
+.btn:hover { border-color: var(--accent); }
+#chat { display: flex; flex-direction: column; border-right: 1px solid var(--line); }
+#log { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 10px; }
+.msg { max-width: 85%; padding: 9px 12px; border-radius: 10px; white-space: pre-wrap; overflow-wrap: anywhere; }
+.msg.me { align-self: flex-end; background: var(--me); }
+.msg.bot { align-self: flex-start; background: var(--bot); border: 1px solid var(--line); }
+.msg .tag { display: block; font-size: 11px; color: var(--muted); margin-top: 4px; font-family: var(--mono); }
+.empty { color: var(--muted); margin: auto; text-align: center; max-width: 320px; }
+form { display: flex; gap: 8px; padding: 12px; border-top: 1px solid var(--line); background: var(--panel); }
+textarea { flex: 1; resize: none; height: 44px; padding: 10px; border-radius: 8px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); font: inherit; }
+form button { background: var(--accent); color: var(--accent-ink); border: 0; border-radius: 8px; padding: 0 16px; font: inherit; cursor: pointer; }
+form button:disabled { opacity: .5; cursor: wait; }
+#trace { padding: 14px; background: var(--panel); }
+.turn { border: 1px solid var(--line); border-radius: 8px; margin-bottom: 12px; overflow: hidden; }
+.turn > .head { padding: 7px 10px; background: var(--bg); font-size: 12px; font-family: var(--mono); display: flex; gap: 10px; flex-wrap: wrap; }
+.turn > .head b { color: var(--accent); }
+.ev { border-top: 1px solid var(--line); padding: 6px 10px; font-size: 12.5px; }
+.ev summary { cursor: pointer; list-style: none; display: flex; gap: 8px; align-items: baseline; }
+.ev summary::-webkit-details-marker { display: none; }
+.ev .type { font-family: var(--mono); font-size: 11px; padding: 1px 6px; border-radius: 4px; border: 1px solid currentColor; white-space: nowrap; }
+.ev .desc { flex: 1; overflow-wrap: anywhere; }
+.ev .num { font-family: var(--mono); font-size: 11px; color: var(--muted); white-space: nowrap; }
+.ev pre { font-family: var(--mono); font-size: 11px; background: var(--bg); padding: 8px; border-radius: 6px; overflow-x: auto; margin: 6px 0 2px; }
+.t-ok { color: var(--ok); } .t-deny { color: var(--deny); } .t-warn { color: var(--warn); } .t-info { color: var(--info); } .t-esc { color: var(--esc); } .t-muted { color: var(--muted); }
+#inbox { display: none; padding: 16px; grid-column: 2 / 4; }
+.ticket { border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; margin-bottom: 12px; background: var(--panel); }
+.ticket .row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 6px; }
+.pill { font-size: 11px; font-family: var(--mono); padding: 2px 7px; border-radius: 999px; border: 1px solid var(--line); }
+.pill.high { color: var(--deny); border-color: var(--deny); }
+.ticket dl { display: grid; grid-template-columns: 130px 1fr; gap: 4px 10px; margin: 8px 0 0; font-size: 13px; }
+.ticket dt { color: var(--muted); }
+.ticket dd { margin: 0; overflow-wrap: anywhere; }
+body.inbox #inbox { display: block; }
+body.inbox #chat, body.inbox #trace { display: none; }
+@media (max-width: 900px) {
+  main { grid-template-columns: 1fr; height: auto; }
+  aside { border-right: 0; border-bottom: 1px solid var(--line); padding: 12px 16px; }
+  .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .card { margin: 0; }
+  #chat { height: 70vh; border-right: 0; }
+  #trace { padding: 12px 16px; }
+  #inbox { grid-column: 1; }
+  header .meta { display: none; }
+  .ticket dl { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>Bookly Support</h1>
+  <div class="tabs">
+    <button class="tab active" id="tab-chat">Chat</button>
+    <button class="tab" id="tab-inbox">Agent Inbox <span id="inbox-count"></span></button>
+  </div>
+  <div class="meta" id="models"></div>
+</header>
+<main>
+  <aside>
+    <h2>Scenario cards</h2>
+    <div class="cards" id="cards"></div>
+    <button class="btn" id="new">New conversation</button>
+    <button class="btn" id="reset">Reset demo data</button>
+  </aside>
+  <section id="chat">
+    <div id="log"><div class="empty" id="empty">Pick a scenario card to fill in a first message, or type your own. Verify with an order number and the email on the order.</div></div>
+    <form id="form">
+      <textarea id="input" placeholder="Message Bookly…" aria-label="Message"></textarea>
+      <button id="send" type="submit">Send</button>
+    </form>
+  </section>
+  <section id="trace">
+    <h2>Trace</h2>
+    <div id="turns"><p class="t-muted" style="font-size:13px">Each turn shows the input guard, the route, every tool call and gate verdict, the output checks, the model, latency and cost.</p></div>
+  </section>
+  <section id="inbox"><div id="tickets"></div></section>
+</main>
+<script>
+const $ = (id) => document.getElementById(id);
+let sessionId = null;
+const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+async function api(path, body) {
+  const res = await fetch(path, body === undefined ? {} : { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(data.detail || res.statusText);
+  return data;
+}
+
+async function newSession() {
+  sessionId = (await api("/api/session", {})).session_id;
+  $("log").innerHTML = "";
+  $("log").appendChild(Object.assign(document.createElement("div"), { className: "empty", textContent: "New conversation. Pick a scenario card or type a message." }));
+  $("turns").innerHTML = "";
+}
+
+function addMsg(who, text, tag) {
+  const empty = $("log").querySelector(".empty"); if (empty) empty.remove();
+  const el = document.createElement("div");
+  el.className = "msg " + who;
+  el.textContent = text;
+  if (tag) { const t = document.createElement("span"); t.className = "tag"; t.textContent = tag; el.appendChild(t); }
+  $("log").appendChild(el);
+  $("log").scrollTop = $("log").scrollHeight;
+}
+
+function describe(e) {
+  const p = e.payload;
+  switch (e.type) {
+    case "input_guard": {
+      const flags = ["injection", "abuse"].filter((k) => p[k]).concat(p.sensitive !== "none" ? [p.sensitive] : []);
+      return [flags.length ? "t-warn" : "t-muted", flags.length ? "flagged: " + flags.join(", ") : "clean"];
+    }
+    case "route": return ["t-info", `${p.aop}${p.mode !== "normal" ? " (" + p.mode + ")" : ""} · ${(p.intents || []).join("+") || "—"} · conf ${p.confidence ?? "—"} · confirm ${p.confirmation} · writes [${(p.write_tools || []).join(", ")}] — ${p.why}`];
+    case "executor": return ["t-muted", `stop ${p.stop_reason}${p.tool_calls.length ? " → " + p.tool_calls.join(", ") : ""} · cache read ${p.cache_read}`];
+    case "tool_call": return ["t-ok", `${p.tool}(${JSON.stringify(p.args)}) allowed`];
+    case "gate_denied": return ["t-deny", `${p.tool} DENIED · ${p.verdict}: ${p.result.message}`];
+    case "tool_error": return ["t-deny", `${p.tool || "executor"} error · ${(p.result && p.result.message) || p.error}`];
+    case "output_check":
+      if (p.stage === "supervisor") return [p.grounded === false ? "t-deny" : "t-muted", p.error ? "supervisor error" : (p.grounded ? "supervisor: policy claims grounded" : "supervisor: " + p.unsupported.join("; "))];
+      return [p.ok ? "t-muted" : "t-deny", p.ok ? `grounded · checked ${[...p.checked.amounts, ...p.checked.dates, ...p.checked.tracking].join(", ") || "no facts"}` : "FAILED · " + p.issues.join("; ")];
+    case "escalation": return ["t-esc", `ticket #${p.ticket_id} → ${p.queue} (${p.trigger}, by ${p.by})`];
+    case "reply": return ["t-muted", "reply sent"];
+    default: return ["t-muted", e.type];
+  }
+}
+
+function renderTurn(turn, events) {
+  const cost = events.reduce((a, e) => a + (e.cost_usd || 0), 0);
+  const route = events.find((e) => e.type === "route");
+  const crit = events.filter((e) => ["route", "executor"].includes(e.type)).reduce((a, e) => a + (e.latency_ms || 0), 0);
+  const box = document.createElement("div");
+  box.className = "turn";
+  box.innerHTML = `<div class="head"><b>Turn ${turn}</b><span>${esc(route ? route.payload.aop : "")}</span><span>${crit} ms model time</span><span>$${cost.toFixed(5)}</span></div>`;
+  for (const e of events) {
+    const [cls, text] = describe(e);
+    const d = document.createElement("details");
+    d.className = "ev";
+    const nums = e.model ? `${e.model.replace("claude-", "")} · ${e.latency_ms}ms · ${e.input_tokens}/${e.output_tokens} tok · $${(e.cost_usd || 0).toFixed(5)}` : "";
+    d.innerHTML = `<summary><span class="type ${cls}">${esc(e.type)}</span><span class="desc ${cls}">${esc(text)}</span><span class="num">${esc(nums)}</span></summary><pre>${esc(JSON.stringify(e.payload, null, 2))}</pre>`;
+    box.appendChild(d);
+  }
+  $("turns").prepend(box);
+}
+
+async function send(text) {
+  if (!sessionId) await newSession();
+  addMsg("me", text);
+  $("send").disabled = true;
+  try {
+    const r = await api("/api/chat", { session_id: sessionId, message: text });
+    addMsg("bot", r.reply, `${r.route}${r.ticket_id ? " · ticket #" + r.ticket_id : ""}`);
+    renderTurn(r.turn, r.events);
+    if (r.ticket_id) loadTickets();
+  } catch (err) {
+    addMsg("bot", "⚠ " + err.message, "error");
+  } finally {
+    $("send").disabled = false;
+    $("input").focus();
+  }
+}
+
+async function loadTickets() {
+  const { tickets } = await api("/api/tickets");
+  $("inbox-count").textContent = tickets.length ? `(${tickets.length})` : "";
+  $("tickets").innerHTML = tickets.length ? "" : '<p class="t-muted">No escalations yet. Tickets the agent creates appear here, as a human bookseller would see them.</p>';
+  for (const t of tickets) {
+    const el = document.createElement("div");
+    el.className = "ticket";
+    el.innerHTML = `<div class="row"><b>#${t.id}</b><span class="pill">${esc(t.queue)}</span><span class="pill ${t.priority === "high" ? "high" : ""}">${esc(t.priority)}</span><span class="pill">${esc(t.trigger)}</span><span class="t-muted" style="font-size:12px">${esc(t.created_at)}</span></div>
+      <div>${esc(t.summary)}</div>
+      <dl><dt>Customer</dt><dd>${esc(t.customer)}</dd><dt>Intent</dt><dd>${esc(t.intent)}</dd><dt>Sentiment</dt><dd>${esc(t.sentiment)}</dd>
+      <dt>Tried</dt><dd>${esc(t.tried.join(", ") || "—")}</dd><dt>Policy refs</dt><dd>${esc(t.policy_refs.join(", ") || "—")}</dd>
+      <dt>Suggested action</dt><dd>${esc(t.suggested_action)}</dd></dl>`;
+    $("tickets").appendChild(el);
+  }
+}
+
+async function init() {
+  const { scenarios, models } = await api("/api/scenarios");
+  $("models").textContent = `router ${models.router} · executor ${models.executor_returns}${models.executor_other !== models.executor_returns ? " / " + models.executor_other : ""}`;
+  for (const s of scenarios) {
+    const el = document.createElement("div");
+    el.className = "card";
+    el.innerHTML = `<b>${esc(s.card)} · ${esc(s.customer)}</b><div class="creds">${esc(s.order_number)} · ${esc(s.email)}</div><div class="shows">${esc(s.shows)}</div>`;
+    el.onclick = () => { $("input").value = s.first_message; $("input").focus(); };
+    $("cards").appendChild(el);
+  }
+  loadTickets();
+}
+
+$("form").onsubmit = (e) => { e.preventDefault(); const t = $("input").value.trim(); if (!t) return; $("input").value = ""; send(t); };
+$("input").onkeydown = (e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); $("form").requestSubmit(); } };
+$("new").onclick = newSession;
+$("reset").onclick = async () => { await api("/api/reset", {}); await newSession(); loadTickets(); };
+$("tab-chat").onclick = () => { document.body.classList.remove("inbox"); $("tab-chat").classList.add("active"); $("tab-inbox").classList.remove("active"); };
+$("tab-inbox").onclick = () => { document.body.classList.add("inbox"); $("tab-inbox").classList.add("active"); $("tab-chat").classList.remove("active"); loadTickets(); };
+init();
+</script>
+</body>
+</html>
