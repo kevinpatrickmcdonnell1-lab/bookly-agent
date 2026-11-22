@@ -79,3 +79,53 @@ def test_internal_policy_id_rejected():
 def test_policy_claims_trigger_supervisor():
     assert code_checks("Our 30-day return window has passed.", Session(), []).needs_supervisor
     assert not code_checks("Happy to help! What's your order number?", Session(), []).needs_supervisor
+
+
+# The draft can phrase a fact any way it likes; it's normalised and still has to be in a tool result.
+DELIVERED = dict(delivered_on="November 12", amount_display="$18.99")
+
+
+@pytest.mark.parametrize("ok_reply,bad_reply", [
+    ("It was delivered November 12.", "It should arrive November 30."),
+    ("It was delivered Nov 12.", "It should arrive Nov 30."),
+    ("It was delivered Nov. 12th.", "It should arrive Sept 3rd."),
+    ("It was delivered on the 12th of November.", "It should arrive 30 November."),
+    ("It was delivered 11/12.", "It should arrive 11/30."),
+    ("It was delivered 2026-11-12.", "It should arrive 11/30/2026."),
+])
+def test_date_formats_normalised(ok_reply, bad_reply):
+    s = grounded_session(**DELIVERED)
+    assert code_checks(ok_reply, s, []).ok, ok_reply
+    bad = code_checks(bad_reply, s, [])
+    assert not bad.ok and "isn't in any tool result" in bad.issues[0], bad_reply
+
+
+@pytest.mark.parametrize("text", ["We're here 24/7.", "About 2 may arrive separately.", "Split it 50/50."])
+def test_non_dates_ignored(text):
+    assert code_checks(text, grounded_session(**DELIVERED), []).ok
+
+
+@pytest.mark.parametrize("reply", [
+    "It should arrive this Friday.", "It should arrive tomorrow.", "Expect it by next week.",
+    "It'll be there Monday.", "It should land the day after tomorrow.",
+])
+def test_relative_dates_fail(reply):
+    c = code_checks(reply, grounded_session(**DELIVERED), [])
+    assert not c.ok and "relative date" in c.issues[0]
+
+
+def test_relative_word_allowed_when_tool_returned_it():
+    s = grounded_session(title="Tomorrow, and Tomorrow, and Tomorrow", delivered_on="November 12")
+    assert code_checks("Your copy of Tomorrow, and Tomorrow, and Tomorrow was delivered November 12.", s, []).ok
+
+
+@pytest.mark.parametrize("ok_reply,bad_reply", [
+    ("A refund of 18.99 dollars is on its way.", "A refund of 25 dollars is on its way."),
+    ("A refund of 18.99 USD is on its way.", "A refund of 25 USD is on its way."),
+    ("A refund of USD 18.99 is on its way.", "A refund of USD 25 is on its way."),
+    ("A refund of $18.99 is on its way.", "A refund of $1,899 is on its way."),
+])
+def test_money_formats_normalised(ok_reply, bad_reply):
+    s = grounded_session(**DELIVERED)
+    assert code_checks(ok_reply, s, []).ok, ok_reply
+    assert not code_checks(bad_reply, s, []).ok, bad_reply
