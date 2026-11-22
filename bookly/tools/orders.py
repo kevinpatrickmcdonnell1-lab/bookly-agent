@@ -23,6 +23,28 @@ def _items(deps: ToolDeps, order_number: str) -> list[dict]:
     return out
 
 
+RECENT_ORDERS_ON_VERIFY = 5
+
+
+def recent_orders_summary(deps: ToolDeps, customer_id: str, limit: int = RECENT_ORDERS_ON_VERIFY) -> dict:
+    """Compact order list returned with a successful verification, so the model
+    doesn't need a separate lookup_orders round. No gift notes or tracking here:
+    lookup_orders and get_order_status hold the detail."""
+    orders = deps.repo.orders_for_customer(customer_id)
+    out = []
+    for o in orders[:limit]:
+        out.append({
+            "order_number": o["order_number"],
+            "status": STATUS_TEXT[o["status"]],
+            "placed_on": nice_date(o["placed_at"]),
+            "delivered_on": nice_date(o["delivered_at"]),
+            "items": [{"item_id": i["item_id"], "title": i["title"], "format": i["format"],
+                       "staff_pick": i["staff_pick"], "already_returned": i["already_returned"]}
+                      for i in _items(deps, o["order_number"])],
+        })
+    return {"recent_orders": out, "more_orders": max(0, len(orders) - limit)}
+
+
 def lookup_orders(s: Session, args: dict, deps: ToolDeps) -> dict:
     orders = []
     for o in deps.repo.orders_for_customer(s.verified_customer_id or ""):

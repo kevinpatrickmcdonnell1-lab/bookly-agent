@@ -74,9 +74,9 @@ One implementation detail matters on the current models: the executor's `system`
 
 | Command | Key? | Covers |
 | --- | --- | --- |
-| `make test` | No | 119 tests in under 10 s: policy rules and boundary days (30/31, 60/61), every gate precondition (pass and fail), tools, database constraints, router rules and decisions, input and output guards, loop mechanics (rule escalation, gate-denial and round limits, regenerate-once, append-only history), eval harness |
+| `make test` | No | 124 tests in under 10 s: policy rules and boundary days (30/31, 60/61), every gate precondition (pass and fail), tools, database constraints, router rules and decisions, input and output guards, loop mechanics (rule escalation, gate-denial and round limits, regenerate-once, append-only history), eval harness |
 | `make evals` | Yes | 8 core scripted scenarios × 3 runs, asserting on database rows and trace events, never wording. Reports pass rate, refund leakage, escalations by trigger, p50/p95 turn latency and cost per conversation. Add `--judge` for an Opus tone rubric. |
-| `make evals-extended` | Yes | All 17 scenarios |
+| `make evals-extended` | Yes | All 18 scenarios |
 | `make compare-models` | Yes | The core suite with each executor setup |
 
 The loop tests use a scripted client to exercise the code around the model. There is deliberately no mock LLM for the demo: without a key, the deterministic layers are what runs.
@@ -87,17 +87,36 @@ Measured with `make compare-models` on 2026-11-22: the 8 core scenarios × 3 run
 
 | Executor setup | Pass rate (3 runs) | Scenarios 3/3 | p50 / p95 turn latency | Cost per conversation | Refund leakage |
 | --- | --- | --- | --- | --- | --- |
-| Haiku for all routes | 100% | 8/8 | 4.7 s / 11.3 s | $0.0016 | $0.00 |
-| Sonnet for all routes | 100% | 8/8 | 5.1 s / 9.0 s | $0.0098 | $0.00 |
-| Hybrid: Haiku except returns on Sonnet | 100% | 8/8 | 4.8 s / 11.6 s | $0.0105 | $0.00 |
+| Haiku for all routes | 100% | 8/8 | 4.3 s / 7.5 s | $0.0014 | $0.00 |
+| Sonnet for all routes | 100% | 8/8 | 4.4 s / 8.5 s | $0.0108 | $0.00 |
+| Hybrid: Haiku except returns on Sonnet | 100% | 8/8 | 4.2 s / 7.1 s | $0.0098 | $0.00 |
 
-What this shows, and what it doesn't:
+The extended set (10 more scenarios, Sonnet executor, 3 runs each) also passes: all 18 scenarios together pass 54/54 runs with $0.00 leakage. One of them, `unique_item_no_question`, checks that the agent neither asks nor guesses when only one item matches what the customer described.
 
-- **The hypothesis didn't hold.** I expected the hybrid to match Sonnet on the money flows at a lower cost. It matched on quality but cost slightly more. Six of the eight core scenarios touch returns, so the hybrid runs Sonnet most of the time. Switching models mid-conversation also gives up the prompt cache, because caches are per model.
-- **Haiku alone matched Sonnet here at about a sixth of the cost.** That is evidence that the core suite is too easy to separate the models, not that Haiku is enough in production. The deterministic layers carry most of the safety, which is the point of the design. The next step is harder scenarios (the extended set, adversarial pushback, multi-intent) before choosing a production default.
-- **The first live run found real bugs, not just model noise.** It scored 71%. The output supervisor rejected true facts that came from tool results, and the returns AOP asked questions that couldn't change the outcome ("have you read it?" for a damaged book). Fixing both brought the suite to 100%. Refund leakage was $0.00 in every run, before and after the fixes.
-- **Latency is the weak spot.** A turn makes 3 or more sequential model calls (guard and router in parallel, then 1 to 4 executor rounds, sometimes the supervisor), and that is where the 5 s median comes from. Streaming the reply and a fine-tuned router are the first levers.
-- **Extended set (9 more scenarios, Sonnet executor, 3 runs each):** 8 of 9 passed 3/3 on the first run, with $0.00 leakage. Escalations were 3 for policy pushback and 3 for approval of the $90 return. The failure was in the scenario, not the agent: `injection_in_gift_note` had one turn, and the agent reasonably asked why the customer was returning the book before checking eligibility. With the customer's answer added as a second turn, it passed 3/3. The injected gift note never changed the outcome. One of those replies showed the internal id `returns#window`, so the output guard now blocks policy ids in replies.
+#### Latency work: before and after
+
+The first measurements put the median turn at about 5 s. A breakdown of 96 turns showed the time went on sequential round trips, not slow models. Caching hit on every executor call, and output averaged 86 tokens per round. Three changes targeted that:
+
+1. `verify_customer` now returns a compact summary of recent orders, so the model no longer needs a separate `lookup_orders` round.
+2. The Haiku output supervisor is skipped when the policy engine backed the reply that turn. Answers from `search_policy` are still supervised, because those are the model's paraphrase of policy text.
+3. The web UI streams trace events and shows progress ("Checking your details…") while a turn runs, and the server warms its API connection at startup. The first request on a cold server had taken about 11 s.
+
+| Core suite, Sonnet executor | Before | After |
+| --- | --- | --- |
+| p50 / p95 turn latency | 5.1 s / 9.0 s | 4.4 s / 8.5 s (4.1 s / 8.2 s on a repeat run) |
+| Executor rounds per turn (mean) | 2.33 | 2.02 |
+| `lookup_orders` calls | 15 | 0 |
+| Supervisor calls / skipped | 22 / 0 | 5 / 15 |
+| Rewrites forced by the output guard | 4 | 1 |
+| Cost per conversation | $0.0098 | $0.0108 |
+
+That gain is smaller than I estimated (2.5–3 s). About 1.4 s of every turn is the guard and router, and a typical turn still needs two executor rounds of about 1.5 s each. The next levers are a rule-based fast path that skips the router for bare "yes"/"no" and credential-only messages, and in production a fine-tuned router. Cost rose about 10% because the verify result is larger. One run right after the prompts changed showed $0.0135. That was a one-off rewrite of the prompt cache, and it went away on the next run.
+
+#### What this shows, and what it doesn't
+
+- **The hybrid hypothesis is roughly a tie.** I expected the hybrid to match Sonnet on the money flows at a lower cost. It matches on quality and now costs about 10% less, which is within run-to-run noise. Six of the eight core scenarios touch returns, so the hybrid runs Sonnet most of the time, and switching models mid-conversation gives up the prompt cache, because caches are per model.
+- **Haiku alone matched Sonnet here at about an eighth of the cost.** That is evidence that these scenarios are too easy to separate the models, not that Haiku is enough in production. The deterministic layers carry most of the safety, which is the point of the design. Harder scenarios (adversarial pushback, long multi-intent conversations) should come before choosing a production default.
+- **Live runs found real bugs, not just model noise.** The first live run scored 71%. The output supervisor rejected true facts from tool results, and the returns AOP asked questions that couldn't change the outcome ("have you read it?" for a damaged book). A later run caught the same kind of AOP problem ("why are you returning it?" for an unread book that isn't a staff pick). Two failures were in my scenarios rather than the agent. Each run writes its full transcripts and traces to `evals/results/` (gitignored). Refund leakage was $0.00 in every run.
 - Three runs per scenario is a small sample. Treat 100% as "no failures seen in 24 runs", not as a reliability guarantee.
 
 ## Assumptions
@@ -109,6 +128,10 @@ What this shows, and what it doesn't:
 - Human booksellers work 9am to 6pm ET. An escalation always creates a ticket, and the customer is told to expect an email reply within 4 hours (of opening, if out of hours).
 - Identity is order number + email. That's weak for account actions; see below.
 - Carrier tracking, email delivery and password-reset links are mocked. Prices in `bookly/config.py` are Anthropic list prices as of November 2026.
+
+## Known issues to watch
+
+- **Guessing, and asking which item when only one matches.** In manual testing the agent asked Ben "which one is the ebook? I'm guessing it's Project Hail Mary", when only one of his items was an ebook. The returns AOP and the brand voice now say to state the item as a fact when exactly one matches, ask only when several do, and never guess out loud. That holds in every eval run so far (`unique_item_no_question`, `ambiguous_order`). It is still a prompt rule, not a code guarantee, and the evals cover only "my ebook" and "a book" with two orders. To improve: add scenarios for identifying an item by title, format and description, plus the order-status equivalent (two orders in transit). If those show slips, add an output-guard check for hedging phrases ("I'm guessing", "I assume", "I'd imagine") that forces one rewrite.
 
 ## What I cut, and what I'd change first
 

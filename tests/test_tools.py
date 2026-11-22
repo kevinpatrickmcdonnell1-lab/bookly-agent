@@ -135,3 +135,11 @@ def test_every_engine_policy_ref_exists_in_kb(deps):
     for ref in ("returns#window", "returns#damaged", "returns#approval", "returns#one-per-item",
                 "ebooks#downloaded", "guarantee#staff-picks", "account#password"):
         assert ref in deps.kb.by_id, ref
+
+
+def test_verify_returns_recent_orders_summary_without_gift_notes(call, session):
+    out = call(session, "verify_customer", order_number="4813", email="ben.okafor@example.com").result
+    assert {o["order_number"] for o in out["recent_orders"]} == {"4812", "4813"}
+    assert out["recent_orders"][0]["items"][0]["item_id"].startswith("I-48")
+    assert "gift_note" not in str(out) and "tracking" not in str(out)
+    assert out["more_orders"] == 0

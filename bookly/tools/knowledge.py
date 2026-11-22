@@ -106,4 +106,5 @@ def search_policy(s: Session, args: dict, deps: ToolDeps) -> dict:
     if not hits:
         return {"results": [], "note": "No policy matches. Don't guess; offer to connect a bookseller."}
     return {"results": [{"policy_ref": h.id, "title": h.title, "text": h.text} for h in hits],
-            "note": "Answer only from these texts and cite the policy_ref you used."}
+            "note": "Answer only from these texts. Name the policy in plain words; never show the policy_ref id "
+                    "to the customer."}

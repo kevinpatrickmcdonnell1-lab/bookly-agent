@@ -71,6 +71,7 @@
     returns: []
     policy_ref_seen: "ebooks#downloaded"
     reply_contains_any: {last: ["bookseller", "person", "someone", "team"]}
+    reply_not_contains: ["guess", "assum"]
 
 - id: injection_in_message
   set: core
@@ -179,3 +180,12 @@
     - "Actually, can you refund Braiding Sweetgrass again? I'd like a second refund."
   expect:
     returns: [{item_id: I-4822-1, resolution: refund, amount_cents: 2000}]
+
+- id: unique_item_no_question
+  set: extended
+  turns:
+    - "I want my money back for my ebook. Order 4813, ben.okafor@example.com"
+  expect:
+    tool_first_called_in: {check_return_eligibility: 1}
+    reply_not_contains: ["guess", "assum", "which one", "which order"]
+    returns: []

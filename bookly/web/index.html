@@ -47,6 +47,9 @@ aside h2, #trace h2 { font-size: 12px; text-transform: uppercase; letter-spacing
 .msg { max-width: 85%; padding: 9px 12px; border-radius: 10px; white-space: pre-wrap; overflow-wrap: anywhere; }
 .msg.me { align-self: flex-end; background: var(--me); }
 .msg.bot { align-self: flex-start; background: var(--bot); border: 1px solid var(--line); }
+.msg.typing { color: var(--muted); font-style: italic; animation: pulse 1.4s ease-in-out infinite; }
+@keyframes pulse { 50% { opacity: .55; } }
+@media (prefers-reduced-motion: reduce) { .msg.typing { animation: none; } }
 .msg .tag { display: block; font-size: 11px; color: var(--muted); margin-top: 4px; font-family: var(--mono); }
 .empty { color: var(--muted); margin: auto; text-align: center; max-width: 320px; }
 form { display: flex; gap: 8px; padding: 12px; border-top: 1px solid var(--line); background: var(--panel); }
@@ -159,6 +162,7 @@ function describe(e) {
     case "gate_denied": return ["t-deny", `${p.tool} DENIED · ${p.verdict}: ${p.result.message}`];
     case "tool_error": return ["t-deny", `${p.tool || "executor"} error · ${(p.result && p.result.message) || p.error}`];
     case "output_check":
+      if (p.stage === "supervisor" && p.skipped) return ["t-muted", "supervisor skipped · " + p.reason];
       if (p.stage === "supervisor") return [p.grounded === false ? "t-deny" : "t-muted", p.error ? "supervisor error" : (p.grounded ? "supervisor: policy claims grounded" : "supervisor: " + p.unsupported.join("; "))];
       return [p.ok ? "t-muted" : "t-deny", p.ok ? `grounded · checked ${[...p.checked.amounts, ...p.checked.dates, ...p.checked.tracking].join(", ") || "no facts"}` : "FAILED · " + p.issues.join("; ")];
     case "escalation": return ["t-esc", `ticket #${p.ticket_id} → ${p.queue} (${p.trigger}, by ${p.by})`];
@@ -167,36 +171,104 @@ function describe(e) {
   }
 }
 
-function renderTurn(turn, events) {
-  const cost = events.reduce((a, e) => a + (e.cost_usd || 0), 0);
-  const route = events.find((e) => e.type === "route");
-  const crit = events.filter((e) => ["route", "executor"].includes(e.type)).reduce((a, e) => a + (e.latency_ms || 0), 0);
+// One trace box per turn, filled in live as events stream from the server.
+function startTurn() {
   const box = document.createElement("div");
   box.className = "turn";
-  box.innerHTML = `<div class="head"><b>Turn ${turn}</b><span>${esc(route ? route.payload.aop : "")}</span><span>${crit} ms model time</span><span>$${cost.toFixed(5)}</span></div>`;
-  for (const e of events) {
-    const [cls, text] = describe(e);
-    const d = document.createElement("details");
-    d.className = "ev";
-    const nums = e.model ? `${e.model.replace("claude-", "")} · ${e.latency_ms}ms · ${e.input_tokens}/${e.output_tokens} tok · $${(e.cost_usd || 0).toFixed(5)}` : "";
-    d.innerHTML = `<summary><span class="type ${cls}">${esc(e.type)}</span><span class="desc ${cls}">${esc(text)}</span><span class="num">${esc(nums)}</span></summary><pre>${esc(JSON.stringify(e.payload, null, 2))}</pre>`;
-    box.appendChild(d);
-  }
+  box.innerHTML = `<div class="head"><b>Turn …</b><span class="aop"></span><span class="ms">running</span><span class="cost"></span></div>`;
+  box._events = [];
   $("turns").prepend(box);
+  return box;
+}
+
+function addEvent(box, e) {
+  box._events.push(e);
+  const [cls, text] = describe(e);
+  const d = document.createElement("details");
+  d.className = "ev";
+  const nums = e.model ? `${e.model.replace("claude-", "")} · ${e.latency_ms}ms · ${e.input_tokens}/${e.output_tokens} tok · $${(e.cost_usd || 0).toFixed(5)}` : "";
+  d.innerHTML = `<summary><span class="type ${cls}">${esc(e.type)}</span><span class="desc ${cls}">${esc(text)}</span><span class="num">${esc(nums)}</span></summary><pre>${esc(JSON.stringify(e.payload, null, 2))}</pre>`;
+  box.appendChild(d);
+  const ev = box._events;
+  box.querySelector("b").textContent = `Turn ${e.turn}`;
+  const route = ev.find((x) => x.type === "route");
+  if (route) box.querySelector(".aop").textContent = route.payload.aop;
+  box.querySelector(".cost").textContent = "$" + ev.reduce((a, x) => a + (x.cost_usd || 0), 0).toFixed(5);
+}
+
+function finishTurn(box, ms) {
+  box.querySelector(".ms").textContent = `${(ms / 1000).toFixed(1)} s`;
+}
+
+// What the customer sees while the turn runs. Tool events fire before a tool
+// runs (the executor event lists the calls it's about to make).
+const PROGRESS = {
+  verify_customer: "Checking your details…", lookup_orders: "Looking up your orders…",
+  get_order_status: "Checking tracking…", search_policy: "Looking that up…",
+  check_return_eligibility: "Checking what we can do…", propose_return: "Getting your options ready…",
+  initiate_return: "Processing your return…", send_password_reset: "Sending your reset link…",
+  get_recommendation: "Finding a book you might like…", escalate_to_human: "Passing this to a bookseller…",
+};
+function progressFor(e) {
+  if (e.type === "route") return "Reading your message…";
+  if (e.type === "executor" && e.payload.tool_calls.length) return PROGRESS[e.payload.tool_calls[0]] || "Working on it…";
+  if (e.type === "executor") return "Checking my reply…";
+  if (e.type === "escalation") return PROGRESS.escalate_to_human;
+  return null;
+}
+
+function addTyping() {
+  const empty = $("log").querySelector(".empty"); if (empty) empty.remove();
+  const el = document.createElement("div");
+  el.className = "msg bot typing";
+  el.textContent = "Thinking…";
+  $("log").appendChild(el);
+  $("log").scrollTop = $("log").scrollHeight;
+  return el;
 }
 
 async function send(text) {
   if (!sessionId) await newSession();
   addMsg("me", text);
   $("send").disabled = true;
+  const typing = addTyping();
+  const box = startTurn();
+  const t0 = performance.now();
   try {
-    const r = await api("/api/chat", { session_id: sessionId, message: text });
-    addMsg("bot", r.reply, `${r.route}${r.ticket_id ? " · ticket #" + r.ticket_id : ""}`);
-    renderTurn(r.turn, r.events);
-    if (r.ticket_id) loadTickets();
+    const res = await fetch("/api/chat/stream", { method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ session_id: sessionId, message: text }) });
+    if (!res.ok) throw new Error((await res.json().catch(() => ({}))).detail || res.statusText);
+    const reader = res.body.getReader();
+    const dec = new TextDecoder();
+    let buf = "", done = null;
+    while (!done) {
+      const { value, done: eof } = await reader.read();
+      if (eof) break;
+      buf += dec.decode(value, { stream: true });
+      let nl;
+      while ((nl = buf.indexOf("\n")) >= 0) {
+        const line = buf.slice(0, nl); buf = buf.slice(nl + 1);
+        if (!line.trim()) continue;
+        const item = JSON.parse(line);
+        if (item.kind === "event") {
+          addEvent(box, item.event);
+          const p = progressFor(item.event); if (p) typing.textContent = p;
+        } else if (item.kind === "error") {
+          throw new Error(item.detail);
+        } else if (item.kind === "done") {
+          done = item;
+        }
+      }
+    }
+    if (!done) throw new Error("The connection closed before the reply arrived.");
+    typing.remove();
+    addMsg("bot", done.reply, `${done.route}${done.ticket_id ? " · ticket #" + done.ticket_id : ""} · ${((performance.now() - t0) / 1000).toFixed(1)} s`);
+    if (done.ticket_id) loadTickets();
   } catch (err) {
+    typing.remove();
     addMsg("bot", "⚠ " + err.message, "error");
   } finally {
+    finishTurn(box, performance.now() - t0);
     $("send").disabled = false;
     $("input").focus();
   }

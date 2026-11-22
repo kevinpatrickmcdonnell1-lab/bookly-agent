@@ -44,6 +44,8 @@ def fmt_event(e: dict) -> str:
     elif t == "tool_error":
         body = f"{p.get('tool', '')} error: {p.get('result', p.get('error'))}"
         color = RED
+    elif t == "output_check" and p.get("skipped"):
+        body, color = f"supervisor skipped: {p['reason']}", DIM
     elif t == "output_check":
         body = f"{p.get('stage')}: " + ("ok" if p.get("ok", p.get("grounded")) else f"FAILED {p.get('issues') or p.get('unsupported')}")
         color = DIM if p.get("ok", p.get("grounded")) else RED

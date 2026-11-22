@@ -15,7 +15,7 @@ import asyncio
 import json
 import re
 from dataclasses import dataclass, field
-from typing import Any
+from typing import Any, Callable
 
 from bookly.agent import guards, router
 from bookly.agent.state import Session, TurnContext
@@ -32,6 +32,39 @@ AOPS = {p.stem: p.read_text() for p in (PKG / "aops").glob("*.md")}
 SAFE_REPLY = ("I'm sorry, I want to be sure I give you accurate information, and I'm not able to do that right "
               "now. Would you like me to connect you with one of our booksellers?")
 _EMAIL = re.compile(r"[\w.+-]+@[\w-]+\.[\w.-]+")
+
+
+# Tools whose results come straight from the policy engine. When one returned a
+# decision this turn, the reply's policy statements are backed by code, so the
+# Haiku supervisor (about 1.1 s) is skipped. Answers from search_policy are
+# model paraphrases of policy text, so they are always supervised.
+ENGINE_TOOLS = frozenset({"check_return_eligibility", "propose_return", "initiate_return"})
+
+
+def supervisor_skip_reason(s: Session) -> str | None:
+    if "search_policy" in s.ctx.tools_ok:
+        return None
+    engine = [t for t in s.ctx.tools_ok if t in ENGINE_TOOLS]
+    if engine:
+        return f"policy statements backed by the policy engine this turn ({', '.join(dict.fromkeys(engine))})"
+    return None
+
+
+class _EventSink(list):
+    """The turn's event list; also forwards each event to an optional callback so
+    the web UI can show progress while the turn is still running."""
+
+    def __init__(self, on_event: Callable[[dict], None] | None):
+        super().__init__()
+        self._on_event = on_event
+
+    def append(self, event: dict) -> None:  # type: ignore[override]
+        super().append(event)
+        if self._on_event is not None:
+            try:
+                self._on_event(event)
+            except Exception:  # noqa: BLE001 - a broken listener must never break the turn
+                pass
 
 
 @dataclass
@@ -123,14 +156,15 @@ class Agent:
                 content: list[dict] | None = None) -> TurnResult:
         s.messages.append({"role": "assistant", "content": content or [{"type": "text", "text": reply}]})
         self._event(s, events, "reply", "reply", {"text": reply, "route": route, "ticket_id": ticket_id})
-        return TurnResult(reply=reply, route=route, events=events, ticket_id=ticket_id)
+        return TurnResult(reply=reply, route=route, events=list(events), ticket_id=ticket_id)
 
     # ---- the turn ----------------------------------------------------------------
 
-    async def run_turn(self, s: Session, text: str) -> TurnResult:
+    async def run_turn(self, s: Session, text: str,
+                       on_event: Callable[[dict], None] | None = None) -> TurnResult:
         s.turn += 1
         s.ctx = TurnContext()
-        events: list[dict] = []
+        events: list[dict] = _EventSink(on_event)
         st = self.settings
         rules = router.rule_signals(text)
         guard_rules = guards.guard_rules(text)
@@ -280,7 +314,11 @@ class Agent:
                               if b.get("type") == "text"]
             check = guards.code_checks(reply, s, customer_texts)
             sup_payload = None
-            if check.ok and check.needs_supervisor:
+            skip_reason = supervisor_skip_reason(s)
+            if check.ok and check.needs_supervisor and skip_reason:
+                self._event(s, events, "output_guard", "output_check",
+                            {"stage": "supervisor", "skipped": True, "reason": skip_reason})
+            elif check.ok and check.needs_supervisor:
                 try:
                     sup, sup_call = await guards.supervise(self.llm, st.supervisor_model, reply, s, self.kb)
                     sup_payload = sup.model_dump()

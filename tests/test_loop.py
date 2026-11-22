@@ -216,3 +216,47 @@ def test_events_mask_emails(agent, llm, repo):
     run(agent, s, "4821 chloe.park@example.com")
     raw = json.dumps(repo.events(s.id), ensure_ascii=False)
     assert "chloe.park@example.com" not in raw and "c•••@example.com" in raw
+
+
+def test_supervisor_skipped_when_engine_backed_this_turn(agent, llm):
+    s = Session()
+    llm.supervisor = {"grounded": False, "unsupported": ["would fail if consulted"]}
+    llm.routes.append(route(["return_refund"]))
+    llm.replies += [
+        [tool("verify_customer", order_number="4813", email="ben.okafor@example.com")],
+        [tool("check_return_eligibility", item_id="I-4813-1", reason="changed_mind", is_unread=True)],
+        [text("It's outside our 30-day return window, so I can't return it. Want me to ask a bookseller?")],
+    ]
+    r = run(agent, s, "4813 ben.okafor@example.com, return The Covenant of Water, unread")
+    assert r.reply.startswith("It's outside")
+    sup = [e["payload"] for e in r.events if e["type"] == "output_check" and e["payload"].get("stage") == "supervisor"]
+    assert sup == [{"stage": "supervisor", "skipped": True,
+                    "reason": "policy statements backed by the policy engine this turn (check_return_eligibility)"}]
+
+
+def test_supervisor_still_runs_on_search_policy_answers(agent, llm):
+    s = Session()
+    llm.supervisor = {"grounded": False, "unsupported": ["made-up rule"]}
+    llm.routes.append(route(["policy_question"]))
+    llm.replies += [[tool("search_policy", query="return window")],
+                    [text("We have a 90-day return window.")], [text("Let me get a bookseller to confirm.")]]
+    r = run(agent, s, "how long can I return?")
+    assert r.reply == "Let me get a bookseller to confirm."
+
+
+def test_on_event_streams_every_event_in_order(agent, llm):
+    s = Session()
+    seen = []
+    llm.routes.append(route(["policy_question"]))
+    llm.replies += [[text("Happy to help, what would you like to know?")]]
+    r = asyncio.run(agent.run_turn(s, "hi", on_event=seen.append))
+    assert [e["id"] for e in seen] == [e["id"] for e in r.events] and seen[-1]["type"] == "reply"
+
+
+def test_broken_listener_does_not_break_the_turn(agent, llm):
+    def boom(e):
+        raise RuntimeError("listener down")
+    llm.routes.append(route(["policy_question"]))
+    llm.replies += [[text("Happy to help, what would you like to know?")]]
+    r = asyncio.run(agent.run_turn(Session(), "hi", on_event=boom))
+    assert r.reply.startswith("Happy to help")

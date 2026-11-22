@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from bookly.agent.state import Session
 from bookly.tools.common import ToolDeps, ToolError, mask_email
+from bookly.tools.orders import recent_orders_summary
 
 FAILED = ToolError("verification_failed",
                    "We couldn't match that order number and email.",
@@ -21,7 +22,9 @@ def verify_customer(s: Session, args: dict, deps: ToolDeps) -> dict:
                         "Explain that you can help with one account per conversation.")
     s.verified_customer_id = customer["id"]
     return {"verified": True, "customer_id": customer["id"], "first_name": customer["name"].split()[0],
-            "email_on_file": mask_email(customer["email"])}
+            "email_on_file": mask_email(customer["email"]),
+            **recent_orders_summary(deps, customer["id"]),
+            "note": "recent_orders is a summary. Call lookup_orders only for older orders or gift notes."}
 
 
 def send_password_reset(s: Session, args: dict, deps: ToolDeps) -> dict:

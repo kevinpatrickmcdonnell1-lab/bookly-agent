@@ -25,7 +25,8 @@ class TurnContext:
     frustration: str = "low"
     gate_denials: int = 0
     tool_rounds: int = 0
-    tools_called: list[str] = field(default_factory=list)
+    tools_called: list[str] = field(default_factory=list)   # passed the gate
+    tools_ok: list[str] = field(default_factory=list)       # also returned a result without error
 
 
 @dataclass

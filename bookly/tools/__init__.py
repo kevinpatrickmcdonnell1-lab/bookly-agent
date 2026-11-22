@@ -44,12 +44,12 @@ _STR = {"type": "string"}
 TOOL_SCHEMAS: list[dict] = [
     {"name": "verify_customer",
      "description": "Confirm who the customer is from an order number and the email on that order. Use before "
-                    "any account data. Max 3 attempts per conversation.",
+                    "any account data. Max 3 attempts per conversation. On success it also returns a summary of "
+                    "their recent orders with item_ids, so you usually don't need lookup_orders afterwards.",
      "input_schema": _schema({"order_number": _STR, "email": _STR})},
     {"name": "lookup_orders",
-     "description": "List the verified customer's recent orders with item_ids, staff-pick flags and delivery "
-                    "dates. Use to find which item the customer means, and to spot when more than one order "
-                    "could match.",
+     "description": "Full detail of the verified customer's orders, including gift notes and orders older than "
+                    "the summary verify_customer returned. Only needed when that summary isn't enough.",
      "input_schema": _schema({})},
     {"name": "get_order_status",
      "description": "Get status, carrier, tracking number and delivery estimate for one of the verified "
@@ -57,8 +57,8 @@ TOOL_SCHEMAS: list[dict] = [
      "input_schema": _schema({"order_number": _STR})},
     {"name": "search_policy",
      "description": "Search Bookly's policy docs (returns, ebooks, staff-pick guarantee, shipping, store credit, "
-                    "account, hours). Use for any general policy question. Answer only from the results and "
-                    "cite the policy_ref.",
+                    "account, hours). Use for any general policy question. Answer only from the results, naming "
+                    "the policy in plain words (never the policy_ref id).",
      "input_schema": _schema({"query": _STR})},
     {"name": "check_return_eligibility",
      "description": "Ask the policy engine whether an item can be returned and for what. Use once you know the "
@@ -136,6 +136,7 @@ def run_tool(s: Session, name: str, args: dict, deps: ToolDeps) -> ToolOutcome:
             "error": "system_error", "code": type(exc).__name__, "message": "The tool failed unexpectedly.",
             "how_to_recover": "Apologise briefly and try once more, or offer a bookseller."}, verdict)
     s.consecutive_tool_errors = 0
+    s.ctx.tools_ok.append(name)
     s.grounding.append(json.dumps(result, default=str))
     if isinstance(result, dict) and result.get("policy_ref"):
         s.note_policy_ref(result["policy_ref"])
