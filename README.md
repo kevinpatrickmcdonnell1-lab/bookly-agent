@@ -6,9 +6,7 @@ A customer support agent for Bookly, a fictional online bookstore. It handles or
 
 ## Run it
 
-
-## Fastest: let Claude Code set it up
-
+Fastest: 
 Open [Claude Code](https://claude.com/claude-code) in an empty folder and paste:
 
 ```
@@ -33,7 +31,7 @@ make test                 # 199 tests, no key needed
 `make chat` runs the same agent in the terminal. `make reset` (or **Reset demo data** in the UI) restores a clean state.
 
 
-Optional voice: add `ELEVENLABS_API_KEY` and a mic button appears ([docs/VOICE.md](docs/VOICE.md)).
+Optional voice: add `ELEVENLABS_API_KEY` to .env file and a mic button appears ([docs/VOICE.md](docs/VOICE.md)).
 
 ## What to try
 
