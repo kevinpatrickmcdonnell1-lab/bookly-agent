@@ -14,6 +14,7 @@ import argparse
 import asyncio
 import json
 import statistics
+import subprocess
 import tempfile
 import time
 from dataclasses import dataclass, field, replace
@@ -257,7 +258,27 @@ def pct(values: list[float], q: float) -> float:
     return values[k]
 
 
-def summarize(records: list[RunRecord], scenarios: list[dict], label: str) -> dict:
+def _git(*args: str) -> str | None:
+    try:
+        out = subprocess.run(["git", "-C", str(ROOT), *args], capture_output=True, text=True, timeout=10)
+    except (OSError, subprocess.SubprocessError):
+        return None
+    return out.stdout if out.returncode == 0 else None
+
+
+def git_provenance() -> dict:
+    """Which code produced a run. None when git isn't available, rather than failing the run."""
+    head = _git("rev-parse", "HEAD")
+    status = _git("status", "--porcelain")
+    dirty = None
+    if status is not None:
+        paths = [line[3:].split(" -> ")[-1].strip('"') for line in status.splitlines() if line.strip()]
+        dirty = any(not p.startswith("evals/results/") for p in paths)
+    return {"git_commit": head.strip() if head else None, "git_dirty": dirty}
+
+
+def summarize(records: list[RunRecord], scenarios: list[dict], label: str,
+              executor_preset: str | None = None) -> dict:
     by = {s["id"]: [r for r in records if r.scenario == s["id"]] for s in scenarios}
     turn_lat = [l for r in records for l in r.turn_latency_ms]
     triggers: dict[str, int] = {}
@@ -271,6 +292,8 @@ def summarize(records: list[RunRecord], scenarios: list[dict], label: str) -> di
             rubric[k] = round(statistics.mean(j[k] for j in judged), 2)
     return {
         "label": label,
+        **git_provenance(),
+        "executor_preset": executor_preset,
         "scenarios": {sid: {"passed": sum(r.passed for r in rs), "runs": len(rs),
                             "failures": sorted({f for r in rs for f in r.failures})} for sid, rs in by.items()},
         "pass_rate": round(sum(r.passed for r in records) / max(1, len(records)), 3),
@@ -341,7 +364,7 @@ def main() -> None:
             print(f"\n--- {r.scenario} run {r.run}: {'PASS' if r.passed else 'FAIL ' + '; '.join(r.failures)}")
             for m in r.transcript:
                 print(f"  {m['who']:>8}: {m['text']}")
-    summary = summarize(records, scenarios, label)
+    summary = summarize(records, scenarios, label, settings.executor_preset)
     print_report(summary)
     print(f"\nSaved {save(records, summary).relative_to(ROOT)} ({time.time() - t0:.0f}s)")
 
