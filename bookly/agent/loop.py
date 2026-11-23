@@ -338,9 +338,15 @@ class Agent:
                             "unsupported policy claim"]
                     self._event(s, events, "output_guard", "output_check",
                                 {"stage": "supervisor", **sup_payload}, sup_call)
-                except Exception as exc:  # noqa: BLE001 - supervisor down: code checks still passed
+                except Exception as exc:  # noqa: BLE001 - supervisor down
                     self._event(s, events, "output_guard", "output_check",
                                 {"stage": "supervisor", "error": repr(exc)})
+                    # Code checks passed, but a customer-typed amount is only allowed once the supervisor has
+                    # confirmed it isn't promised. Without that check it can't go out: fail safe, not open.
+                    if check.echoed_amounts:
+                        check.ok = False
+                        check.issues.append("customer-quoted amount could not be checked: "
+                                            + ", ".join(check.echoed_amounts))
             self._event(s, events, "output_guard", "output_check", {
                 "stage": "code", "ok": check.ok, "issues": check.issues, "checked": check.checked,
                 "supervisor_used": sup_payload is not None, "regenerated": regenerated})

@@ -53,6 +53,8 @@ class ScriptedLLM:
         elif system == ROUTER_PROMPT:
             data = self.routes.pop(0)
         elif system == SUPERVISOR_PROMPT:
+            if isinstance(self.supervisor, Exception):
+                raise self.supervisor
             data = self.supervisor
         else:
             raise AssertionError("unexpected classifier")
@@ -276,3 +278,33 @@ def test_customer_amount_echo_forces_supervisor_even_when_engine_backed(agent, l
     assert r.reply == "I can refund the $20.00 you paid for it. Shall I go ahead?"
     sup = [e["payload"] for e in r.events if e["type"] == "output_check" and e["payload"].get("stage") == "supervisor"]
     assert sup[0]["grounded"] is False and not sup[0].get("skipped")
+
+
+def test_supervisor_outage_blocks_customer_amount_echo(agent, llm):
+    # Fail safe: an echoed customer amount needs the supervisor, so an outage blocks it.
+    s = Session()
+    llm.supervisor = RuntimeError("overloaded")
+    llm.routes.append(route(["return_refund"]))
+    llm.replies += [
+        [tool("verify_customer", order_number="4822", email="chloe.park@example.com")],
+        [tool("check_return_eligibility", item_id="I-4822-1", reason="damaged", is_unread=True)],
+        [text("Sure, your $35 is on its way, which covers the $20.00 you paid.")],
+        [text("I can refund the $20.00 you paid for it. Shall I go ahead?")],
+    ]
+    r = run(agent, s, "Order 4822, chloe.park@example.com. Braiding Sweetgrass arrived damaged. I want $35 back.")
+    assert r.reply == "I can refund the $20.00 you paid for it. Shall I go ahead?"
+    code = [e["payload"] for e in r.events if e["type"] == "output_check" and e["payload"].get("stage") == "code"]
+    assert code[0]["ok"] is False and any("could not be checked" in i for i in code[0]["issues"])
+
+
+def test_supervisor_outage_without_echo_still_sends(agent, llm):
+    # Code checks passed and nothing waited on the supervisor: an outage doesn't block the reply.
+    s = Session()
+    llm.supervisor = RuntimeError("overloaded")
+    llm.routes.append(route(["policy_question"]))
+    llm.replies += [[tool("search_policy", query="return window")],
+                    [text("Unread books can be returned within 30 days of delivery.")]]
+    r = run(agent, s, "how long do I have to return a book?")
+    assert r.reply == "Unread books can be returned within 30 days of delivery."
+    assert any(e["payload"].get("error") for e in r.events
+               if e["type"] == "output_check" and e["payload"].get("stage") == "supervisor")

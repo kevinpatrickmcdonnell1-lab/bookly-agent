@@ -136,6 +136,32 @@ def test_resolve_focus_finds_recommendation():
     assert hit["title"] == "The Remains of the Day" and hit["source"] == "recommendation"
 
 
+def test_resolve_focus_asks_when_two_titles_match_equally():
+    # "the Day book" fits both: no match, so the clarifying question isn't suppressed.
+    s = _focused()
+    s.set_focus(title="The Remains of the Day", order_number="4842", item_id="I-4842-1", source="order_status")
+    s.set_focus(title="The Day of the Jackal", order_number="4843", item_id="I-4843-1", source="order_status")
+    assert resolve_focus("the day book", s) is None
+    o = out(["return_refund"])
+    o.entities = Entities(item_hint="the day book")
+    assert focus_note(o, s) is None
+
+
+def test_resolve_focus_prefers_the_closer_title():
+    s = _focused()
+    s.set_focus(title="The Remains of the Day", order_number="4842", item_id="I-4842-1", source="order_status")
+    s.set_focus(title="The Day of the Jackal", order_number="4843", item_id="I-4843-1", source="order_status")
+    assert resolve_focus("remains of the day", s)["order_number"] == "4842"
+
+
+def test_resolve_focus_same_title_twice_is_one_match():
+    s = _focused()
+    s.set_focus(title="The Remains of the Day", order_number="4842", item_id="I-4842-1", source="order_status")
+    s.recommended = {"title": "The Remains of the Day", "author": "Kazuo Ishiguro", "staff_pick": True}
+    hit = resolve_focus("remains", s)
+    assert hit["order_number"] == "4842"
+
+
 def test_router_context_carries_focus_and_earlier_messages():
     s = _focused()
     s.messages = [{"role": "user", "content": [{"type": "text", "text": "<customer_message>Where's my order?"

@@ -155,17 +155,26 @@ def _title_words(title: str) -> set[str]:
 
 def resolve_focus(hint: str | None, s: Session) -> dict | None:
     """Match the router's item_hint to something already discussed. Code, not the model,
-    decides the match: the hint must share a title word with a recorded item."""
+    decides the match. The item sharing the most title words with the hint wins; if two
+    different titles tie, there's no match, so the executor asks which one they mean."""
     if not hint:
         return None
     words = _title_words(hint)
     candidates = [*reversed(s.mentioned)]
     if s.recommended:
         candidates.append({**s.recommended, "source": "recommendation"})
+    best: dict[str, tuple[int, dict]] = {}   # title -> (overlap, newest entry for that title)
     for c in candidates:
-        if c.get("title") and words & _title_words(c["title"]):
-            return c
-    return None
+        title = c.get("title")
+        overlap = len(words & _title_words(title)) if title else 0
+        if overlap and title not in best:
+            best[title] = (overlap, c)
+    if not best:
+        return None
+    ranked = sorted(best.values(), key=lambda v: v[0], reverse=True)
+    if len(ranked) > 1 and ranked[0][0] == ranked[1][0]:
+        return None
+    return ranked[0][1]
 
 
 def focus_note(out: RouterOutput | None, s: Session) -> str | None:
