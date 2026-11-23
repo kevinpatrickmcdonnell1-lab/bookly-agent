@@ -70,19 +70,20 @@ The loop is [`bookly/agent/loop.py`](bookly/agent/loop.py), on the raw Anthropic
 
 ## Results
 
-29 scripted scenarios × 3 runs per executor, 2026-11-22. Evals assert on database rows and trace events, not wording. Refund leakage was $0.00 in every run.
+31 scripted scenarios × 3 runs per executor, 2026-11-22/23. Evals assert on database rows and trace events, not wording. Refund leakage was $0.00 in every run.
 
 | Executor | Passed | p50 / p95 turn latency | Cost per conversation |
 | --- | --- | --- | --- |
-| Haiku 5.5 | 87/87 | 4.7 s / 8.1 s | $0.0019 |
-| Sonnet 5.5 (default) | 86/87 | 5.3 s / 10.4 s | $0.0167 |
+| Haiku 5.5 | 92/93 | 4.8 s / 8.4 s | $0.0021 |
+| Sonnet 5.5 (default) | 92/93 | 5.0 s / 9.7 s | $0.0191 |
 
-87/87 still allows a true failure rate of up to about 4%. [docs/EVALS.md](docs/EVALS.md) has the suites, the bugs the evals found, the hybrid setup and the latency work.
+92/93 still allows a true failure rate of up to about 6%. [docs/EVALS.md](docs/EVALS.md) has the suites, the bugs the evals found, the hybrid setup and the latency work.
 
 ## Limitations
 
 - **Damage claims are self-reported.** "It arrived damaged" gets a refund with no evidence. Production needs a photo, a per-customer limit or a re-send first.
 - **Authentication:** order number + email isn't enough for account actions. Production needs a signed-in session or a one-time code before any write.
 - **Output guard:** checks every amount, date and tracking number came from a tool, but not that it's attached to the right item.
-- **Refund timing:** policy search misses "5 to 7 business days" for "how long do refunds take?", so the supervisor blocks the claim and the customer gets a safe fallback.
+- **Refund timing:** policy search used to miss "5 to 7 business days" for "how long do refunds take?". A retitled section and a search stop word fixed it in every run since, but it isn't its own KB section yet.
+- **The supervisor is over-strict about books the customer doesn't own.** It blocked a true "that's a staff pick" about a recommended book in 1 of 3 runs with the Haiku and hybrid executors, and the customer got the fallback reply. It never let a wrong claim through, so I've left it strict.
 - **Evals:** scripted customers, 3 runs per scenario. Real customers are messier.
