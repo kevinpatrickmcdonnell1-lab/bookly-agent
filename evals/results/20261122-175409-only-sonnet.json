@@ -1,0 +1,1901 @@
+{
+  "summary": {
+    "label": "only-sonnet",
+    "scenarios": {
+      "ebook_in_mixed_order": {
+        "passed": 3,
+        "runs": 3,
+        "failures": []
+      }
+    },
+    "pass_rate": 1.0,
+    "all_runs_pass": 1,
+    "scenario_count": 1,
+    "refund_leakage_cents": 0,
+    "escalations_by_trigger": {},
+    "conversations_escalated": 0.0,
+    "turn_latency_ms": {
+      "p50": 4823,
+      "p95": 7334
+    },
+    "cost_per_conversation_usd": 0.01616,
+    "tone_rubric": {}
+  },
+  "runs": [
+    {
+      "scenario": "ebook_in_mixed_order",
+      "run": 1,
+      "passed": true,
+      "failures": [],
+      "replies": [
+        "Thanks, Elena. Project Hail Mary is the ebook on your account, and it's eligible under our 30-day return window. We'd refund $14.99 to your original payment method, which takes 5 to 7 business days, and we'd email you a prepaid return label. Would you like me to go ahead?",
+        "All done, Elena. Your $14.99 refund for Project Hail Mary is on its way to your original payment method and should arrive in 5 to 7 business days. We'll email the prepaid return label too.\n\nIf you're looking for a cozy next read, one of our staff picks is A Psalm for the Wild-Built by Becky Chambers. It's about a tea monk and a robot asking what people really need."
+      ],
+      "transcript": [
+        {
+          "who": "customer",
+          "text": "Order 4843, elena.vasquez@example.com. Can I get a refund for the ebook? I never downloaded it."
+        },
+        {
+          "who": "bookly",
+          "text": "Thanks, Elena. Project Hail Mary is the ebook on your account, and it's eligible under our 30-day return window. We'd refund $14.99 to your original payment method, which takes 5 to 7 business days, and we'd email you a prepaid return label. Would you like me to go ahead?"
+        },
+        {
+          "who": "customer",
+          "text": "Yes, go ahead."
+        },
+        {
+          "who": "bookly",
+          "text": "All done, Elena. Your $14.99 refund for Project Hail Mary is on its way to your original payment method and should arrive in 5 to 7 business days. We'll email the prepaid return label too.\n\nIf you're looking for a cozy next read, one of our staff picks is A Psalm for the Wild-Built by Becky Chambers. It's about a tea monk and a robot asking what people really need."
+        }
+      ],
+      "turn_latency_ms": [
+        7254,
+        4823
+      ],
+      "cost_usd": 0.016725999999999998,
+      "tickets": [],
+      "returns": [
+        {
+          "id": 1,
+          "item_id": "I-4843-2",
+          "customer_id": "C-1105",
+          "resolution": "refund",
+          "amount_cents": 1499,
+          "reason": "other",
+          "policy_ref": "returns#window",
+          "idempotency_key": "29889306995e:I-4843-2",
+          "created_at": "2026-11-22T22:54:08+00:00"
+        }
+      ],
+      "leakage_cents": 0,
+      "error": null,
+      "judge": null,
+      "events": [
+        {
+          "id": 1,
+          "session_id": "29889306995e",
+          "turn": 1,
+          "stage": "input_guard",
+          "type": "input_guard",
+          "payload": {
+            "injection": false,
+            "abuse": false,
+            "sensitive": "none",
+            "reason": "Ordinary refund request for an undownloaded ebook with no injection, abuse, or sensitive content.",
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1045,
+          "input_tokens": 654,
+          "output_tokens": 64,
+          "cost_usd": 9.7e-05,
+          "created_at": "2026-11-22T22:53:59+00:00"
+        },
+        {
+          "id": 2,
+          "session_id": "29889306995e",
+          "turn": 1,
+          "stage": "route",
+          "type": "route",
+          "payload": {
+            "aop": "returns",
+            "mode": "normal",
+            "why": "intent return_refund (0.90)",
+            "intents": [
+              "return_refund"
+            ],
+            "confidence": 0.9,
+            "confirmation": "none",
+            "frustration": "low",
+            "write_tools": [
+              "initiate_return",
+              "propose_return"
+            ],
+            "queued": [],
+            "escalate": null,
+            "rules": {
+              "human_request": false
+            },
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1093,
+          "input_tokens": 1699,
+          "output_tokens": 118,
+          "cost_usd": 0.000229,
+          "created_at": "2026-11-22T22:53:59+00:00"
+        },
+        {
+          "id": 3,
+          "session_id": "29889306995e",
+          "turn": 1,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "tool_use",
+            "tool_calls": [
+              "verify_customer"
+            ],
+            "cache_read": 4510,
+            "cache_write": 0,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1574,
+          "input_tokens": 2,
+          "output_tokens": 83,
+          "cost_usd": 0.001285,
+          "created_at": "2026-11-22T22:54:00+00:00"
+        },
+        {
+          "id": 4,
+          "session_id": "29889306995e",
+          "turn": 1,
+          "stage": "tool",
+          "type": "tool_call",
+          "payload": {
+            "tool": "verify_customer",
+            "args": {
+              "order_number": "4843",
+              "email": "e\u2022\u2022\u2022@example.com"
+            },
+            "write": false,
+            "verdict": "ok",
+            "result": {
+              "verified": true,
+              "customer_id": "C-1105",
+              "first_name": "Elena",
+              "email_on_file": "e\u2022\u2022\u2022@example.com",
+              "recent_orders": [
+                {
+                  "order_number": "4841",
+                  "status": "on its way",
+                  "placed_on": "November 20",
+                  "delivered_on": null,
+                  "items": [
+                    {
+                      "item_id": "I-4841-1",
+                      "title": "Station Eleven",
+                      "format": "paperback",
+                      "staff_pick": true,
+                      "already_returned": false
+                    },
+                    {
+                      "item_id": "I-4841-2",
+                      "title": "Circe",
+                      "format": "paperback",
+                      "staff_pick": true,
+                      "already_returned": false
+                    }
+                  ]
+                },
+                {
+                  "order_number": "4842",
+                  "status": "on its way",
+                  "placed_on": "November 18",
+                  "delivered_on": null,
+                  "items": [
+                    {
+                      "item_id": "I-4842-1",
+                      "title": "The Remains of the Day",
+                      "format": "paperback",
+                      "staff_pick": true,
+                      "already_returned": false
+                    }
+                  ]
+                },
+                {
+                  "order_number": "4843",
+                  "status": "delivered",
+                  "placed_on": "November 14",
+                  "delivered_on": "November 16",
+                  "items": [
+                    {
+                      "item_id": "I-4843-1",
+                      "title": "Piranesi",
+                      "format": "paperback",
+                      "staff_pick": false,
+                      "already_returned": false
+                    },
+                    {
+                      "item_id": "I-4843-2",
+                      "title": "Project Hail Mary",
+                      "format": "ebook",
+                      "staff_pick": false,
+                      "already_returned": false
+                    }
+                  ]
+                }
+              ],
+              "more_orders": 0,
+              "note": "recent_orders is a summary. Call lookup_orders only for older orders or gift notes."
+            }
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T22:54:00+00:00"
+        },
+        {
+          "id": 5,
+          "session_id": "29889306995e",
+          "turn": 1,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "tool_use",
+            "tool_calls": [
+              "check_return_eligibility"
+            ],
+            "cache_read": 5094,
+            "cache_write": 0,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1725,
+          "input_tokens": 2,
+          "output_tokens": 135,
+          "cost_usd": 0.001863,
+          "created_at": "2026-11-22T22:54:02+00:00"
+        },
+        {
+          "id": 6,
+          "session_id": "29889306995e",
+          "turn": 1,
+          "stage": "tool",
+          "type": "tool_call",
+          "payload": {
+            "tool": "check_return_eligibility",
+            "args": {
+              "item_id": "I-4843-2",
+              "reason": "other",
+              "is_unread": false
+            },
+            "write": false,
+            "verdict": "ok",
+            "result": {
+              "item_id": "I-4843-2",
+              "title": "Project Hail Mary",
+              "eligible": true,
+              "resolution": "refund",
+              "amount_display": "$14.99",
+              "requires_approval": false,
+              "policy_ref": "returns#window",
+              "explanation": "Unread books can be returned for a refund within 30 days of delivery.",
+              "days_since_delivery": 6,
+              "next_step": "Call propose_return with this resolution."
+            }
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T22:54:02+00:00"
+        },
+        {
+          "id": 7,
+          "session_id": "29889306995e",
+          "turn": 1,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "tool_use",
+            "tool_calls": [
+              "propose_return"
+            ],
+            "cache_read": 5094,
+            "cache_write": 277,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1573,
+          "input_tokens": 2,
+          "output_tokens": 79,
+          "cost_usd": 0.001996,
+          "created_at": "2026-11-22T22:54:03+00:00"
+        },
+        {
+          "id": 8,
+          "session_id": "29889306995e",
+          "turn": 1,
+          "stage": "tool",
+          "type": "tool_call",
+          "payload": {
+            "tool": "propose_return",
+            "args": {
+              "item_id": "I-4843-2",
+              "resolution": "refund"
+            },
+            "write": false,
+            "verdict": "ok",
+            "result": {
+              "proposal": "Refund $14.99 for Project Hail Mary to the original payment method, which takes 5 to 7 business days. We'll email a prepaid return label.",
+              "amount_display": "$14.99",
+              "next_step": "Tell the customer exactly this and ask if they'd like to go ahead. Don't call initiate_return until they reply yes."
+            }
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T22:54:03+00:00"
+        },
+        {
+          "id": 9,
+          "session_id": "29889306995e",
+          "turn": 1,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "end_turn",
+            "tool_calls": [],
+            "cache_read": 5371,
+            "cache_write": 200,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1241,
+          "input_tokens": 2,
+          "output_tokens": 98,
+          "cost_usd": 0.002021,
+          "created_at": "2026-11-22T22:54:05+00:00"
+        },
+        {
+          "id": 10,
+          "session_id": "29889306995e",
+          "turn": 1,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "supervisor",
+            "skipped": true,
+            "reason": "policy statements backed by the policy engine this turn (check_return_eligibility, propose_return)"
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T22:54:05+00:00"
+        },
+        {
+          "id": 11,
+          "session_id": "29889306995e",
+          "turn": 1,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "code",
+            "ok": true,
+            "issues": [],
+            "checked": {
+              "amounts": [
+                "$14.99"
+              ],
+              "dates": [],
+              "tracking": []
+            },
+            "supervisor_used": false,
+            "regenerated": false
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T22:54:05+00:00"
+        },
+        {
+          "id": 12,
+          "session_id": "29889306995e",
+          "turn": 1,
+          "stage": "reply",
+          "type": "reply",
+          "payload": {
+            "text": "Thanks, Elena. Project Hail Mary is the ebook on your account, and it's eligible under our 30-day return window. We'd refund $14.99 to your original payment method, which takes 5 to 7 business days, and we'd email you a prepaid return label. Would you like me to go ahead?",
+            "route": "returns",
+            "ticket_id": null
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T22:54:05+00:00"
+        },
+        {
+          "id": 13,
+          "session_id": "29889306995e",
+          "turn": 2,
+          "stage": "input_guard",
+          "type": "input_guard",
+          "payload": {
+            "injection": false,
+            "abuse": false,
+            "sensitive": "none",
+            "reason": "The message is a short affirmative reply with no injection, abuse, or sensitive content.",
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1219,
+          "input_tokens": 624,
+          "output_tokens": 57,
+          "cost_usd": 9.1e-05,
+          "created_at": "2026-11-22T22:54:06+00:00"
+        },
+        {
+          "id": 14,
+          "session_id": "29889306995e",
+          "turn": 2,
+          "stage": "route",
+          "type": "route",
+          "payload": {
+            "aop": "returns",
+            "mode": "normal",
+            "why": "answering pending proposal (confirmation=yes)",
+            "intents": [
+              "return_refund"
+            ],
+            "confidence": 0.97,
+            "confirmation": "yes",
+            "frustration": "low",
+            "write_tools": [
+              "initiate_return",
+              "propose_return"
+            ],
+            "queued": [],
+            "escalate": null,
+            "rules": {
+              "human_request": false
+            },
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1067,
+          "input_tokens": 1768,
+          "output_tokens": 116,
+          "cost_usd": 0.000235,
+          "created_at": "2026-11-22T22:54:06+00:00"
+        },
+        {
+          "id": 15,
+          "session_id": "29889306995e",
+          "turn": 2,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "tool_use",
+            "tool_calls": [
+              "initiate_return",
+              "get_recommendation"
+            ],
+            "cache_read": 5571,
+            "cache_write": 1740,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 2003,
+          "input_tokens": 2,
+          "output_tokens": 106,
+          "cost_usd": 0.005971,
+          "created_at": "2026-11-22T22:54:08+00:00"
+        },
+        {
+          "id": 16,
+          "session_id": "29889306995e",
+          "turn": 2,
+          "stage": "tool",
+          "type": "tool_call",
+          "payload": {
+            "tool": "initiate_return",
+            "args": {
+              "item_id": "I-4843-2",
+              "resolution": "refund"
+            },
+            "write": true,
+            "verdict": "ok",
+            "result": {
+              "return_id": 1,
+              "status": "completed",
+              "resolution": "refund",
+              "amount_display": "$14.99",
+              "title": "Project Hail Mary",
+              "what_happens_next": "Refund $14.99 for Project Hail Mary to the original payment method, which takes 5 to 7 business days. We'll email a prepaid return label."
+            }
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T22:54:08+00:00"
+        },
+        {
+          "id": 17,
+          "session_id": "29889306995e",
+          "turn": 2,
+          "stage": "tool",
+          "type": "tool_call",
+          "payload": {
+            "tool": "get_recommendation",
+            "args": {},
+            "write": false,
+            "verdict": "ok",
+            "result": {
+              "title": "A Psalm for the Wild-Built",
+              "author": "Becky Chambers",
+              "why": "A tea monk and a robot ask what people need.",
+              "price": "$15.00",
+              "staff_pick": true,
+              "note": "Offer this once, lightly. Don't push."
+            }
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T22:54:08+00:00"
+        },
+        {
+          "id": 18,
+          "session_id": "29889306995e",
+          "turn": 2,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "end_turn",
+            "tool_calls": [],
+            "cache_read": 7311,
+            "cache_write": 365,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1586,
+          "input_tokens": 2,
+          "output_tokens": 129,
+          "cost_usd": 0.002938,
+          "created_at": "2026-11-22T22:54:09+00:00"
+        },
+        {
+          "id": 19,
+          "session_id": "29889306995e",
+          "turn": 2,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "supervisor",
+            "skipped": true,
+            "reason": "policy statements backed by the policy engine this turn (initiate_return)"
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T22:54:09+00:00"
+        },
+        {
+          "id": 20,
+          "session_id": "29889306995e",
+          "turn": 2,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "code",
+            "ok": true,
+            "issues": [],
+            "checked": {
+              "amounts": [
+                "$14.99"
+              ],
+              "dates": [],
+              "tracking": []
+            },
+            "supervisor_used": false,
+            "regenerated": false
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T22:54:09+00:00"
+        },
+        {
+          "id": 21,
+          "session_id": "29889306995e",
+          "turn": 2,
+          "stage": "reply",
+          "type": "reply",
+          "payload": {
+            "text": "All done, Elena. Your $14.99 refund for Project Hail Mary is on its way to your original payment method and should arrive in 5 to 7 business days. We'll email the prepaid return label too.\n\nIf you're looking for a cozy next read, one of our staff picks is A Psalm for the Wild-Built by Becky Chambers. It's about a tea monk and a robot asking what people really need.",
+            "route": "returns",
+            "ticket_id": null
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T22:54:09+00:00"
+        }
+      ]
+    },
+    {
+      "scenario": "ebook_in_mixed_order",
+      "run": 2,
+      "passed": true,
+      "failures": [],
+      "replies": [
+        "Thanks, Elena. Project Hail Mary is the ebook on your account, and it's within our 30-day return window. I can refund $14.99 to your original payment method, which takes 5 to 7 business days. We'll also email you a prepaid return label. Would you like me to go ahead?",
+        "All done, Elena. Your $14.99 refund for Project Hail Mary is on its way to your original payment method, and it should land in 5 to 7 business days. We'll email the prepaid return label too.\n\nIf you're in the mood for something gentle next, our staff pick is A Psalm for the Wild-Built by Becky Chambers, where a tea monk and a robot ask what people really need."
+      ],
+      "transcript": [
+        {
+          "who": "customer",
+          "text": "Order 4843, elena.vasquez@example.com. Can I get a refund for the ebook? I never downloaded it."
+        },
+        {
+          "who": "bookly",
+          "text": "Thanks, Elena. Project Hail Mary is the ebook on your account, and it's within our 30-day return window. I can refund $14.99 to your original payment method, which takes 5 to 7 business days. We'll also email you a prepaid return label. Would you like me to go ahead?"
+        },
+        {
+          "who": "customer",
+          "text": "Yes, go ahead."
+        },
+        {
+          "who": "bookly",
+          "text": "All done, Elena. Your $14.99 refund for Project Hail Mary is on its way to your original payment method, and it should land in 5 to 7 business days. We'll email the prepaid return label too.\n\nIf you're in the mood for something gentle next, our staff pick is A Psalm for the Wild-Built by Becky Chambers, where a tea monk and a robot ask what people really need."
+        }
+      ],
+      "turn_latency_ms": [
+        7334,
+        4303
+      ],
+      "cost_usd": 0.015186,
+      "tickets": [],
+      "returns": [
+        {
+          "id": 1,
+          "item_id": "I-4843-2",
+          "customer_id": "C-1105",
+          "resolution": "refund",
+          "amount_cents": 1499,
+          "reason": "other",
+          "policy_ref": "returns#window",
+          "idempotency_key": "5b6404e7c4f6:I-4843-2",
+          "created_at": "2026-11-22T22:54:08+00:00"
+        }
+      ],
+      "leakage_cents": 0,
+      "error": null,
+      "judge": null,
+      "events": [
+        {
+          "id": 1,
+          "session_id": "5b6404e7c4f6",
+          "turn": 1,
+          "stage": "input_guard",
+          "type": "input_guard",
+          "payload": {
+            "injection": false,
+            "abuse": false,
+            "sensitive": "none",
+            "reason": "Ordinary refund request for an undownloaded ebook with no injection, abuse, or sensitive content.",
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1148,
+          "input_tokens": 654,
+          "output_tokens": 64,
+          "cost_usd": 9.7e-05,
+          "created_at": "2026-11-22T22:53:59+00:00"
+        },
+        {
+          "id": 2,
+          "session_id": "5b6404e7c4f6",
+          "turn": 1,
+          "stage": "route",
+          "type": "route",
+          "payload": {
+            "aop": "returns",
+            "mode": "normal",
+            "why": "intent return_refund (0.90)",
+            "intents": [
+              "return_refund"
+            ],
+            "confidence": 0.9,
+            "confirmation": "none",
+            "frustration": "low",
+            "write_tools": [
+              "initiate_return",
+              "propose_return"
+            ],
+            "queued": [],
+            "escalate": null,
+            "rules": {
+              "human_request": false
+            },
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1161,
+          "input_tokens": 1699,
+          "output_tokens": 118,
+          "cost_usd": 0.000229,
+          "created_at": "2026-11-22T22:53:59+00:00"
+        },
+        {
+          "id": 3,
+          "session_id": "5b6404e7c4f6",
+          "turn": 1,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "tool_use",
+            "tool_calls": [
+              "verify_customer"
+            ],
+            "cache_read": 4510,
+            "cache_write": 0,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1635,
+          "input_tokens": 2,
+          "output_tokens": 83,
+          "cost_usd": 0.001285,
+          "created_at": "2026-11-22T22:54:00+00:00"
+        },
+        {
+          "id": 4,
+          "session_id": "5b6404e7c4f6",
+          "turn": 1,
+          "stage": "tool",
+          "type": "tool_call",
+          "payload": {
+            "tool": "verify_customer",
+            "args": {
+              "order_number": "4843",
+              "email": "e\u2022\u2022\u2022@example.com"
+            },
+            "write": false,
+            "verdict": "ok",
+            "result": {
+              "verified": true,
+              "customer_id": "C-1105",
+              "first_name": "Elena",
+              "email_on_file": "e\u2022\u2022\u2022@example.com",
+              "recent_orders": [
+                {
+                  "order_number": "4841",
+                  "status": "on its way",
+                  "placed_on": "November 20",
+                  "delivered_on": null,
+                  "items": [
+                    {
+                      "item_id": "I-4841-1",
+                      "title": "Station Eleven",
+                      "format": "paperback",
+                      "staff_pick": true,
+                      "already_returned": false
+                    },
+                    {
+                      "item_id": "I-4841-2",
+                      "title": "Circe",
+                      "format": "paperback",
+                      "staff_pick": true,
+                      "already_returned": false
+                    }
+                  ]
+                },
+                {
+                  "order_number": "4842",
+                  "status": "on its way",
+                  "placed_on": "November 18",
+                  "delivered_on": null,
+                  "items": [
+                    {
+                      "item_id": "I-4842-1",
+                      "title": "The Remains of the Day",
+                      "format": "paperback",
+                      "staff_pick": true,
+                      "already_returned": false
+                    }
+                  ]
+                },
+                {
+                  "order_number": "4843",
+                  "status": "delivered",
+                  "placed_on": "November 14",
+                  "delivered_on": "November 16",
+                  "items": [
+                    {
+                      "item_id": "I-4843-1",
+                      "title": "Piranesi",
+                      "format": "paperback",
+                      "staff_pick": false,
+                      "already_returned": false
+                    },
+                    {
+                      "item_id": "I-4843-2",
+                      "title": "Project Hail Mary",
+                      "format": "ebook",
+                      "staff_pick": false,
+                      "already_returned": false
+                    }
+                  ]
+                }
+              ],
+              "more_orders": 0,
+              "note": "recent_orders is a summary. Call lookup_orders only for older orders or gift notes."
+            }
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T22:54:00+00:00"
+        },
+        {
+          "id": 5,
+          "session_id": "5b6404e7c4f6",
+          "turn": 1,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "tool_use",
+            "tool_calls": [
+              "check_return_eligibility"
+            ],
+            "cache_read": 5094,
+            "cache_write": 0,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1529,
+          "input_tokens": 2,
+          "output_tokens": 105,
+          "cost_usd": 0.001563,
+          "created_at": "2026-11-22T22:54:02+00:00"
+        },
+        {
+          "id": 6,
+          "session_id": "5b6404e7c4f6",
+          "turn": 1,
+          "stage": "tool",
+          "type": "tool_call",
+          "payload": {
+            "tool": "check_return_eligibility",
+            "args": {
+              "item_id": "I-4843-2",
+              "reason": "other",
+              "is_unread": true
+            },
+            "write": false,
+            "verdict": "ok",
+            "result": {
+              "item_id": "I-4843-2",
+              "title": "Project Hail Mary",
+              "eligible": true,
+              "resolution": "refund",
+              "amount_display": "$14.99",
+              "requires_approval": false,
+              "policy_ref": "returns#window",
+              "explanation": "Unread books can be returned for a refund within 30 days of delivery.",
+              "days_since_delivery": 6,
+              "next_step": "Call propose_return with this resolution."
+            }
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T22:54:02+00:00"
+        },
+        {
+          "id": 7,
+          "session_id": "5b6404e7c4f6",
+          "turn": 1,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "tool_use",
+            "tool_calls": [
+              "propose_return"
+            ],
+            "cache_read": 5341,
+            "cache_write": 0,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1426,
+          "input_tokens": 2,
+          "output_tokens": 79,
+          "cost_usd": 0.001328,
+          "created_at": "2026-11-22T22:54:03+00:00"
+        },
+        {
+          "id": 8,
+          "session_id": "5b6404e7c4f6",
+          "turn": 1,
+          "stage": "tool",
+          "type": "tool_call",
+          "payload": {
+            "tool": "propose_return",
+            "args": {
+              "item_id": "I-4843-2",
+              "resolution": "refund"
+            },
+            "write": false,
+            "verdict": "ok",
+            "result": {
+              "proposal": "Refund $14.99 for Project Hail Mary to the original payment method, which takes 5 to 7 business days. We'll email a prepaid return label.",
+              "amount_display": "$14.99",
+              "next_step": "Tell the customer exactly this and ask if they'd like to go ahead. Don't call initiate_return until they reply yes."
+            }
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T22:54:03+00:00"
+        },
+        {
+          "id": 9,
+          "session_id": "5b6404e7c4f6",
+          "turn": 1,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "end_turn",
+            "tool_calls": [],
+            "cache_read": 5541,
+            "cache_write": 0,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1307,
+          "input_tokens": 2,
+          "output_tokens": 94,
+          "cost_usd": 0.001498,
+          "created_at": "2026-11-22T22:54:05+00:00"
+        },
+        {
+          "id": 10,
+          "session_id": "5b6404e7c4f6",
+          "turn": 1,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "supervisor",
+            "skipped": true,
+            "reason": "policy statements backed by the policy engine this turn (check_return_eligibility, propose_return)"
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T22:54:05+00:00"
+        },
+        {
+          "id": 11,
+          "session_id": "5b6404e7c4f6",
+          "turn": 1,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "code",
+            "ok": true,
+            "issues": [],
+            "checked": {
+              "amounts": [
+                "$14.99"
+              ],
+              "dates": [],
+              "tracking": []
+            },
+            "supervisor_used": false,
+            "regenerated": false
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T22:54:05+00:00"
+        },
+        {
+          "id": 12,
+          "session_id": "5b6404e7c4f6",
+          "turn": 1,
+          "stage": "reply",
+          "type": "reply",
+          "payload": {
+            "text": "Thanks, Elena. Project Hail Mary is the ebook on your account, and it's within our 30-day return window. I can refund $14.99 to your original payment method, which takes 5 to 7 business days. We'll also email you a prepaid return label. Would you like me to go ahead?",
+            "route": "returns",
+            "ticket_id": null
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T22:54:05+00:00"
+        },
+        {
+          "id": 13,
+          "session_id": "5b6404e7c4f6",
+          "turn": 2,
+          "stage": "input_guard",
+          "type": "input_guard",
+          "payload": {
+            "injection": false,
+            "abuse": false,
+            "sensitive": "none",
+            "reason": "The message is a short affirmative reply with no injection, abuse, or sensitive content.",
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1148,
+          "input_tokens": 624,
+          "output_tokens": 56,
+          "cost_usd": 9e-05,
+          "created_at": "2026-11-22T22:54:06+00:00"
+        },
+        {
+          "id": 14,
+          "session_id": "5b6404e7c4f6",
+          "turn": 2,
+          "stage": "route",
+          "type": "route",
+          "payload": {
+            "aop": "returns",
+            "mode": "normal",
+            "why": "answering pending proposal (confirmation=yes)",
+            "intents": [
+              "return_refund"
+            ],
+            "confidence": 0.97,
+            "confirmation": "yes",
+            "frustration": "low",
+            "write_tools": [
+              "initiate_return",
+              "propose_return"
+            ],
+            "queued": [],
+            "escalate": null,
+            "rules": {
+              "human_request": false
+            },
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1193,
+          "input_tokens": 1764,
+          "output_tokens": 115,
+          "cost_usd": 0.000234,
+          "created_at": "2026-11-22T22:54:06+00:00"
+        },
+        {
+          "id": 15,
+          "session_id": "5b6404e7c4f6",
+          "turn": 2,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "tool_use",
+            "tool_calls": [
+              "initiate_return",
+              "get_recommendation"
+            ],
+            "cache_read": 5541,
+            "cache_write": 1736,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1616,
+          "input_tokens": 2,
+          "output_tokens": 106,
+          "cost_usd": 0.005958,
+          "created_at": "2026-11-22T22:54:08+00:00"
+        },
+        {
+          "id": 16,
+          "session_id": "5b6404e7c4f6",
+          "turn": 2,
+          "stage": "tool",
+          "type": "tool_call",
+          "payload": {
+            "tool": "initiate_return",
+            "args": {
+              "item_id": "I-4843-2",
+              "resolution": "refund"
+            },
+            "write": true,
+            "verdict": "ok",
+            "result": {
+              "return_id": 1,
+              "status": "completed",
+              "resolution": "refund",
+              "amount_display": "$14.99",
+              "title": "Project Hail Mary",
+              "what_happens_next": "Refund $14.99 for Project Hail Mary to the original payment method, which takes 5 to 7 business days. We'll email a prepaid return label."
+            }
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T22:54:08+00:00"
+        },
+        {
+          "id": 17,
+          "session_id": "5b6404e7c4f6",
+          "turn": 2,
+          "stage": "tool",
+          "type": "tool_call",
+          "payload": {
+            "tool": "get_recommendation",
+            "args": {},
+            "write": false,
+            "verdict": "ok",
+            "result": {
+              "title": "A Psalm for the Wild-Built",
+              "author": "Becky Chambers",
+              "why": "A tea monk and a robot ask what people need.",
+              "price": "$15.00",
+              "staff_pick": true,
+              "note": "Offer this once, lightly. Don't push."
+            }
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T22:54:08+00:00"
+        },
+        {
+          "id": 18,
+          "session_id": "5b6404e7c4f6",
+          "turn": 2,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "end_turn",
+            "tool_calls": [],
+            "cache_read": 7277,
+            "cache_write": 365,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1467,
+          "input_tokens": 2,
+          "output_tokens": 126,
+          "cost_usd": 0.002904,
+          "created_at": "2026-11-22T22:54:09+00:00"
+        },
+        {
+          "id": 19,
+          "session_id": "5b6404e7c4f6",
+          "turn": 2,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "supervisor",
+            "skipped": true,
+            "reason": "policy statements backed by the policy engine this turn (initiate_return)"
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T22:54:09+00:00"
+        },
+        {
+          "id": 20,
+          "session_id": "5b6404e7c4f6",
+          "turn": 2,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "code",
+            "ok": true,
+            "issues": [],
+            "checked": {
+              "amounts": [
+                "$14.99"
+              ],
+              "dates": [],
+              "tracking": []
+            },
+            "supervisor_used": false,
+            "regenerated": false
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T22:54:09+00:00"
+        },
+        {
+          "id": 21,
+          "session_id": "5b6404e7c4f6",
+          "turn": 2,
+          "stage": "reply",
+          "type": "reply",
+          "payload": {
+            "text": "All done, Elena. Your $14.99 refund for Project Hail Mary is on its way to your original payment method, and it should land in 5 to 7 business days. We'll email the prepaid return label too.\n\nIf you're in the mood for something gentle next, our staff pick is A Psalm for the Wild-Built by Becky Chambers, where a tea monk and a robot ask what people really need.",
+            "route": "returns",
+            "ticket_id": null
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T22:54:09+00:00"
+        }
+      ]
+    },
+    {
+      "scenario": "ebook_in_mixed_order",
+      "run": 3,
+      "passed": true,
+      "failures": [],
+      "replies": [
+        "Thanks, Elena. Project Hail Mary is the ebook on your account, and it's within our 30-day return window. I can refund $14.99 to your original payment method, which takes 5 to 7 business days, and we'll email you a prepaid return label. Would you like me to go ahead?",
+        "All done, Elena. Your $14.99 refund for Project Hail Mary is on its way to your original payment method, and it takes 5 to 7 business days. We'll email you a prepaid return label as well.\n\nIf you want a gentle next read, our booksellers love A Psalm for the Wild-Built by Becky Chambers. It's about a tea monk and a robot asking what people really need."
+      ],
+      "transcript": [
+        {
+          "who": "customer",
+          "text": "Order 4843, elena.vasquez@example.com. Can I get a refund for the ebook? I never downloaded it."
+        },
+        {
+          "who": "bookly",
+          "text": "Thanks, Elena. Project Hail Mary is the ebook on your account, and it's within our 30-day return window. I can refund $14.99 to your original payment method, which takes 5 to 7 business days, and we'll email you a prepaid return label. Would you like me to go ahead?"
+        },
+        {
+          "who": "customer",
+          "text": "Yes, go ahead."
+        },
+        {
+          "who": "bookly",
+          "text": "All done, Elena. Your $14.99 refund for Project Hail Mary is on its way to your original payment method, and it takes 5 to 7 business days. We'll email you a prepaid return label as well.\n\nIf you want a gentle next read, our booksellers love A Psalm for the Wild-Built by Becky Chambers. It's about a tea monk and a robot asking what people really need."
+        }
+      ],
+      "turn_latency_ms": [
+        6883,
+        4270
+      ],
+      "cost_usd": 0.016571,
+      "tickets": [],
+      "returns": [
+        {
+          "id": 1,
+          "item_id": "I-4843-2",
+          "customer_id": "C-1105",
+          "resolution": "refund",
+          "amount_cents": 1499,
+          "reason": "other",
+          "policy_ref": "returns#window",
+          "idempotency_key": "fa102b9a68be:I-4843-2",
+          "created_at": "2026-11-22T22:54:07+00:00"
+        }
+      ],
+      "leakage_cents": 0,
+      "error": null,
+      "judge": null,
+      "events": [
+        {
+          "id": 1,
+          "session_id": "fa102b9a68be",
+          "turn": 1,
+          "stage": "input_guard",
+          "type": "input_guard",
+          "payload": {
+            "injection": false,
+            "abuse": false,
+            "sensitive": "none",
+            "reason": "Ordinary refund request for an undownloaded ebook with no injection, abuse, or sensitive content.",
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1077,
+          "input_tokens": 654,
+          "output_tokens": 64,
+          "cost_usd": 9.7e-05,
+          "created_at": "2026-11-22T22:53:59+00:00"
+        },
+        {
+          "id": 2,
+          "session_id": "fa102b9a68be",
+          "turn": 1,
+          "stage": "route",
+          "type": "route",
+          "payload": {
+            "aop": "returns",
+            "mode": "normal",
+            "why": "intent return_refund (0.90)",
+            "intents": [
+              "return_refund"
+            ],
+            "confidence": 0.9,
+            "confirmation": "none",
+            "frustration": "low",
+            "write_tools": [
+              "initiate_return",
+              "propose_return"
+            ],
+            "queued": [],
+            "escalate": null,
+            "rules": {
+              "human_request": false
+            },
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1222,
+          "input_tokens": 1699,
+          "output_tokens": 119,
+          "cost_usd": 0.000229,
+          "created_at": "2026-11-22T22:53:59+00:00"
+        },
+        {
+          "id": 3,
+          "session_id": "fa102b9a68be",
+          "turn": 1,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "tool_use",
+            "tool_calls": [
+              "verify_customer"
+            ],
+            "cache_read": 4510,
+            "cache_write": 0,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1454,
+          "input_tokens": 2,
+          "output_tokens": 83,
+          "cost_usd": 0.001285,
+          "created_at": "2026-11-22T22:54:00+00:00"
+        },
+        {
+          "id": 4,
+          "session_id": "fa102b9a68be",
+          "turn": 1,
+          "stage": "tool",
+          "type": "tool_call",
+          "payload": {
+            "tool": "verify_customer",
+            "args": {
+              "order_number": "4843",
+              "email": "e\u2022\u2022\u2022@example.com"
+            },
+            "write": false,
+            "verdict": "ok",
+            "result": {
+              "verified": true,
+              "customer_id": "C-1105",
+              "first_name": "Elena",
+              "email_on_file": "e\u2022\u2022\u2022@example.com",
+              "recent_orders": [
+                {
+                  "order_number": "4841",
+                  "status": "on its way",
+                  "placed_on": "November 20",
+                  "delivered_on": null,
+                  "items": [
+                    {
+                      "item_id": "I-4841-1",
+                      "title": "Station Eleven",
+                      "format": "paperback",
+                      "staff_pick": true,
+                      "already_returned": false
+                    },
+                    {
+                      "item_id": "I-4841-2",
+                      "title": "Circe",
+                      "format": "paperback",
+                      "staff_pick": true,
+                      "already_returned": false
+                    }
+                  ]
+                },
+                {
+                  "order_number": "4842",
+                  "status": "on its way",
+                  "placed_on": "November 18",
+                  "delivered_on": null,
+                  "items": [
+                    {
+                      "item_id": "I-4842-1",
+                      "title": "The Remains of the Day",
+                      "format": "paperback",
+                      "staff_pick": true,
+                      "already_returned": false
+                    }
+                  ]
+                },
+                {
+                  "order_number": "4843",
+                  "status": "delivered",
+                  "placed_on": "November 14",
+                  "delivered_on": "November 16",
+                  "items": [
+                    {
+                      "item_id": "I-4843-1",
+                      "title": "Piranesi",
+                      "format": "paperback",
+                      "staff_pick": false,
+                      "already_returned": false
+                    },
+                    {
+                      "item_id": "I-4843-2",
+                      "title": "Project Hail Mary",
+                      "format": "ebook",
+                      "staff_pick": false,
+                      "already_returned": false
+                    }
+                  ]
+                }
+              ],
+              "more_orders": 0,
+              "note": "recent_orders is a summary. Call lookup_orders only for older orders or gift notes."
+            }
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T22:54:00+00:00"
+        },
+        {
+          "id": 5,
+          "session_id": "fa102b9a68be",
+          "turn": 1,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "tool_use",
+            "tool_calls": [
+              "check_return_eligibility"
+            ],
+            "cache_read": 5094,
+            "cache_write": 0,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1626,
+          "input_tokens": 2,
+          "output_tokens": 130,
+          "cost_usd": 0.001813,
+          "created_at": "2026-11-22T22:54:02+00:00"
+        },
+        {
+          "id": 6,
+          "session_id": "fa102b9a68be",
+          "turn": 1,
+          "stage": "tool",
+          "type": "tool_call",
+          "payload": {
+            "tool": "check_return_eligibility",
+            "args": {
+              "item_id": "I-4843-2",
+              "reason": "other",
+              "is_unread": true
+            },
+            "write": false,
+            "verdict": "ok",
+            "result": {
+              "item_id": "I-4843-2",
+              "title": "Project Hail Mary",
+              "eligible": true,
+              "resolution": "refund",
+              "amount_display": "$14.99",
+              "requires_approval": false,
+              "policy_ref": "returns#window",
+              "explanation": "Unread books can be returned for a refund within 30 days of delivery.",
+              "days_since_delivery": 6,
+              "next_step": "Call propose_return with this resolution."
+            }
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T22:54:02+00:00"
+        },
+        {
+          "id": 7,
+          "session_id": "fa102b9a68be",
+          "turn": 1,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "tool_use",
+            "tool_calls": [
+              "propose_return"
+            ],
+            "cache_read": 5094,
+            "cache_write": 272,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1231,
+          "input_tokens": 2,
+          "output_tokens": 79,
+          "cost_usd": 0.001983,
+          "created_at": "2026-11-22T22:54:03+00:00"
+        },
+        {
+          "id": 8,
+          "session_id": "fa102b9a68be",
+          "turn": 1,
+          "stage": "tool",
+          "type": "tool_call",
+          "payload": {
+            "tool": "propose_return",
+            "args": {
+              "item_id": "I-4843-2",
+              "resolution": "refund"
+            },
+            "write": false,
+            "verdict": "ok",
+            "result": {
+              "proposal": "Refund $14.99 for Project Hail Mary to the original payment method, which takes 5 to 7 business days. We'll email a prepaid return label.",
+              "amount_display": "$14.99",
+              "next_step": "Tell the customer exactly this and ask if they'd like to go ahead. Don't call initiate_return until they reply yes."
+            }
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T22:54:03+00:00"
+        },
+        {
+          "id": 9,
+          "session_id": "fa102b9a68be",
+          "turn": 1,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "end_turn",
+            "tool_calls": [],
+            "cache_read": 5366,
+            "cache_write": 200,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1328,
+          "input_tokens": 2,
+          "output_tokens": 94,
+          "cost_usd": 0.001981,
+          "created_at": "2026-11-22T22:54:04+00:00"
+        },
+        {
+          "id": 10,
+          "session_id": "fa102b9a68be",
+          "turn": 1,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "supervisor",
+            "skipped": true,
+            "reason": "policy statements backed by the policy engine this turn (check_return_eligibility, propose_return)"
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T22:54:04+00:00"
+        },
+        {
+          "id": 11,
+          "session_id": "fa102b9a68be",
+          "turn": 1,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "code",
+            "ok": true,
+            "issues": [],
+            "checked": {
+              "amounts": [
+                "$14.99"
+              ],
+              "dates": [],
+              "tracking": []
+            },
+            "supervisor_used": false,
+            "regenerated": false
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T22:54:04+00:00"
+        },
+        {
+          "id": 12,
+          "session_id": "fa102b9a68be",
+          "turn": 1,
+          "stage": "reply",
+          "type": "reply",
+          "payload": {
+            "text": "Thanks, Elena. Project Hail Mary is the ebook on your account, and it's within our 30-day return window. I can refund $14.99 to your original payment method, which takes 5 to 7 business days, and we'll email you a prepaid return label. Would you like me to go ahead?",
+            "route": "returns",
+            "ticket_id": null
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T22:54:04+00:00"
+        },
+        {
+          "id": 13,
+          "session_id": "fa102b9a68be",
+          "turn": 2,
+          "stage": "input_guard",
+          "type": "input_guard",
+          "payload": {
+            "injection": false,
+            "abuse": false,
+            "sensitive": "none",
+            "reason": "The message is a plain affirmative reply with no injection, abuse, or sensitive content.",
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 920,
+          "input_tokens": 624,
+          "output_tokens": 58,
+          "cost_usd": 9.1e-05,
+          "created_at": "2026-11-22T22:54:05+00:00"
+        },
+        {
+          "id": 14,
+          "session_id": "fa102b9a68be",
+          "turn": 2,
+          "stage": "route",
+          "type": "route",
+          "payload": {
+            "aop": "returns",
+            "mode": "normal",
+            "why": "answering pending proposal (confirmation=yes)",
+            "intents": [
+              "return_refund"
+            ],
+            "confidence": 0.97,
+            "confirmation": "yes",
+            "frustration": "low",
+            "write_tools": [
+              "initiate_return",
+              "propose_return"
+            ],
+            "queued": [],
+            "escalate": null,
+            "rules": {
+              "human_request": false
+            },
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1113,
+          "input_tokens": 1764,
+          "output_tokens": 116,
+          "cost_usd": 0.000234,
+          "created_at": "2026-11-22T22:54:05+00:00"
+        },
+        {
+          "id": 15,
+          "session_id": "fa102b9a68be",
+          "turn": 2,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "tool_use",
+            "tool_calls": [
+              "initiate_return",
+              "get_recommendation"
+            ],
+            "cache_read": 5566,
+            "cache_write": 1736,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1588,
+          "input_tokens": 2,
+          "output_tokens": 106,
+          "cost_usd": 0.005961,
+          "created_at": "2026-11-22T22:54:07+00:00"
+        },
+        {
+          "id": 16,
+          "session_id": "fa102b9a68be",
+          "turn": 2,
+          "stage": "tool",
+          "type": "tool_call",
+          "payload": {
+            "tool": "initiate_return",
+            "args": {
+              "item_id": "I-4843-2",
+              "resolution": "refund"
+            },
+            "write": true,
+            "verdict": "ok",
+            "result": {
+              "return_id": 1,
+              "status": "completed",
+              "resolution": "refund",
+              "amount_display": "$14.99",
+              "title": "Project Hail Mary",
+              "what_happens_next": "Refund $14.99 for Project Hail Mary to the original payment method, which takes 5 to 7 business days. We'll email a prepaid return label."
+            }
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T22:54:07+00:00"
+        },
+        {
+          "id": 17,
+          "session_id": "fa102b9a68be",
+          "turn": 2,
+          "stage": "tool",
+          "type": "tool_call",
+          "payload": {
+            "tool": "get_recommendation",
+            "args": {},
+            "write": false,
+            "verdict": "ok",
+            "result": {
+              "title": "A Psalm for the Wild-Built",
+              "author": "Becky Chambers",
+              "why": "A tea monk and a robot ask what people need.",
+              "price": "$15.00",
+              "staff_pick": true,
+              "note": "Offer this once, lightly. Don't push."
+            }
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T22:54:07+00:00"
+        },
+        {
+          "id": 18,
+          "session_id": "fa102b9a68be",
+          "turn": 2,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "end_turn",
+            "tool_calls": [],
+            "cache_read": 7302,
+            "cache_write": 365,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1537,
+          "input_tokens": 2,
+          "output_tokens": 125,
+          "cost_usd": 0.002897,
+          "created_at": "2026-11-22T22:54:09+00:00"
+        },
+        {
+          "id": 19,
+          "session_id": "fa102b9a68be",
+          "turn": 2,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "supervisor",
+            "skipped": true,
+            "reason": "policy statements backed by the policy engine this turn (initiate_return)"
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T22:54:09+00:00"
+        },
+        {
+          "id": 20,
+          "session_id": "fa102b9a68be",
+          "turn": 2,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "code",
+            "ok": true,
+            "issues": [],
+            "checked": {
+              "amounts": [
+                "$14.99"
+              ],
+              "dates": [],
+              "tracking": []
+            },
+            "supervisor_used": false,
+            "regenerated": false
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T22:54:09+00:00"
+        },
+        {
+          "id": 21,
+          "session_id": "fa102b9a68be",
+          "turn": 2,
+          "stage": "reply",
+          "type": "reply",
+          "payload": {
+            "text": "All done, Elena. Your $14.99 refund for Project Hail Mary is on its way to your original payment method, and it takes 5 to 7 business days. We'll email you a prepaid return label as well.\n\nIf you want a gentle next read, our booksellers love A Psalm for the Wild-Built by Becky Chambers. It's about a tea monk and a robot asking what people really need.",
+            "route": "returns",
+            "ticket_id": null
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T22:54:09+00:00"
+        }
+      ]
+    }
+  ]
+}

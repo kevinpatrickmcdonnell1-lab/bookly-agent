@@ -1,0 +1,5511 @@
+{
+  "summary": {
+    "label": "only-sonnet",
+    "scenarios": {
+      "focus_policy_followup": {
+        "passed": 0,
+        "runs": 3,
+        "failures": [
+          "a reply contains 'which one'",
+          "turn 3 reply doesn't mention 'Tomorrow'"
+        ]
+      },
+      "focus_recommended_book": {
+        "passed": 0,
+        "runs": 3,
+        "failures": [
+          "a reply contains 'which book'",
+          "a reply contains 'which one'",
+          "turn 5 reply doesn't mention 'Remains of the Day'"
+        ]
+      }
+    },
+    "pass_rate": 0.0,
+    "all_runs_pass": 0,
+    "scenario_count": 2,
+    "refund_leakage_cents": 0,
+    "escalations_by_trigger": {},
+    "conversations_escalated": 0.0,
+    "turn_latency_ms": {
+      "p50": 4353,
+      "p95": 6198
+    },
+    "cost_per_conversation_usd": 0.02977,
+    "tone_rubric": {}
+  },
+  "runs": [
+    {
+      "scenario": "focus_policy_followup",
+      "run": 1,
+      "passed": false,
+      "failures": [
+        "turn 3 reply doesn't mention 'Tomorrow'"
+      ],
+      "replies": [
+        "I'd be happy to check on that. Could you give me the order number and the email address on the order?",
+        "Thanks, Chloe. Your order 4821 with Tomorrow, and Tomorrow, and Tomorrow is on its way with UPS. The last scan shows it departed the regional facility, and the estimated delivery is November 24. The tracking number is 1Z999AA10123456784.",
+        "Here's what I can tell you. Each item can be returned once. When a return is confirmed, we email a prepaid return label, and you drop the parcel at any post office within 14 days. Your order 4821 has already shipped, so it would go under our normal return policy.\n\nI don't have the details on return windows or refund amounts in front of me. If you have a book in mind, I can check it for you.",
+        "I'm assuming you mean Tomorrow, and Tomorrow, and Tomorrow from order 4821. What's the reason you'd like to return it? For example, did you change your mind, or is it something else?"
+      ],
+      "transcript": [
+        {
+          "who": "customer",
+          "text": "Where's my order?"
+        },
+        {
+          "who": "bookly",
+          "text": "I'd be happy to check on that. Could you give me the order number and the email address on the order?"
+        },
+        {
+          "who": "customer",
+          "text": "It's order 4821 and my email is chloe.park@example.com"
+        },
+        {
+          "who": "bookly",
+          "text": "Thanks, Chloe. Your order 4821 with Tomorrow, and Tomorrow, and Tomorrow is on its way with UPS. The last scan shows it departed the regional facility, and the estimated delivery is November 24. The tracking number is 1Z999AA10123456784."
+        },
+        {
+          "who": "customer",
+          "text": "Okay, interesting. What's the refund policy?"
+        },
+        {
+          "who": "bookly",
+          "text": "Here's what I can tell you. Each item can be returned once. When a return is confirmed, we email a prepaid return label, and you drop the parcel at any post office within 14 days. Your order 4821 has already shipped, so it would go under our normal return policy.\n\nI don't have the details on return windows or refund amounts in front of me. If you have a book in mind, I can check it for you."
+        },
+        {
+          "who": "customer",
+          "text": "The one we were just talking about."
+        },
+        {
+          "who": "bookly",
+          "text": "I'm assuming you mean Tomorrow, and Tomorrow, and Tomorrow from order 4821. What's the reason you'd like to return it? For example, did you change your mind, or is it something else?"
+        }
+      ],
+      "turn_latency_ms": [
+        6198,
+        4946,
+        4931,
+        3060
+      ],
+      "cost_usd": 0.020373,
+      "tickets": [],
+      "returns": [],
+      "leakage_cents": 0,
+      "error": null,
+      "judge": null,
+      "events": [
+        {
+          "id": 1,
+          "session_id": "d44361a1d3c8",
+          "turn": 1,
+          "stage": "input_guard",
+          "type": "input_guard",
+          "payload": {
+            "injection": false,
+            "abuse": false,
+            "sensitive": "none",
+            "reason": "Routine order status question with no injection, abuse, or sensitive content.",
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1300,
+          "input_tokens": 621,
+          "output_tokens": 52,
+          "cost_usd": 8.8e-05,
+          "created_at": "2026-11-22T23:09:15+00:00"
+        },
+        {
+          "id": 2,
+          "session_id": "d44361a1d3c8",
+          "turn": 1,
+          "stage": "route",
+          "type": "route",
+          "payload": {
+            "aop": "order_status",
+            "mode": "normal",
+            "why": "intent order_status (0.95)",
+            "intents": [
+              "order_status"
+            ],
+            "confidence": 0.95,
+            "confirmation": "none",
+            "frustration": "low",
+            "write_tools": [],
+            "queued": [],
+            "escalate": null,
+            "rules": {
+              "human_request": false
+            },
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1251,
+          "input_tokens": 1666,
+          "output_tokens": 91,
+          "cost_usd": 0.000212,
+          "created_at": "2026-11-22T23:09:15+00:00"
+        },
+        {
+          "id": 3,
+          "session_id": "d44361a1d3c8",
+          "turn": 1,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "end_turn",
+            "tool_calls": [],
+            "cache_read": 2970,
+            "cache_write": 606,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 4814,
+          "input_tokens": 2,
+          "output_tokens": 29,
+          "cost_usd": 0.002106,
+          "created_at": "2026-11-22T23:09:20+00:00"
+        },
+        {
+          "id": 4,
+          "session_id": "d44361a1d3c8",
+          "turn": 1,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "code",
+            "ok": true,
+            "issues": [],
+            "checked": {
+              "amounts": [],
+              "dates": [],
+              "tracking": [],
+              "echoed_customer_amounts": []
+            },
+            "supervisor_used": false,
+            "regenerated": false
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:20+00:00"
+        },
+        {
+          "id": 5,
+          "session_id": "d44361a1d3c8",
+          "turn": 1,
+          "stage": "reply",
+          "type": "reply",
+          "payload": {
+            "text": "I'd be happy to check on that. Could you give me the order number and the email address on the order?",
+            "route": "order_status",
+            "ticket_id": null
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:20+00:00"
+        },
+        {
+          "id": 6,
+          "session_id": "d44361a1d3c8",
+          "turn": 2,
+          "stage": "input_guard",
+          "type": "input_guard",
+          "payload": {
+            "injection": false,
+            "abuse": false,
+            "sensitive": "none",
+            "reason": "Customer simply provided an order number and email address with no injection, abuse, or sensitive content.",
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1182,
+          "input_tokens": 635,
+          "output_tokens": 59,
+          "cost_usd": 9.3e-05,
+          "created_at": "2026-11-22T23:09:21+00:00"
+        },
+        {
+          "id": 7,
+          "session_id": "d44361a1d3c8",
+          "turn": 2,
+          "stage": "route",
+          "type": "route",
+          "payload": {
+            "aop": "order_status",
+            "mode": "normal",
+            "why": "intent order_status (0.95)",
+            "intents": [
+              "order_status"
+            ],
+            "confidence": 0.95,
+            "confirmation": "none",
+            "frustration": "low",
+            "write_tools": [],
+            "queued": [],
+            "escalate": null,
+            "rules": {
+              "human_request": false
+            },
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1317,
+          "input_tokens": 1710,
+          "output_tokens": 111,
+          "cost_usd": 0.000227,
+          "created_at": "2026-11-22T23:09:21+00:00"
+        },
+        {
+          "id": 8,
+          "session_id": "d44361a1d3c8",
+          "turn": 2,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "tool_use",
+            "tool_calls": [
+              "verify_customer",
+              "get_order_status"
+            ],
+            "cache_read": 2970,
+            "cache_write": 1274,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1760,
+          "input_tokens": 2,
+          "output_tokens": 130,
+          "cost_usd": 0.004786,
+          "created_at": "2026-11-22T23:09:23+00:00"
+        },
+        {
+          "id": 9,
+          "session_id": "d44361a1d3c8",
+          "turn": 2,
+          "stage": "tool",
+          "type": "tool_call",
+          "payload": {
+            "tool": "verify_customer",
+            "args": {
+              "order_number": "4821",
+              "email": "c\u2022\u2022\u2022@example.com"
+            },
+            "write": false,
+            "verdict": "ok",
+            "result": {
+              "verified": true,
+              "customer_id": "C-1077",
+              "first_name": "Chloe",
+              "email_on_file": "c\u2022\u2022\u2022@example.com",
+              "recent_orders": [
+                {
+                  "order_number": "4821",
+                  "status": "on its way",
+                  "placed_on": "November 19",
+                  "delivered_on": null,
+                  "items": [
+                    {
+                      "item_id": "I-4821-1",
+                      "title": "Tomorrow, and Tomorrow, and Tomorrow",
+                      "format": "hardcover",
+                      "staff_pick": false,
+                      "already_returned": false
+                    }
+                  ]
+                },
+                {
+                  "order_number": "4822",
+                  "status": "delivered",
+                  "placed_on": "November 14",
+                  "delivered_on": "November 17",
+                  "items": [
+                    {
+                      "item_id": "I-4822-1",
+                      "title": "Braiding Sweetgrass",
+                      "format": "paperback",
+                      "staff_pick": true,
+                      "already_returned": false
+                    }
+                  ]
+                }
+              ],
+              "more_orders": 0,
+              "note": "recent_orders is a summary. Call lookup_orders only for older orders or gift notes."
+            }
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:23+00:00"
+        },
+        {
+          "id": 10,
+          "session_id": "d44361a1d3c8",
+          "turn": 2,
+          "stage": "tool",
+          "type": "tool_call",
+          "payload": {
+            "tool": "get_order_status",
+            "args": {
+              "order_number": "4821"
+            },
+            "write": false,
+            "verdict": "ok",
+            "result": {
+              "order_number": "4821",
+              "status": "on its way",
+              "placed_on": "November 19",
+              "items": [
+                "Tomorrow, and Tomorrow, and Tomorrow"
+              ],
+              "estimated_delivery": "November 24",
+              "carrier": "UPS",
+              "tracking_number": "1Z999AA10123456784",
+              "last_scan": "Departed regional facility"
+            }
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:23+00:00"
+        },
+        {
+          "id": 11,
+          "session_id": "d44361a1d3c8",
+          "turn": 2,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "end_turn",
+            "tool_calls": [],
+            "cache_read": 4244,
+            "cache_write": 629,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1424,
+          "input_tokens": 2,
+          "output_tokens": 97,
+          "cost_usd": 0.002971,
+          "created_at": "2026-11-22T23:09:25+00:00"
+        },
+        {
+          "id": 12,
+          "session_id": "d44361a1d3c8",
+          "turn": 2,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "code",
+            "ok": true,
+            "issues": [],
+            "checked": {
+              "amounts": [],
+              "dates": [
+                "November 24"
+              ],
+              "tracking": [
+                "1Z999AA10123456784"
+              ],
+              "echoed_customer_amounts": []
+            },
+            "supervisor_used": false,
+            "regenerated": false
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:25+00:00"
+        },
+        {
+          "id": 13,
+          "session_id": "d44361a1d3c8",
+          "turn": 2,
+          "stage": "reply",
+          "type": "reply",
+          "payload": {
+            "text": "Thanks, Chloe. Your order 4821 with Tomorrow, and Tomorrow, and Tomorrow is on its way with UPS. The last scan shows it departed the regional facility, and the estimated delivery is November 24. The tracking number is 1Z999AA10123456784.",
+            "route": "order_status",
+            "ticket_id": null
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:25+00:00"
+        },
+        {
+          "id": 14,
+          "session_id": "d44361a1d3c8",
+          "turn": 3,
+          "stage": "input_guard",
+          "type": "input_guard",
+          "payload": {
+            "injection": false,
+            "abuse": false,
+            "sensitive": "none",
+            "reason": "Neutral question about the refund policy with no injection, abuse, or sensitive content.",
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1040,
+          "input_tokens": 631,
+          "output_tokens": 57,
+          "cost_usd": 9.2e-05,
+          "created_at": "2026-11-22T23:09:26+00:00"
+        },
+        {
+          "id": 15,
+          "session_id": "d44361a1d3c8",
+          "turn": 3,
+          "stage": "route",
+          "type": "route",
+          "payload": {
+            "aop": "policy_qa",
+            "mode": "normal",
+            "why": "intent policy_question (0.90)",
+            "intents": [
+              "policy_question"
+            ],
+            "confidence": 0.9,
+            "confirmation": "none",
+            "frustration": "low",
+            "write_tools": [],
+            "queued": [],
+            "escalate": null,
+            "rules": {
+              "human_request": false
+            },
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1168,
+          "input_tokens": 1774,
+          "output_tokens": 94,
+          "cost_usd": 0.000224,
+          "created_at": "2026-11-22T23:09:26+00:00"
+        },
+        {
+          "id": 16,
+          "session_id": "d44361a1d3c8",
+          "turn": 3,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "tool_use",
+            "tool_calls": [
+              "search_policy"
+            ],
+            "cache_read": 4873,
+            "cache_write": 655,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1332,
+          "input_tokens": 2,
+          "output_tokens": 52,
+          "cost_usd": 0.002649,
+          "created_at": "2026-11-22T23:09:27+00:00"
+        },
+        {
+          "id": 17,
+          "session_id": "d44361a1d3c8",
+          "turn": 3,
+          "stage": "tool",
+          "type": "tool_call",
+          "payload": {
+            "tool": "search_policy",
+            "args": {
+              "query": "refund return policy"
+            },
+            "write": false,
+            "verdict": "ok",
+            "result": {
+              "results": [
+                {
+                  "policy_ref": "orders#changes",
+                  "title": "Orders: Changing or cancelling an order",
+                  "text": "Orders can be changed or cancelled until they ship, usually within 24 hours of being placed. After that, you can return the books under our normal return policy."
+                },
+                {
+                  "policy_ref": "returns#one-per-item",
+                  "title": "Returns and refunds: One return per item",
+                  "text": "Each item can be returned once. If an item has already been returned, we can't process a second return for it."
+                },
+                {
+                  "policy_ref": "returns#how",
+                  "title": "Returns and refunds: How to send a book back",
+                  "text": "Once a return is confirmed we email a prepaid return label. Drop the parcel at any post office within 14 days."
+                }
+              ],
+              "note": "Answer only from these texts. Name the policy in plain words; never show the policy_ref id to the customer."
+            }
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:27+00:00"
+        },
+        {
+          "id": 18,
+          "session_id": "d44361a1d3c8",
+          "turn": 3,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "end_turn",
+            "tool_calls": [],
+            "cache_read": 5528,
+            "cache_write": 330,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1518,
+          "input_tokens": 2,
+          "output_tokens": 121,
+          "cost_usd": 0.002592,
+          "created_at": "2026-11-22T23:09:29+00:00"
+        },
+        {
+          "id": 19,
+          "session_id": "d44361a1d3c8",
+          "turn": 3,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "supervisor",
+            "grounded": true,
+            "unsupported": []
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 899,
+          "input_tokens": 1745,
+          "output_tokens": 17,
+          "cost_usd": 0.000183,
+          "created_at": "2026-11-22T23:09:30+00:00"
+        },
+        {
+          "id": 20,
+          "session_id": "d44361a1d3c8",
+          "turn": 3,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "code",
+            "ok": true,
+            "issues": [],
+            "checked": {
+              "amounts": [],
+              "dates": [],
+              "tracking": [],
+              "echoed_customer_amounts": []
+            },
+            "supervisor_used": true,
+            "regenerated": false
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:30+00:00"
+        },
+        {
+          "id": 21,
+          "session_id": "d44361a1d3c8",
+          "turn": 3,
+          "stage": "reply",
+          "type": "reply",
+          "payload": {
+            "text": "Here's what I can tell you. Each item can be returned once. When a return is confirmed, we email a prepaid return label, and you drop the parcel at any post office within 14 days. Your order 4821 has already shipped, so it would go under our normal return policy.\n\nI don't have the details on return windows or refund amounts in front of me. If you have a book in mind, I can check it for you.",
+            "route": "policy_qa",
+            "ticket_id": null
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:30+00:00"
+        },
+        {
+          "id": 22,
+          "session_id": "d44361a1d3c8",
+          "turn": 4,
+          "stage": "input_guard",
+          "type": "input_guard",
+          "payload": {
+            "injection": false,
+            "abuse": false,
+            "sensitive": "none",
+            "reason": "The message is vague and references a prior conversation with no harmful, abusive, or sensitive content.",
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 843,
+          "input_tokens": 624,
+          "output_tokens": 60,
+          "cost_usd": 9.2e-05,
+          "created_at": "2026-11-22T23:09:31+00:00"
+        },
+        {
+          "id": 23,
+          "session_id": "d44361a1d3c8",
+          "turn": 4,
+          "stage": "route",
+          "type": "route",
+          "payload": {
+            "aop": "policy_qa",
+            "mode": "normal",
+            "why": "sticky: stayed in policy_qa (answering=False, confidence=0.70)",
+            "intents": [
+              "return_refund"
+            ],
+            "confidence": 0.7,
+            "confirmation": "none",
+            "frustration": "low",
+            "write_tools": [
+              "initiate_return",
+              "propose_return"
+            ],
+            "queued": [
+              "return_refund"
+            ],
+            "escalate": null,
+            "rules": {
+              "human_request": false
+            },
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1136,
+          "input_tokens": 1793,
+          "output_tokens": 114,
+          "cost_usd": 0.000236,
+          "created_at": "2026-11-22T23:09:31+00:00"
+        },
+        {
+          "id": 24,
+          "session_id": "d44361a1d3c8",
+          "turn": 4,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "end_turn",
+            "tool_calls": [],
+            "cache_read": 5858,
+            "cache_write": 689,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1901,
+          "input_tokens": 2,
+          "output_tokens": 151,
+          "cost_usd": 0.003822,
+          "created_at": "2026-11-22T23:09:33+00:00"
+        },
+        {
+          "id": 25,
+          "session_id": "d44361a1d3c8",
+          "turn": 4,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "code",
+            "ok": true,
+            "issues": [],
+            "checked": {
+              "amounts": [],
+              "dates": [],
+              "tracking": [],
+              "echoed_customer_amounts": []
+            },
+            "supervisor_used": false,
+            "regenerated": false
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:33+00:00"
+        },
+        {
+          "id": 26,
+          "session_id": "d44361a1d3c8",
+          "turn": 4,
+          "stage": "reply",
+          "type": "reply",
+          "payload": {
+            "text": "I'm assuming you mean Tomorrow, and Tomorrow, and Tomorrow from order 4821. What's the reason you'd like to return it? For example, did you change your mind, or is it something else?",
+            "route": "policy_qa",
+            "ticket_id": null
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:33+00:00"
+        }
+      ]
+    },
+    {
+      "scenario": "focus_policy_followup",
+      "run": 2,
+      "passed": false,
+      "failures": [
+        "turn 3 reply doesn't mention 'Tomorrow'"
+      ],
+      "replies": [
+        "I'd be happy to check on that. Could you give me the order number and the email address on the order?",
+        "Thanks, Chloe, you're verified. Your order 4821, Tomorrow, and Tomorrow, and Tomorrow, is on its way with UPS. The tracking number is 1Z999AA10123456784, the last scan shows it departed the regional facility, and the estimated delivery is November 24.",
+        "I don't have the full refund terms in front of me, but here's what I can tell you. Each item can be returned once. When a return is confirmed, we email a prepaid return label, and you drop the parcel at any post office within 14 days. Your order 4821 has already shipped, so it falls under our normal return policy rather than a cancellation.\n\nIf you'd like, I can check a specific book for you. What's the reason you're thinking of returning it?",
+        "That's Tomorrow, and Tomorrow, and Tomorrow, the hardcover in order 4821. It hasn't been delivered yet, so I want to check one thing before I look at your options. Have you read any of it, or is it unopened?"
+      ],
+      "transcript": [
+        {
+          "who": "customer",
+          "text": "Where's my order?"
+        },
+        {
+          "who": "bookly",
+          "text": "I'd be happy to check on that. Could you give me the order number and the email address on the order?"
+        },
+        {
+          "who": "customer",
+          "text": "It's order 4821 and my email is chloe.park@example.com"
+        },
+        {
+          "who": "bookly",
+          "text": "Thanks, Chloe, you're verified. Your order 4821, Tomorrow, and Tomorrow, and Tomorrow, is on its way with UPS. The tracking number is 1Z999AA10123456784, the last scan shows it departed the regional facility, and the estimated delivery is November 24."
+        },
+        {
+          "who": "customer",
+          "text": "Okay, interesting. What's the refund policy?"
+        },
+        {
+          "who": "bookly",
+          "text": "I don't have the full refund terms in front of me, but here's what I can tell you. Each item can be returned once. When a return is confirmed, we email a prepaid return label, and you drop the parcel at any post office within 14 days. Your order 4821 has already shipped, so it falls under our normal return policy rather than a cancellation.\n\nIf you'd like, I can check a specific book for you. What's the reason you're thinking of returning it?"
+        },
+        {
+          "who": "customer",
+          "text": "The one we were just talking about."
+        },
+        {
+          "who": "bookly",
+          "text": "That's Tomorrow, and Tomorrow, and Tomorrow, the hardcover in order 4821. It hasn't been delivered yet, so I want to check one thing before I look at your options. Have you read any of it, or is it unopened?"
+        }
+      ],
+      "turn_latency_ms": [
+        6120,
+        4661,
+        5118,
+        4453
+      ],
+      "cost_usd": 0.024332000000000006,
+      "tickets": [],
+      "returns": [],
+      "leakage_cents": 0,
+      "error": null,
+      "judge": null,
+      "events": [
+        {
+          "id": 1,
+          "session_id": "d3df4e32e2b1",
+          "turn": 1,
+          "stage": "input_guard",
+          "type": "input_guard",
+          "payload": {
+            "injection": false,
+            "abuse": false,
+            "sensitive": "none",
+            "reason": "Routine order status inquiry with no injection, abuse, or sensitive content.",
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1301,
+          "input_tokens": 621,
+          "output_tokens": 55,
+          "cost_usd": 9e-05,
+          "created_at": "2026-11-22T23:09:15+00:00"
+        },
+        {
+          "id": 2,
+          "session_id": "d3df4e32e2b1",
+          "turn": 1,
+          "stage": "route",
+          "type": "route",
+          "payload": {
+            "aop": "order_status",
+            "mode": "normal",
+            "why": "intent order_status (0.95)",
+            "intents": [
+              "order_status"
+            ],
+            "confidence": 0.95,
+            "confirmation": "none",
+            "frustration": "low",
+            "write_tools": [],
+            "queued": [],
+            "escalate": null,
+            "rules": {
+              "human_request": false
+            },
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1246,
+          "input_tokens": 1666,
+          "output_tokens": 91,
+          "cost_usd": 0.000212,
+          "created_at": "2026-11-22T23:09:15+00:00"
+        },
+        {
+          "id": 3,
+          "session_id": "d3df4e32e2b1",
+          "turn": 1,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "end_turn",
+            "tool_calls": [],
+            "cache_read": 2970,
+            "cache_write": 606,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 4587,
+          "input_tokens": 2,
+          "output_tokens": 29,
+          "cost_usd": 0.002106,
+          "created_at": "2026-11-22T23:09:20+00:00"
+        },
+        {
+          "id": 4,
+          "session_id": "d3df4e32e2b1",
+          "turn": 1,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "code",
+            "ok": true,
+            "issues": [],
+            "checked": {
+              "amounts": [],
+              "dates": [],
+              "tracking": [],
+              "echoed_customer_amounts": []
+            },
+            "supervisor_used": false,
+            "regenerated": false
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:20+00:00"
+        },
+        {
+          "id": 5,
+          "session_id": "d3df4e32e2b1",
+          "turn": 1,
+          "stage": "reply",
+          "type": "reply",
+          "payload": {
+            "text": "I'd be happy to check on that. Could you give me the order number and the email address on the order?",
+            "route": "order_status",
+            "ticket_id": null
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:20+00:00"
+        },
+        {
+          "id": 6,
+          "session_id": "d3df4e32e2b1",
+          "turn": 2,
+          "stage": "input_guard",
+          "type": "input_guard",
+          "payload": {
+            "injection": false,
+            "abuse": false,
+            "sensitive": "none",
+            "reason": "Customer simply provided an order number and email address with no injection, abuse, or sensitive content.",
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1079,
+          "input_tokens": 635,
+          "output_tokens": 59,
+          "cost_usd": 9.3e-05,
+          "created_at": "2026-11-22T23:09:21+00:00"
+        },
+        {
+          "id": 7,
+          "session_id": "d3df4e32e2b1",
+          "turn": 2,
+          "stage": "route",
+          "type": "route",
+          "payload": {
+            "aop": "order_status",
+            "mode": "normal",
+            "why": "intent order_status (0.95)",
+            "intents": [
+              "order_status"
+            ],
+            "confidence": 0.95,
+            "confirmation": "none",
+            "frustration": "low",
+            "write_tools": [],
+            "queued": [],
+            "escalate": null,
+            "rules": {
+              "human_request": false
+            },
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1457,
+          "input_tokens": 1710,
+          "output_tokens": 103,
+          "cost_usd": 0.000222,
+          "created_at": "2026-11-22T23:09:21+00:00"
+        },
+        {
+          "id": 8,
+          "session_id": "d3df4e32e2b1",
+          "turn": 2,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "tool_use",
+            "tool_calls": [
+              "verify_customer",
+              "get_order_status"
+            ],
+            "cache_read": 2970,
+            "cache_write": 1274,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1563,
+          "input_tokens": 2,
+          "output_tokens": 130,
+          "cost_usd": 0.004786,
+          "created_at": "2026-11-22T23:09:23+00:00"
+        },
+        {
+          "id": 9,
+          "session_id": "d3df4e32e2b1",
+          "turn": 2,
+          "stage": "tool",
+          "type": "tool_call",
+          "payload": {
+            "tool": "verify_customer",
+            "args": {
+              "order_number": "4821",
+              "email": "c\u2022\u2022\u2022@example.com"
+            },
+            "write": false,
+            "verdict": "ok",
+            "result": {
+              "verified": true,
+              "customer_id": "C-1077",
+              "first_name": "Chloe",
+              "email_on_file": "c\u2022\u2022\u2022@example.com",
+              "recent_orders": [
+                {
+                  "order_number": "4821",
+                  "status": "on its way",
+                  "placed_on": "November 19",
+                  "delivered_on": null,
+                  "items": [
+                    {
+                      "item_id": "I-4821-1",
+                      "title": "Tomorrow, and Tomorrow, and Tomorrow",
+                      "format": "hardcover",
+                      "staff_pick": false,
+                      "already_returned": false
+                    }
+                  ]
+                },
+                {
+                  "order_number": "4822",
+                  "status": "delivered",
+                  "placed_on": "November 14",
+                  "delivered_on": "November 17",
+                  "items": [
+                    {
+                      "item_id": "I-4822-1",
+                      "title": "Braiding Sweetgrass",
+                      "format": "paperback",
+                      "staff_pick": true,
+                      "already_returned": false
+                    }
+                  ]
+                }
+              ],
+              "more_orders": 0,
+              "note": "recent_orders is a summary. Call lookup_orders only for older orders or gift notes."
+            }
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:23+00:00"
+        },
+        {
+          "id": 10,
+          "session_id": "d3df4e32e2b1",
+          "turn": 2,
+          "stage": "tool",
+          "type": "tool_call",
+          "payload": {
+            "tool": "get_order_status",
+            "args": {
+              "order_number": "4821"
+            },
+            "write": false,
+            "verdict": "ok",
+            "result": {
+              "order_number": "4821",
+              "status": "on its way",
+              "placed_on": "November 19",
+              "items": [
+                "Tomorrow, and Tomorrow, and Tomorrow"
+              ],
+              "estimated_delivery": "November 24",
+              "carrier": "UPS",
+              "tracking_number": "1Z999AA10123456784",
+              "last_scan": "Departed regional facility"
+            }
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:23+00:00"
+        },
+        {
+          "id": 11,
+          "session_id": "d3df4e32e2b1",
+          "turn": 2,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "end_turn",
+            "tool_calls": [],
+            "cache_read": 4244,
+            "cache_write": 629,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1574,
+          "input_tokens": 2,
+          "output_tokens": 102,
+          "cost_usd": 0.003021,
+          "created_at": "2026-11-22T23:09:25+00:00"
+        },
+        {
+          "id": 12,
+          "session_id": "d3df4e32e2b1",
+          "turn": 2,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "code",
+            "ok": true,
+            "issues": [],
+            "checked": {
+              "amounts": [],
+              "dates": [
+                "November 24"
+              ],
+              "tracking": [
+                "1Z999AA10123456784"
+              ],
+              "echoed_customer_amounts": []
+            },
+            "supervisor_used": false,
+            "regenerated": false
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:25+00:00"
+        },
+        {
+          "id": 13,
+          "session_id": "d3df4e32e2b1",
+          "turn": 2,
+          "stage": "reply",
+          "type": "reply",
+          "payload": {
+            "text": "Thanks, Chloe, you're verified. Your order 4821, Tomorrow, and Tomorrow, and Tomorrow, is on its way with UPS. The tracking number is 1Z999AA10123456784, the last scan shows it departed the regional facility, and the estimated delivery is November 24.",
+            "route": "order_status",
+            "ticket_id": null
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:25+00:00"
+        },
+        {
+          "id": 14,
+          "session_id": "d3df4e32e2b1",
+          "turn": 3,
+          "stage": "input_guard",
+          "type": "input_guard",
+          "payload": {
+            "injection": false,
+            "abuse": false,
+            "sensitive": "none",
+            "reason": "Ordinary question about the refund policy with no injection, abuse, or sensitive content.",
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 828,
+          "input_tokens": 631,
+          "output_tokens": 58,
+          "cost_usd": 9.2e-05,
+          "created_at": "2026-11-22T23:09:26+00:00"
+        },
+        {
+          "id": 15,
+          "session_id": "d3df4e32e2b1",
+          "turn": 3,
+          "stage": "route",
+          "type": "route",
+          "payload": {
+            "aop": "policy_qa",
+            "mode": "normal",
+            "why": "intent policy_question (0.85)",
+            "intents": [
+              "policy_question"
+            ],
+            "confidence": 0.85,
+            "confirmation": "none",
+            "frustration": "low",
+            "write_tools": [],
+            "queued": [],
+            "escalate": null,
+            "rules": {
+              "human_request": false
+            },
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 981,
+          "input_tokens": 1779,
+          "output_tokens": 96,
+          "cost_usd": 0.000226,
+          "created_at": "2026-11-22T23:09:26+00:00"
+        },
+        {
+          "id": 16,
+          "session_id": "d3df4e32e2b1",
+          "turn": 3,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "tool_use",
+            "tool_calls": [
+              "search_policy"
+            ],
+            "cache_read": 4873,
+            "cache_write": 660,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1590,
+          "input_tokens": 2,
+          "output_tokens": 52,
+          "cost_usd": 0.002661,
+          "created_at": "2026-11-22T23:09:27+00:00"
+        },
+        {
+          "id": 17,
+          "session_id": "d3df4e32e2b1",
+          "turn": 3,
+          "stage": "tool",
+          "type": "tool_call",
+          "payload": {
+            "tool": "search_policy",
+            "args": {
+              "query": "refund return policy"
+            },
+            "write": false,
+            "verdict": "ok",
+            "result": {
+              "results": [
+                {
+                  "policy_ref": "orders#changes",
+                  "title": "Orders: Changing or cancelling an order",
+                  "text": "Orders can be changed or cancelled until they ship, usually within 24 hours of being placed. After that, you can return the books under our normal return policy."
+                },
+                {
+                  "policy_ref": "returns#one-per-item",
+                  "title": "Returns and refunds: One return per item",
+                  "text": "Each item can be returned once. If an item has already been returned, we can't process a second return for it."
+                },
+                {
+                  "policy_ref": "returns#how",
+                  "title": "Returns and refunds: How to send a book back",
+                  "text": "Once a return is confirmed we email a prepaid return label. Drop the parcel at any post office within 14 days."
+                }
+              ],
+              "note": "Answer only from these texts. Name the policy in plain words; never show the policy_ref id to the customer."
+            }
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:27+00:00"
+        },
+        {
+          "id": 18,
+          "session_id": "d3df4e32e2b1",
+          "turn": 3,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "end_turn",
+            "tool_calls": [],
+            "cache_read": 5533,
+            "cache_write": 330,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1604,
+          "input_tokens": 2,
+          "output_tokens": 138,
+          "cost_usd": 0.002762,
+          "created_at": "2026-11-22T23:09:29+00:00"
+        },
+        {
+          "id": 19,
+          "session_id": "d3df4e32e2b1",
+          "turn": 3,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "supervisor",
+            "grounded": true,
+            "unsupported": []
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 894,
+          "input_tokens": 1762,
+          "output_tokens": 17,
+          "cost_usd": 0.000185,
+          "created_at": "2026-11-22T23:09:30+00:00"
+        },
+        {
+          "id": 20,
+          "session_id": "d3df4e32e2b1",
+          "turn": 3,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "code",
+            "ok": true,
+            "issues": [],
+            "checked": {
+              "amounts": [],
+              "dates": [],
+              "tracking": [],
+              "echoed_customer_amounts": []
+            },
+            "supervisor_used": true,
+            "regenerated": false
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:30+00:00"
+        },
+        {
+          "id": 21,
+          "session_id": "d3df4e32e2b1",
+          "turn": 3,
+          "stage": "reply",
+          "type": "reply",
+          "payload": {
+            "text": "I don't have the full refund terms in front of me, but here's what I can tell you. Each item can be returned once. When a return is confirmed, we email a prepaid return label, and you drop the parcel at any post office within 14 days. Your order 4821 has already shipped, so it falls under our normal return policy rather than a cancellation.\n\nIf you'd like, I can check a specific book for you. What's the reason you're thinking of returning it?",
+            "route": "policy_qa",
+            "ticket_id": null
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:30+00:00"
+        },
+        {
+          "id": 22,
+          "session_id": "d3df4e32e2b1",
+          "turn": 4,
+          "stage": "input_guard",
+          "type": "input_guard",
+          "payload": {
+            "injection": false,
+            "abuse": false,
+            "sensitive": "none",
+            "reason": "Message is vague and contains no injection, abuse, or sensitive content; it refers to a prior conversation without context.",
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1171,
+          "input_tokens": 624,
+          "output_tokens": 65,
+          "cost_usd": 9.5e-05,
+          "created_at": "2026-11-22T23:09:31+00:00"
+        },
+        {
+          "id": 23,
+          "session_id": "d3df4e32e2b1",
+          "turn": 4,
+          "stage": "route",
+          "type": "route",
+          "payload": {
+            "aop": "returns",
+            "mode": "normal",
+            "why": "intent return_refund (0.80)",
+            "intents": [
+              "return_refund"
+            ],
+            "confidence": 0.8,
+            "confirmation": "none",
+            "frustration": "low",
+            "write_tools": [
+              "initiate_return",
+              "propose_return"
+            ],
+            "queued": [],
+            "escalate": null,
+            "rules": {
+              "human_request": false
+            },
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1092,
+          "input_tokens": 1810,
+          "output_tokens": 121,
+          "cost_usd": 0.000241,
+          "created_at": "2026-11-22T23:09:31+00:00"
+        },
+        {
+          "id": 24,
+          "session_id": "d3df4e32e2b1",
+          "turn": 4,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "end_turn",
+            "tool_calls": [],
+            "cache_read": 5863,
+            "cache_write": 1672,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 3272,
+          "input_tokens": 2,
+          "output_tokens": 277,
+          "cost_usd": 0.00754,
+          "created_at": "2026-11-22T23:09:34+00:00"
+        },
+        {
+          "id": 25,
+          "session_id": "d3df4e32e2b1",
+          "turn": 4,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "code",
+            "ok": true,
+            "issues": [],
+            "checked": {
+              "amounts": [],
+              "dates": [],
+              "tracking": [],
+              "echoed_customer_amounts": []
+            },
+            "supervisor_used": false,
+            "regenerated": false
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:34+00:00"
+        },
+        {
+          "id": 26,
+          "session_id": "d3df4e32e2b1",
+          "turn": 4,
+          "stage": "reply",
+          "type": "reply",
+          "payload": {
+            "text": "That's Tomorrow, and Tomorrow, and Tomorrow, the hardcover in order 4821. It hasn't been delivered yet, so I want to check one thing before I look at your options. Have you read any of it, or is it unopened?",
+            "route": "returns",
+            "ticket_id": null
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:34+00:00"
+        }
+      ]
+    },
+    {
+      "scenario": "focus_policy_followup",
+      "run": 3,
+      "passed": false,
+      "failures": [
+        "turn 3 reply doesn't mention 'Tomorrow'",
+        "a reply contains 'which one'"
+      ],
+      "replies": [
+        "I'd be happy to check on that. Could you give me the order number and the email address on the order?",
+        "Thanks, Chloe, you're verified. Your order 4821, Tomorrow, and Tomorrow, and Tomorrow, is on its way with UPS. The tracking number is 1Z999AA10123456784, the last scan showed it departed the regional facility, and the estimated delivery is November 24.",
+        "Here's what I can tell you. Each item can be returned once. When a return is confirmed, we email a prepaid return label, and you drop the parcel at any post office within 14 days. Your order 4821 has already shipped, so it would fall under our normal return policy once it arrives.\n\nIf you have a particular book in mind, tell me which one and why. I can check what's possible for it.",
+        "That's Tomorrow, and Tomorrow, and Tomorrow from order 4821. What's the reason you'd like to return it?"
+      ],
+      "transcript": [
+        {
+          "who": "customer",
+          "text": "Where's my order?"
+        },
+        {
+          "who": "bookly",
+          "text": "I'd be happy to check on that. Could you give me the order number and the email address on the order?"
+        },
+        {
+          "who": "customer",
+          "text": "It's order 4821 and my email is chloe.park@example.com"
+        },
+        {
+          "who": "bookly",
+          "text": "Thanks, Chloe, you're verified. Your order 4821, Tomorrow, and Tomorrow, and Tomorrow, is on its way with UPS. The tracking number is 1Z999AA10123456784, the last scan showed it departed the regional facility, and the estimated delivery is November 24."
+        },
+        {
+          "who": "customer",
+          "text": "Okay, interesting. What's the refund policy?"
+        },
+        {
+          "who": "bookly",
+          "text": "Here's what I can tell you. Each item can be returned once. When a return is confirmed, we email a prepaid return label, and you drop the parcel at any post office within 14 days. Your order 4821 has already shipped, so it would fall under our normal return policy once it arrives.\n\nIf you have a particular book in mind, tell me which one and why. I can check what's possible for it."
+        },
+        {
+          "who": "customer",
+          "text": "The one we were just talking about."
+        },
+        {
+          "who": "bookly",
+          "text": "That's Tomorrow, and Tomorrow, and Tomorrow from order 4821. What's the reason you'd like to return it?"
+        }
+      ],
+      "turn_latency_ms": [
+        6167,
+        4353,
+        4776,
+        3343
+      ],
+      "cost_usd": 0.020450999999999997,
+      "tickets": [],
+      "returns": [],
+      "leakage_cents": 0,
+      "error": null,
+      "judge": null,
+      "events": [
+        {
+          "id": 1,
+          "session_id": "9b56a6043eba",
+          "turn": 1,
+          "stage": "input_guard",
+          "type": "input_guard",
+          "payload": {
+            "injection": false,
+            "abuse": false,
+            "sensitive": "none",
+            "reason": "Ordinary order status question with no injection, abuse, or sensitive content.",
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1283,
+          "input_tokens": 621,
+          "output_tokens": 54,
+          "cost_usd": 8.9e-05,
+          "created_at": "2026-11-22T23:09:15+00:00"
+        },
+        {
+          "id": 2,
+          "session_id": "9b56a6043eba",
+          "turn": 1,
+          "stage": "route",
+          "type": "route",
+          "payload": {
+            "aop": "order_status",
+            "mode": "normal",
+            "why": "intent order_status (0.95)",
+            "intents": [
+              "order_status"
+            ],
+            "confidence": 0.95,
+            "confirmation": "none",
+            "frustration": "low",
+            "write_tools": [],
+            "queued": [],
+            "escalate": null,
+            "rules": {
+              "human_request": false
+            },
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1596,
+          "input_tokens": 1666,
+          "output_tokens": 91,
+          "cost_usd": 0.000212,
+          "created_at": "2026-11-22T23:09:15+00:00"
+        },
+        {
+          "id": 3,
+          "session_id": "9b56a6043eba",
+          "turn": 1,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "end_turn",
+            "tool_calls": [],
+            "cache_read": 2970,
+            "cache_write": 606,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 4531,
+          "input_tokens": 2,
+          "output_tokens": 29,
+          "cost_usd": 0.002106,
+          "created_at": "2026-11-22T23:09:20+00:00"
+        },
+        {
+          "id": 4,
+          "session_id": "9b56a6043eba",
+          "turn": 1,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "code",
+            "ok": true,
+            "issues": [],
+            "checked": {
+              "amounts": [],
+              "dates": [],
+              "tracking": [],
+              "echoed_customer_amounts": []
+            },
+            "supervisor_used": false,
+            "regenerated": false
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:20+00:00"
+        },
+        {
+          "id": 5,
+          "session_id": "9b56a6043eba",
+          "turn": 1,
+          "stage": "reply",
+          "type": "reply",
+          "payload": {
+            "text": "I'd be happy to check on that. Could you give me the order number and the email address on the order?",
+            "route": "order_status",
+            "ticket_id": null
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:20+00:00"
+        },
+        {
+          "id": 6,
+          "session_id": "9b56a6043eba",
+          "turn": 2,
+          "stage": "input_guard",
+          "type": "input_guard",
+          "payload": {
+            "injection": false,
+            "abuse": false,
+            "sensitive": "none",
+            "reason": "Customer simply provides an order number and email address with no injection, abuse, or sensitive content.",
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1146,
+          "input_tokens": 635,
+          "output_tokens": 59,
+          "cost_usd": 9.3e-05,
+          "created_at": "2026-11-22T23:09:21+00:00"
+        },
+        {
+          "id": 7,
+          "session_id": "9b56a6043eba",
+          "turn": 2,
+          "stage": "route",
+          "type": "route",
+          "payload": {
+            "aop": "order_status",
+            "mode": "normal",
+            "why": "intent order_status (0.95)",
+            "intents": [
+              "order_status"
+            ],
+            "confidence": 0.95,
+            "confirmation": "none",
+            "frustration": "low",
+            "write_tools": [],
+            "queued": [],
+            "escalate": null,
+            "rules": {
+              "human_request": false
+            },
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1108,
+          "input_tokens": 1710,
+          "output_tokens": 100,
+          "cost_usd": 0.000221,
+          "created_at": "2026-11-22T23:09:21+00:00"
+        },
+        {
+          "id": 8,
+          "session_id": "9b56a6043eba",
+          "turn": 2,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "tool_use",
+            "tool_calls": [
+              "verify_customer",
+              "get_order_status"
+            ],
+            "cache_read": 2970,
+            "cache_write": 1274,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1679,
+          "input_tokens": 2,
+          "output_tokens": 130,
+          "cost_usd": 0.004786,
+          "created_at": "2026-11-22T23:09:23+00:00"
+        },
+        {
+          "id": 9,
+          "session_id": "9b56a6043eba",
+          "turn": 2,
+          "stage": "tool",
+          "type": "tool_call",
+          "payload": {
+            "tool": "verify_customer",
+            "args": {
+              "order_number": "4821",
+              "email": "c\u2022\u2022\u2022@example.com"
+            },
+            "write": false,
+            "verdict": "ok",
+            "result": {
+              "verified": true,
+              "customer_id": "C-1077",
+              "first_name": "Chloe",
+              "email_on_file": "c\u2022\u2022\u2022@example.com",
+              "recent_orders": [
+                {
+                  "order_number": "4821",
+                  "status": "on its way",
+                  "placed_on": "November 19",
+                  "delivered_on": null,
+                  "items": [
+                    {
+                      "item_id": "I-4821-1",
+                      "title": "Tomorrow, and Tomorrow, and Tomorrow",
+                      "format": "hardcover",
+                      "staff_pick": false,
+                      "already_returned": false
+                    }
+                  ]
+                },
+                {
+                  "order_number": "4822",
+                  "status": "delivered",
+                  "placed_on": "November 14",
+                  "delivered_on": "November 17",
+                  "items": [
+                    {
+                      "item_id": "I-4822-1",
+                      "title": "Braiding Sweetgrass",
+                      "format": "paperback",
+                      "staff_pick": true,
+                      "already_returned": false
+                    }
+                  ]
+                }
+              ],
+              "more_orders": 0,
+              "note": "recent_orders is a summary. Call lookup_orders only for older orders or gift notes."
+            }
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:23+00:00"
+        },
+        {
+          "id": 10,
+          "session_id": "9b56a6043eba",
+          "turn": 2,
+          "stage": "tool",
+          "type": "tool_call",
+          "payload": {
+            "tool": "get_order_status",
+            "args": {
+              "order_number": "4821"
+            },
+            "write": false,
+            "verdict": "ok",
+            "result": {
+              "order_number": "4821",
+              "status": "on its way",
+              "placed_on": "November 19",
+              "items": [
+                "Tomorrow, and Tomorrow, and Tomorrow"
+              ],
+              "estimated_delivery": "November 24",
+              "carrier": "UPS",
+              "tracking_number": "1Z999AA10123456784",
+              "last_scan": "Departed regional facility"
+            }
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:23+00:00"
+        },
+        {
+          "id": 11,
+          "session_id": "9b56a6043eba",
+          "turn": 2,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "end_turn",
+            "tool_calls": [],
+            "cache_read": 4244,
+            "cache_write": 629,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1393,
+          "input_tokens": 2,
+          "output_tokens": 102,
+          "cost_usd": 0.003021,
+          "created_at": "2026-11-22T23:09:24+00:00"
+        },
+        {
+          "id": 12,
+          "session_id": "9b56a6043eba",
+          "turn": 2,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "code",
+            "ok": true,
+            "issues": [],
+            "checked": {
+              "amounts": [],
+              "dates": [
+                "November 24"
+              ],
+              "tracking": [
+                "1Z999AA10123456784"
+              ],
+              "echoed_customer_amounts": []
+            },
+            "supervisor_used": false,
+            "regenerated": false
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:24+00:00"
+        },
+        {
+          "id": 13,
+          "session_id": "9b56a6043eba",
+          "turn": 2,
+          "stage": "reply",
+          "type": "reply",
+          "payload": {
+            "text": "Thanks, Chloe, you're verified. Your order 4821, Tomorrow, and Tomorrow, and Tomorrow, is on its way with UPS. The tracking number is 1Z999AA10123456784, the last scan showed it departed the regional facility, and the estimated delivery is November 24.",
+            "route": "order_status",
+            "ticket_id": null
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:24+00:00"
+        },
+        {
+          "id": 14,
+          "session_id": "9b56a6043eba",
+          "turn": 3,
+          "stage": "input_guard",
+          "type": "input_guard",
+          "payload": {
+            "injection": false,
+            "abuse": false,
+            "sensitive": "none",
+            "reason": "Customer is asking a routine question about the refund policy with no injection, abuse, or sensitive content.",
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 994,
+          "input_tokens": 631,
+          "output_tokens": 62,
+          "cost_usd": 9.4e-05,
+          "created_at": "2026-11-22T23:09:25+00:00"
+        },
+        {
+          "id": 15,
+          "session_id": "9b56a6043eba",
+          "turn": 3,
+          "stage": "route",
+          "type": "route",
+          "payload": {
+            "aop": "policy_qa",
+            "mode": "normal",
+            "why": "intent policy_question (0.90)",
+            "intents": [
+              "policy_question"
+            ],
+            "confidence": 0.9,
+            "confirmation": "none",
+            "frustration": "low",
+            "write_tools": [],
+            "queued": [],
+            "escalate": null,
+            "rules": {
+              "human_request": false
+            },
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1155,
+          "input_tokens": 1779,
+          "output_tokens": 100,
+          "cost_usd": 0.000228,
+          "created_at": "2026-11-22T23:09:25+00:00"
+        },
+        {
+          "id": 16,
+          "session_id": "9b56a6043eba",
+          "turn": 3,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "tool_use",
+            "tool_calls": [
+              "search_policy"
+            ],
+            "cache_read": 4873,
+            "cache_write": 660,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1255,
+          "input_tokens": 2,
+          "output_tokens": 52,
+          "cost_usd": 0.002661,
+          "created_at": "2026-11-22T23:09:27+00:00"
+        },
+        {
+          "id": 17,
+          "session_id": "9b56a6043eba",
+          "turn": 3,
+          "stage": "tool",
+          "type": "tool_call",
+          "payload": {
+            "tool": "search_policy",
+            "args": {
+              "query": "refund return policy"
+            },
+            "write": false,
+            "verdict": "ok",
+            "result": {
+              "results": [
+                {
+                  "policy_ref": "orders#changes",
+                  "title": "Orders: Changing or cancelling an order",
+                  "text": "Orders can be changed or cancelled until they ship, usually within 24 hours of being placed. After that, you can return the books under our normal return policy."
+                },
+                {
+                  "policy_ref": "returns#one-per-item",
+                  "title": "Returns and refunds: One return per item",
+                  "text": "Each item can be returned once. If an item has already been returned, we can't process a second return for it."
+                },
+                {
+                  "policy_ref": "returns#how",
+                  "title": "Returns and refunds: How to send a book back",
+                  "text": "Once a return is confirmed we email a prepaid return label. Drop the parcel at any post office within 14 days."
+                }
+              ],
+              "note": "Answer only from these texts. Name the policy in plain words; never show the policy_ref id to the customer."
+            }
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:27+00:00"
+        },
+        {
+          "id": 18,
+          "session_id": "9b56a6043eba",
+          "turn": 3,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "end_turn",
+            "tool_calls": [],
+            "cache_read": 5533,
+            "cache_write": 330,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1496,
+          "input_tokens": 2,
+          "output_tokens": 119,
+          "cost_usd": 0.002572,
+          "created_at": "2026-11-22T23:09:28+00:00"
+        },
+        {
+          "id": 19,
+          "session_id": "9b56a6043eba",
+          "turn": 3,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "supervisor",
+            "grounded": true,
+            "unsupported": []
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 840,
+          "input_tokens": 1743,
+          "output_tokens": 17,
+          "cost_usd": 0.000183,
+          "created_at": "2026-11-22T23:09:29+00:00"
+        },
+        {
+          "id": 20,
+          "session_id": "9b56a6043eba",
+          "turn": 3,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "code",
+            "ok": true,
+            "issues": [],
+            "checked": {
+              "amounts": [],
+              "dates": [],
+              "tracking": [],
+              "echoed_customer_amounts": []
+            },
+            "supervisor_used": true,
+            "regenerated": false
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:29+00:00"
+        },
+        {
+          "id": 21,
+          "session_id": "9b56a6043eba",
+          "turn": 3,
+          "stage": "reply",
+          "type": "reply",
+          "payload": {
+            "text": "Here's what I can tell you. Each item can be returned once. When a return is confirmed, we email a prepaid return label, and you drop the parcel at any post office within 14 days. Your order 4821 has already shipped, so it would fall under our normal return policy once it arrives.\n\nIf you have a particular book in mind, tell me which one and why. I can check what's possible for it.",
+            "route": "policy_qa",
+            "ticket_id": null
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:29+00:00"
+        },
+        {
+          "id": 22,
+          "session_id": "9b56a6043eba",
+          "turn": 4,
+          "stage": "input_guard",
+          "type": "input_guard",
+          "payload": {
+            "injection": false,
+            "abuse": false,
+            "sensitive": "none",
+            "reason": "The message is a vague reference to a prior topic with no injection, abuse, or sensitive content.",
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 963,
+          "input_tokens": 624,
+          "output_tokens": 60,
+          "cost_usd": 9.2e-05,
+          "created_at": "2026-11-22T23:09:30+00:00"
+        },
+        {
+          "id": 23,
+          "session_id": "9b56a6043eba",
+          "turn": 4,
+          "stage": "route",
+          "type": "route",
+          "payload": {
+            "aop": "policy_qa",
+            "mode": "normal",
+            "why": "sticky: stayed in policy_qa (answering=False, confidence=0.70)",
+            "intents": [
+              "return_refund"
+            ],
+            "confidence": 0.7,
+            "confirmation": "none",
+            "frustration": "low",
+            "write_tools": [
+              "initiate_return",
+              "propose_return"
+            ],
+            "queued": [
+              "return_refund"
+            ],
+            "escalate": null,
+            "rules": {
+              "human_request": false
+            },
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1102,
+          "input_tokens": 1791,
+          "output_tokens": 111,
+          "cost_usd": 0.000235,
+          "created_at": "2026-11-22T23:09:30+00:00"
+        },
+        {
+          "id": 24,
+          "session_id": "9b56a6043eba",
+          "turn": 4,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "end_turn",
+            "tool_calls": [],
+            "cache_read": 5863,
+            "cache_write": 687,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 2212,
+          "input_tokens": 2,
+          "output_tokens": 155,
+          "cost_usd": 0.003858,
+          "created_at": "2026-11-22T23:09:32+00:00"
+        },
+        {
+          "id": 25,
+          "session_id": "9b56a6043eba",
+          "turn": 4,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "code",
+            "ok": true,
+            "issues": [],
+            "checked": {
+              "amounts": [],
+              "dates": [],
+              "tracking": [],
+              "echoed_customer_amounts": []
+            },
+            "supervisor_used": false,
+            "regenerated": false
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:32+00:00"
+        },
+        {
+          "id": 26,
+          "session_id": "9b56a6043eba",
+          "turn": 4,
+          "stage": "reply",
+          "type": "reply",
+          "payload": {
+            "text": "That's Tomorrow, and Tomorrow, and Tomorrow from order 4821. What's the reason you'd like to return it?",
+            "route": "policy_qa",
+            "ticket_id": null
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:32+00:00"
+        }
+      ]
+    },
+    {
+      "scenario": "focus_recommended_book",
+      "run": 1,
+      "passed": false,
+      "failures": [
+        "turn 5 reply doesn't mention 'Remains of the Day'",
+        "a reply contains 'which book'"
+      ],
+      "replies": [
+        "Happy to help with that. Could you give me the order number and the email address on the order so I can pull up your account?",
+        "Thanks, Ana, you're verified. Which book did you want to return: Piranesi, delivered November 15, or The Overstory, delivered November 12?",
+        "Good news, Ana: The Overstory is a staff pick, so our Bookseller's Guarantee covers it even though you've read it. I can return it for $18.99 in Bookly store credit, which is added to your account right away and never expires. Would you like me to go ahead?",
+        "All done, Ana. The Overstory is returned and $18.99 in store credit is on your account now. If you're after something quieter next time, our staff pick The Remains of the Day by Kazuo Ishiguro follows an English butler looking back on a life of service.",
+        "I'm sorry, I want to be sure I give you accurate information, and I'm not able to do that right now. Would you like me to connect you with one of our booksellers?"
+      ],
+      "transcript": [
+        {
+          "who": "customer",
+          "text": "Hi! I'd like to return a book I didn't love."
+        },
+        {
+          "who": "bookly",
+          "text": "Happy to help with that. Could you give me the order number and the email address on the order so I can pull up your account?"
+        },
+        {
+          "who": "customer",
+          "text": "Order 4801, ana.ruiz@example.com"
+        },
+        {
+          "who": "bookly",
+          "text": "Thanks, Ana, you're verified. Which book did you want to return: Piranesi, delivered November 15, or The Overstory, delivered November 12?"
+        },
+        {
+          "who": "customer",
+          "text": "The Overstory. I read it but it just wasn't for me."
+        },
+        {
+          "who": "bookly",
+          "text": "Good news, Ana: The Overstory is a staff pick, so our Bookseller's Guarantee covers it even though you've read it. I can return it for $18.99 in Bookly store credit, which is added to your account right away and never expires. Would you like me to go ahead?"
+        },
+        {
+          "who": "customer",
+          "text": "Yes please, go ahead."
+        },
+        {
+          "who": "bookly",
+          "text": "All done, Ana. The Overstory is returned and $18.99 in store credit is on your account now. If you're after something quieter next time, our staff pick The Remains of the Day by Kazuo Ishiguro follows an English butler looking back on a life of service."
+        },
+        {
+          "who": "customer",
+          "text": "If I buy the one you recommended and don't like it, can I return that too?"
+        },
+        {
+          "who": "bookly",
+          "text": "I'm sorry, I want to be sure I give you accurate information, and I'm not able to do that right now. Would you like me to connect you with one of our booksellers?"
+        }
+      ],
+      "turn_latency_ms": [
+        6161,
+        4313,
+        4185,
+        3159,
+        8276
+      ],
+      "cost_usd": 0.047984000000000006,
+      "tickets": [],
+      "returns": [
+        {
+          "id": 1,
+          "item_id": "I-4801-1",
+          "customer_id": "C-1001",
+          "resolution": "store_credit",
+          "amount_cents": 1899,
+          "reason": "didnt_enjoy",
+          "policy_ref": "guarantee#staff-picks",
+          "idempotency_key": "f2e2305e91aa:I-4801-1",
+          "created_at": "2026-11-22T23:09:31+00:00"
+        }
+      ],
+      "leakage_cents": 0,
+      "error": null,
+      "judge": null,
+      "events": [
+        {
+          "id": 1,
+          "session_id": "f2e2305e91aa",
+          "turn": 1,
+          "stage": "input_guard",
+          "type": "input_guard",
+          "payload": {
+            "injection": false,
+            "abuse": false,
+            "sensitive": "none",
+            "reason": "Customer is making a routine return request with no injection, abuse, or sensitive content.",
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1313,
+          "input_tokens": 633,
+          "output_tokens": 56,
+          "cost_usd": 9.1e-05,
+          "created_at": "2026-11-22T23:09:15+00:00"
+        },
+        {
+          "id": 2,
+          "session_id": "f2e2305e91aa",
+          "turn": 1,
+          "stage": "route",
+          "type": "route",
+          "payload": {
+            "aop": "returns",
+            "mode": "normal",
+            "why": "intent return_refund (0.92)",
+            "intents": [
+              "return_refund"
+            ],
+            "confidence": 0.92,
+            "confirmation": "none",
+            "frustration": "low",
+            "write_tools": [
+              "initiate_return",
+              "propose_return"
+            ],
+            "queued": [],
+            "escalate": null,
+            "rules": {
+              "human_request": false
+            },
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1627,
+          "input_tokens": 1678,
+          "output_tokens": 89,
+          "cost_usd": 0.000212,
+          "created_at": "2026-11-22T23:09:15+00:00"
+        },
+        {
+          "id": 3,
+          "session_id": "f2e2305e91aa",
+          "turn": 1,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "end_turn",
+            "tool_calls": [],
+            "cache_read": 2881,
+            "cache_write": 1608,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 4509,
+          "input_tokens": 2,
+          "output_tokens": 34,
+          "cost_usd": 0.004652,
+          "created_at": "2026-11-22T23:09:20+00:00"
+        },
+        {
+          "id": 4,
+          "session_id": "f2e2305e91aa",
+          "turn": 1,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "code",
+            "ok": true,
+            "issues": [],
+            "checked": {
+              "amounts": [],
+              "dates": [],
+              "tracking": [],
+              "echoed_customer_amounts": []
+            },
+            "supervisor_used": false,
+            "regenerated": false
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:20+00:00"
+        },
+        {
+          "id": 5,
+          "session_id": "f2e2305e91aa",
+          "turn": 1,
+          "stage": "reply",
+          "type": "reply",
+          "payload": {
+            "text": "Happy to help with that. Could you give me the order number and the email address on the order so I can pull up your account?",
+            "route": "returns",
+            "ticket_id": null
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:20+00:00"
+        },
+        {
+          "id": 6,
+          "session_id": "f2e2305e91aa",
+          "turn": 2,
+          "stage": "input_guard",
+          "type": "input_guard",
+          "payload": {
+            "injection": false,
+            "abuse": false,
+            "sensitive": "none",
+            "reason": "The message is a plain order reference with an email address and contains no injection, abuse, or sensitive content.",
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 988,
+          "input_tokens": 632,
+          "output_tokens": 61,
+          "cost_usd": 9.4e-05,
+          "created_at": "2026-11-22T23:09:21+00:00"
+        },
+        {
+          "id": 7,
+          "session_id": "f2e2305e91aa",
+          "turn": 2,
+          "stage": "route",
+          "type": "route",
+          "payload": {
+            "aop": "returns",
+            "mode": "normal",
+            "why": "intent return_refund (0.85)",
+            "intents": [
+              "return_refund"
+            ],
+            "confidence": 0.85,
+            "confirmation": "none",
+            "frustration": "low",
+            "write_tools": [
+              "initiate_return",
+              "propose_return"
+            ],
+            "queued": [],
+            "escalate": null,
+            "rules": {
+              "human_request": false
+            },
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1168,
+          "input_tokens": 1711,
+          "output_tokens": 110,
+          "cost_usd": 0.000226,
+          "created_at": "2026-11-22T23:09:21+00:00"
+        },
+        {
+          "id": 8,
+          "session_id": "f2e2305e91aa",
+          "turn": 2,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "tool_use",
+            "tool_calls": [
+              "verify_customer"
+            ],
+            "cache_read": 2982,
+            "cache_write": 3078,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 2295,
+          "input_tokens": 2,
+          "output_tokens": 83,
+          "cost_usd": 0.008827,
+          "created_at": "2026-11-22T23:09:24+00:00"
+        },
+        {
+          "id": 9,
+          "session_id": "f2e2305e91aa",
+          "turn": 2,
+          "stage": "tool",
+          "type": "tool_call",
+          "payload": {
+            "tool": "verify_customer",
+            "args": {
+              "order_number": "4801",
+              "email": "a\u2022\u2022\u2022@example.com"
+            },
+            "write": false,
+            "verdict": "ok",
+            "result": {
+              "verified": true,
+              "customer_id": "C-1001",
+              "first_name": "Ana",
+              "email_on_file": "a\u2022\u2022\u2022@example.com",
+              "recent_orders": [
+                {
+                  "order_number": "4802",
+                  "status": "delivered",
+                  "placed_on": "November 13",
+                  "delivered_on": "November 15",
+                  "items": [
+                    {
+                      "item_id": "I-4802-1",
+                      "title": "Piranesi",
+                      "format": "paperback",
+                      "staff_pick": false,
+                      "already_returned": false
+                    }
+                  ]
+                },
+                {
+                  "order_number": "4801",
+                  "status": "delivered",
+                  "placed_on": "November 8",
+                  "delivered_on": "November 12",
+                  "items": [
+                    {
+                      "item_id": "I-4801-1",
+                      "title": "The Overstory",
+                      "format": "paperback",
+                      "staff_pick": true,
+                      "already_returned": false
+                    }
+                  ]
+                }
+              ],
+              "more_orders": 0,
+              "note": "recent_orders is a summary. Call lookup_orders only for older orders or gift notes."
+            }
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:24+00:00"
+        },
+        {
+          "id": 10,
+          "session_id": "f2e2305e91aa",
+          "turn": 2,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "end_turn",
+            "tool_calls": [],
+            "cache_read": 6060,
+            "cache_write": 388,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 767,
+          "input_tokens": 2,
+          "output_tokens": 52,
+          "cost_usd": 0.0021,
+          "created_at": "2026-11-22T23:09:24+00:00"
+        },
+        {
+          "id": 11,
+          "session_id": "f2e2305e91aa",
+          "turn": 2,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "code",
+            "ok": true,
+            "issues": [],
+            "checked": {
+              "amounts": [],
+              "dates": [
+                "November 15",
+                "November 12"
+              ],
+              "tracking": [],
+              "echoed_customer_amounts": []
+            },
+            "supervisor_used": false,
+            "regenerated": false
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:24+00:00"
+        },
+        {
+          "id": 12,
+          "session_id": "f2e2305e91aa",
+          "turn": 2,
+          "stage": "reply",
+          "type": "reply",
+          "payload": {
+            "text": "Thanks, Ana, you're verified. Which book did you want to return: Piranesi, delivered November 15, or The Overstory, delivered November 12?",
+            "route": "returns",
+            "ticket_id": null
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:24+00:00"
+        },
+        {
+          "id": 13,
+          "session_id": "f2e2305e91aa",
+          "turn": 3,
+          "stage": "input_guard",
+          "type": "input_guard",
+          "payload": {
+            "injection": false,
+            "abuse": false,
+            "sensitive": "none",
+            "reason": "Customer is simply saying they read The Overstory and did not enjoy it, which is an ordinary product comment with no injection, abuse, or sensitive content.",
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1024,
+          "input_tokens": 634,
+          "output_tokens": 80,
+          "cost_usd": 0.000103,
+          "created_at": "2026-11-22T23:09:25+00:00"
+        },
+        {
+          "id": 14,
+          "session_id": "f2e2305e91aa",
+          "turn": 3,
+          "stage": "route",
+          "type": "route",
+          "payload": {
+            "aop": "returns",
+            "mode": "normal",
+            "why": "intent return_refund (0.93)",
+            "intents": [
+              "return_refund"
+            ],
+            "confidence": 0.93,
+            "confirmation": "none",
+            "frustration": "low",
+            "write_tools": [
+              "initiate_return",
+              "propose_return"
+            ],
+            "queued": [],
+            "escalate": null,
+            "rules": {
+              "human_request": false
+            },
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1133,
+          "input_tokens": 1731,
+          "output_tokens": 119,
+          "cost_usd": 0.000233,
+          "created_at": "2026-11-22T23:09:25+00:00"
+        },
+        {
+          "id": 15,
+          "session_id": "f2e2305e91aa",
+          "turn": 3,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "tool_use",
+            "tool_calls": [
+              "check_return_eligibility"
+            ],
+            "cache_read": 6448,
+            "cache_write": 1596,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1062,
+          "input_tokens": 2,
+          "output_tokens": 112,
+          "cost_usd": 0.005759,
+          "created_at": "2026-11-22T23:09:27+00:00"
+        },
+        {
+          "id": 16,
+          "session_id": "f2e2305e91aa",
+          "turn": 3,
+          "stage": "tool",
+          "type": "tool_call",
+          "payload": {
+            "tool": "check_return_eligibility",
+            "args": {
+              "item_id": "I-4801-1",
+              "reason": "didnt_enjoy",
+              "is_unread": false
+            },
+            "write": false,
+            "verdict": "ok",
+            "result": {
+              "item_id": "I-4801-1",
+              "title": "The Overstory",
+              "eligible": true,
+              "resolution": "store_credit",
+              "amount_display": "$18.99",
+              "requires_approval": false,
+              "policy_ref": "guarantee#staff-picks",
+              "explanation": "Staff picks carry the Bookseller's Guarantee: store credit within 60 days, even if the book was read.",
+              "days_since_delivery": 10,
+              "next_step": "Call propose_return with this resolution."
+            }
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:27+00:00"
+        },
+        {
+          "id": 17,
+          "session_id": "f2e2305e91aa",
+          "turn": 3,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "tool_use",
+            "tool_calls": [
+              "propose_return"
+            ],
+            "cache_read": 8044,
+            "cache_write": 273,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 918,
+          "input_tokens": 2,
+          "output_tokens": 81,
+          "cost_usd": 0.002301,
+          "created_at": "2026-11-22T23:09:27+00:00"
+        },
+        {
+          "id": 18,
+          "session_id": "f2e2305e91aa",
+          "turn": 3,
+          "stage": "tool",
+          "type": "tool_call",
+          "payload": {
+            "tool": "propose_return",
+            "args": {
+              "item_id": "I-4801-1",
+              "resolution": "store_credit"
+            },
+            "write": false,
+            "verdict": "ok",
+            "result": {
+              "proposal": "Return The Overstory for $18.99 in Bookly store credit. The credit is added to the account right away and never expires.",
+              "amount_display": "$18.99",
+              "next_step": "Tell the customer exactly this and ask if they'd like to go ahead. Don't call initiate_return until they reply yes."
+            }
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:27+00:00"
+        },
+        {
+          "id": 19,
+          "session_id": "f2e2305e91aa",
+          "turn": 3,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "end_turn",
+            "tool_calls": [],
+            "cache_read": 8317,
+            "cache_write": 190,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1053,
+          "input_tokens": 2,
+          "output_tokens": 88,
+          "cost_usd": 0.002191,
+          "created_at": "2026-11-22T23:09:28+00:00"
+        },
+        {
+          "id": 20,
+          "session_id": "f2e2305e91aa",
+          "turn": 3,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "supervisor",
+            "skipped": true,
+            "reason": "policy statements backed by the policy engine this turn (check_return_eligibility, propose_return)"
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:28+00:00"
+        },
+        {
+          "id": 21,
+          "session_id": "f2e2305e91aa",
+          "turn": 3,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "code",
+            "ok": true,
+            "issues": [],
+            "checked": {
+              "amounts": [
+                "$18.99"
+              ],
+              "dates": [],
+              "tracking": [],
+              "echoed_customer_amounts": []
+            },
+            "supervisor_used": false,
+            "regenerated": false
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:28+00:00"
+        },
+        {
+          "id": 22,
+          "session_id": "f2e2305e91aa",
+          "turn": 3,
+          "stage": "reply",
+          "type": "reply",
+          "payload": {
+            "text": "Good news, Ana: The Overstory is a staff pick, so our Bookseller's Guarantee covers it even though you've read it. I can return it for $18.99 in Bookly store credit, which is added to your account right away and never expires. Would you like me to go ahead?",
+            "route": "returns",
+            "ticket_id": null
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:28+00:00"
+        },
+        {
+          "id": 23,
+          "session_id": "f2e2305e91aa",
+          "turn": 4,
+          "stage": "input_guard",
+          "type": "input_guard",
+          "payload": {
+            "injection": false,
+            "abuse": false,
+            "sensitive": "none",
+            "reason": "Short affirmative reply with no injection, abuse, or sensitive content.",
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1142,
+          "input_tokens": 625,
+          "output_tokens": 53,
+          "cost_usd": 8.9e-05,
+          "created_at": "2026-11-22T23:09:30+00:00"
+        },
+        {
+          "id": 24,
+          "session_id": "f2e2305e91aa",
+          "turn": 4,
+          "stage": "route",
+          "type": "route",
+          "payload": {
+            "aop": "returns",
+            "mode": "normal",
+            "why": "answering pending proposal (confirmation=yes)",
+            "intents": [
+              "return_refund"
+            ],
+            "confidence": 0.97,
+            "confirmation": "yes",
+            "frustration": "low",
+            "write_tools": [
+              "initiate_return",
+              "propose_return"
+            ],
+            "queued": [],
+            "escalate": null,
+            "rules": {
+              "human_request": false
+            },
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1032,
+          "input_tokens": 1761,
+          "output_tokens": 108,
+          "cost_usd": 0.00023,
+          "created_at": "2026-11-22T23:09:30+00:00"
+        },
+        {
+          "id": 25,
+          "session_id": "f2e2305e91aa",
+          "turn": 4,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "tool_use",
+            "tool_calls": [
+              "initiate_return",
+              "get_recommendation"
+            ],
+            "cache_read": 8507,
+            "cache_write": 1741,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 921,
+          "input_tokens": 2,
+          "output_tokens": 108,
+          "cost_usd": 0.006287,
+          "created_at": "2026-11-22T23:09:31+00:00"
+        },
+        {
+          "id": 26,
+          "session_id": "f2e2305e91aa",
+          "turn": 4,
+          "stage": "tool",
+          "type": "tool_call",
+          "payload": {
+            "tool": "initiate_return",
+            "args": {
+              "item_id": "I-4801-1",
+              "resolution": "store_credit"
+            },
+            "write": true,
+            "verdict": "ok",
+            "result": {
+              "return_id": 1,
+              "status": "completed",
+              "resolution": "store_credit",
+              "amount_display": "$18.99",
+              "title": "The Overstory",
+              "what_happens_next": "Return The Overstory for $18.99 in Bookly store credit. The credit is added to the account right away and never expires."
+            }
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:31+00:00"
+        },
+        {
+          "id": 27,
+          "session_id": "f2e2305e91aa",
+          "turn": 4,
+          "stage": "tool",
+          "type": "tool_call",
+          "payload": {
+            "tool": "get_recommendation",
+            "args": {},
+            "write": false,
+            "verdict": "ok",
+            "result": {
+              "title": "The Remains of the Day",
+              "author": "Kazuo Ishiguro",
+              "why": "An English butler looks back on a life of service.",
+              "price": "$16.00",
+              "staff_pick": true,
+              "note": "Offer this once, lightly. Don't push."
+            }
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:31+00:00"
+        },
+        {
+          "id": 28,
+          "session_id": "f2e2305e91aa",
+          "turn": 4,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "end_turn",
+            "tool_calls": [],
+            "cache_read": 10248,
+            "cache_write": 351,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1081,
+          "input_tokens": 2,
+          "output_tokens": 84,
+          "cost_usd": 0.002746,
+          "created_at": "2026-11-22T23:09:32+00:00"
+        },
+        {
+          "id": 29,
+          "session_id": "f2e2305e91aa",
+          "turn": 4,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "supervisor",
+            "skipped": true,
+            "reason": "policy statements backed by the policy engine this turn (initiate_return)"
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:32+00:00"
+        },
+        {
+          "id": 30,
+          "session_id": "f2e2305e91aa",
+          "turn": 4,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "code",
+            "ok": true,
+            "issues": [],
+            "checked": {
+              "amounts": [
+                "$18.99"
+              ],
+              "dates": [],
+              "tracking": [],
+              "echoed_customer_amounts": []
+            },
+            "supervisor_used": false,
+            "regenerated": false
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:32+00:00"
+        },
+        {
+          "id": 31,
+          "session_id": "f2e2305e91aa",
+          "turn": 4,
+          "stage": "reply",
+          "type": "reply",
+          "payload": {
+            "text": "All done, Ana. The Overstory is returned and $18.99 in store credit is on your account now. If you're after something quieter next time, our staff pick The Remains of the Day by Kazuo Ishiguro follows an English butler looking back on a life of service.",
+            "route": "returns",
+            "ticket_id": null
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:32+00:00"
+        },
+        {
+          "id": 32,
+          "session_id": "f2e2305e91aa",
+          "turn": 5,
+          "stage": "input_guard",
+          "type": "input_guard",
+          "payload": {
+            "injection": false,
+            "abuse": false,
+            "sensitive": "none",
+            "reason": "Ordinary question about return policy for a recommended product.",
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 878,
+          "input_tokens": 637,
+          "output_tokens": 47,
+          "cost_usd": 8.7e-05,
+          "created_at": "2026-11-22T23:09:33+00:00"
+        },
+        {
+          "id": 33,
+          "session_id": "f2e2305e91aa",
+          "turn": 5,
+          "stage": "route",
+          "type": "route",
+          "payload": {
+            "aop": "policy_qa",
+            "mode": "normal",
+            "why": "intent policy_question (0.85), queued ['return_refund']",
+            "intents": [
+              "policy_question"
+            ],
+            "confidence": 0.85,
+            "confirmation": "none",
+            "frustration": "low",
+            "write_tools": [
+              "initiate_return",
+              "propose_return"
+            ],
+            "queued": [
+              "return_refund"
+            ],
+            "escalate": null,
+            "rules": {
+              "human_request": false
+            },
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1567,
+          "input_tokens": 1766,
+          "output_tokens": 122,
+          "cost_usd": 0.000238,
+          "created_at": "2026-11-22T23:09:33+00:00"
+        },
+        {
+          "id": 34,
+          "session_id": "f2e2305e91aa",
+          "turn": 5,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "tool_use",
+            "tool_calls": [
+              "search_policy"
+            ],
+            "cache_read": 10599,
+            "cache_write": 788,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1017,
+          "input_tokens": 2,
+          "output_tokens": 70,
+          "cost_usd": 0.003734,
+          "created_at": "2026-11-22T23:09:34+00:00"
+        },
+        {
+          "id": 35,
+          "session_id": "f2e2305e91aa",
+          "turn": 5,
+          "stage": "tool",
+          "type": "tool_call",
+          "payload": {
+            "tool": "search_policy",
+            "args": {
+              "query": "staff pick Bookseller's Guarantee return didn't enjoy"
+            },
+            "write": false,
+            "verdict": "ok",
+            "result": {
+              "results": [
+                {
+                  "policy_ref": "guarantee#staff-picks",
+                  "title": "The Bookseller's Guarantee: Staff picks",
+                  "text": "Every staff pick carries the Bookseller's Guarantee. If you didn't love a staff pick, you can return it for store credit within 60 days of delivery, even if you read it. The credit equals the price you paid. Our booksellers would also love to suggest another book for you."
+                },
+                {
+                  "policy_ref": "guarantee#why",
+                  "title": "The Bookseller's Guarantee: Why store credit",
+                  "text": "The guarantee is our promise that a staff pick is worth the risk. Store credit lets you try another of our booksellers' recommendations."
+                },
+                {
+                  "policy_ref": "returns#window",
+                  "title": "Returns and refunds: Return window",
+                  "text": "Unread physical books (paperbacks, hardcovers and box sets) can be returned for a full refund within 30 days of delivery. Ebooks that have not been downloaded can also be refunded within 30 days. Books that have been read can't be returned for a refund, except staff picks under the Bookseller's Guarantee. Refunds go back to the original payment method within 5 to 7 business days."
+                }
+              ],
+              "note": "Answer only from these texts. Name the policy in plain words; never show the policy_ref id to the customer."
+            }
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:34+00:00"
+        },
+        {
+          "id": 36,
+          "session_id": "f2e2305e91aa",
+          "turn": 5,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "end_turn",
+            "tool_calls": [],
+            "cache_read": 11387,
+            "cache_write": 502,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1132,
+          "input_tokens": 2,
+          "output_tokens": 90,
+          "cost_usd": 0.003298,
+          "created_at": "2026-11-22T23:09:35+00:00"
+        },
+        {
+          "id": 37,
+          "session_id": "f2e2305e91aa",
+          "turn": 5,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "supervisor",
+            "grounded": false,
+            "unsupported": [
+              "\"The Remains of the Day is a staff pick, so our Bookseller's Guarantee applies\" \u2014 the tool data lists it as a staff pick, but the draft implies the guarantee applies to a purchase not yet made, which the policy text does not state; the guarantee covers staff picks the customer has bought and been delivered"
+            ]
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1092,
+          "input_tokens": 2321,
+          "output_tokens": 122,
+          "cost_usd": 0.000293,
+          "created_at": "2026-11-22T23:09:36+00:00"
+        },
+        {
+          "id": 38,
+          "session_id": "f2e2305e91aa",
+          "turn": 5,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "code",
+            "ok": false,
+            "issues": [
+              "unsupported policy claim: \"The Remains of the Day is a staff pick, so our Bookseller's Guarantee applies\" \u2014 the tool data lists it as a staff pick, but the draft implies the guarantee applies to a purchase not yet made, which the policy text does not state; the guarantee covers staff picks the customer has bought and been delivered"
+            ],
+            "checked": {
+              "amounts": [],
+              "dates": [],
+              "tracking": [],
+              "echoed_customer_amounts": []
+            },
+            "supervisor_used": true,
+            "regenerated": false
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:36+00:00"
+        },
+        {
+          "id": 39,
+          "session_id": "f2e2305e91aa",
+          "turn": 5,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "end_turn",
+            "tool_calls": [],
+            "cache_read": 11889,
+            "cache_write": 163,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 2186,
+          "input_tokens": 2,
+          "output_tokens": 231,
+          "cost_usd": 0.00391,
+          "created_at": "2026-11-22T23:09:39+00:00"
+        },
+        {
+          "id": 40,
+          "session_id": "f2e2305e91aa",
+          "turn": 5,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "supervisor",
+            "grounded": false,
+            "unsupported": [
+              "Yes. The Remains of the Day is a staff pick, and every staff pick carries the Bookseller's Guarantee. If you didn't love it, you can return it for store credit within 60 days of delivery, even if you've read it. The credit equals the price you paid."
+            ]
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 981,
+          "input_tokens": 2317,
+          "output_tokens": 102,
+          "cost_usd": 0.000283,
+          "created_at": "2026-11-22T23:09:40+00:00"
+        },
+        {
+          "id": 41,
+          "session_id": "f2e2305e91aa",
+          "turn": 5,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "code",
+            "ok": false,
+            "issues": [
+              "unsupported policy claim: Yes. The Remains of the Day is a staff pick, and every staff pick carries the Bookseller's Guarantee. If you didn't love it, you can return it for store credit within 60 days of delivery, even if you've read it. The credit equals the price you paid."
+            ],
+            "checked": {
+              "amounts": [],
+              "dates": [],
+              "tracking": [],
+              "echoed_customer_amounts": []
+            },
+            "supervisor_used": true,
+            "regenerated": true
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:40+00:00"
+        },
+        {
+          "id": 42,
+          "session_id": "f2e2305e91aa",
+          "turn": 5,
+          "stage": "reply",
+          "type": "reply",
+          "payload": {
+            "text": "I'm sorry, I want to be sure I give you accurate information, and I'm not able to do that right now. Would you like me to connect you with one of our booksellers?",
+            "route": "policy_qa",
+            "ticket_id": null
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:40+00:00"
+        }
+      ]
+    },
+    {
+      "scenario": "focus_recommended_book",
+      "run": 2,
+      "passed": false,
+      "failures": [
+        "a reply contains 'which one'"
+      ],
+      "replies": [
+        "Happy to help with that. Could you give me the order number and the email address on the order so I can pull up your account?",
+        "Thanks, Ana, you're verified. I see two books that could be the one: Piranesi, delivered November 15, and The Overstory, delivered November 12. Which one are you returning?",
+        "Good news, Ana: The Overstory is a staff pick, so the Bookseller's Guarantee covers it even though you've read it. I can return it for $18.99 in Bookly store credit, which is added to your account right away and never expires. Would you like me to go ahead?",
+        "All done, Ana. The Overstory is returned and $18.99 in store credit is now on your account. If you're in the mood for something quieter, our booksellers love The Remains of the Day by Kazuo Ishiguro, about an English butler looking back on a life of service.",
+        "Yes. The Remains of the Day is a staff pick, so it's covered by the Bookseller's Guarantee. If you don't love it, you can return it for store credit within 60 days of delivery, even if you've read it, and the credit equals the price you paid."
+      ],
+      "transcript": [
+        {
+          "who": "customer",
+          "text": "Hi! I'd like to return a book I didn't love."
+        },
+        {
+          "who": "bookly",
+          "text": "Happy to help with that. Could you give me the order number and the email address on the order so I can pull up your account?"
+        },
+        {
+          "who": "customer",
+          "text": "Order 4801, ana.ruiz@example.com"
+        },
+        {
+          "who": "bookly",
+          "text": "Thanks, Ana, you're verified. I see two books that could be the one: Piranesi, delivered November 15, and The Overstory, delivered November 12. Which one are you returning?"
+        },
+        {
+          "who": "customer",
+          "text": "The Overstory. I read it but it just wasn't for me."
+        },
+        {
+          "who": "bookly",
+          "text": "Good news, Ana: The Overstory is a staff pick, so the Bookseller's Guarantee covers it even though you've read it. I can return it for $18.99 in Bookly store credit, which is added to your account right away and never expires. Would you like me to go ahead?"
+        },
+        {
+          "who": "customer",
+          "text": "Yes please, go ahead."
+        },
+        {
+          "who": "bookly",
+          "text": "All done, Ana. The Overstory is returned and $18.99 in store credit is now on your account. If you're in the mood for something quieter, our booksellers love The Remains of the Day by Kazuo Ishiguro, about an English butler looking back on a life of service."
+        },
+        {
+          "who": "customer",
+          "text": "If I buy the one you recommended and don't like it, can I return that too?"
+        },
+        {
+          "who": "bookly",
+          "text": "Yes. The Remains of the Day is a staff pick, so it's covered by the Bookseller's Guarantee. If you don't love it, you can return it for store credit within 60 days of delivery, even if you've read it, and the credit equals the price you paid."
+        }
+      ],
+      "turn_latency_ms": [
+        2858,
+        3935,
+        5122,
+        3336,
+        4344
+      ],
+      "cost_usd": 0.031563,
+      "tickets": [],
+      "returns": [
+        {
+          "id": 1,
+          "item_id": "I-4801-1",
+          "customer_id": "C-1001",
+          "resolution": "store_credit",
+          "amount_cents": 1899,
+          "reason": "didnt_enjoy",
+          "policy_ref": "guarantee#staff-picks",
+          "idempotency_key": "994aa852c81c:I-4801-1",
+          "created_at": "2026-11-22T23:09:47+00:00"
+        }
+      ],
+      "leakage_cents": 0,
+      "error": null,
+      "judge": null,
+      "events": [
+        {
+          "id": 1,
+          "session_id": "994aa852c81c",
+          "turn": 1,
+          "stage": "input_guard",
+          "type": "input_guard",
+          "payload": {
+            "injection": false,
+            "abuse": false,
+            "sensitive": "none",
+            "reason": "Customer is making an ordinary return request with no injection, abuse, or sensitive content.",
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 923,
+          "input_tokens": 633,
+          "output_tokens": 58,
+          "cost_usd": 9.2e-05,
+          "created_at": "2026-11-22T23:09:34+00:00"
+        },
+        {
+          "id": 2,
+          "session_id": "994aa852c81c",
+          "turn": 1,
+          "stage": "route",
+          "type": "route",
+          "payload": {
+            "aop": "returns",
+            "mode": "normal",
+            "why": "intent return_refund (0.92)",
+            "intents": [
+              "return_refund"
+            ],
+            "confidence": 0.92,
+            "confirmation": "none",
+            "frustration": "low",
+            "write_tools": [
+              "initiate_return",
+              "propose_return"
+            ],
+            "queued": [],
+            "escalate": null,
+            "rules": {
+              "human_request": false
+            },
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1287,
+          "input_tokens": 1678,
+          "output_tokens": 89,
+          "cost_usd": 0.000212,
+          "created_at": "2026-11-22T23:09:34+00:00"
+        },
+        {
+          "id": 3,
+          "session_id": "994aa852c81c",
+          "turn": 1,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "end_turn",
+            "tool_calls": [],
+            "cache_read": 4489,
+            "cache_write": 0,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1546,
+          "input_tokens": 2,
+          "output_tokens": 34,
+          "cost_usd": 0.000793,
+          "created_at": "2026-11-22T23:09:35+00:00"
+        },
+        {
+          "id": 4,
+          "session_id": "994aa852c81c",
+          "turn": 1,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "code",
+            "ok": true,
+            "issues": [],
+            "checked": {
+              "amounts": [],
+              "dates": [],
+              "tracking": [],
+              "echoed_customer_amounts": []
+            },
+            "supervisor_used": false,
+            "regenerated": false
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:35+00:00"
+        },
+        {
+          "id": 5,
+          "session_id": "994aa852c81c",
+          "turn": 1,
+          "stage": "reply",
+          "type": "reply",
+          "payload": {
+            "text": "Happy to help with that. Could you give me the order number and the email address on the order so I can pull up your account?",
+            "route": "returns",
+            "ticket_id": null
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:35+00:00"
+        },
+        {
+          "id": 6,
+          "session_id": "994aa852c81c",
+          "turn": 2,
+          "stage": "input_guard",
+          "type": "input_guard",
+          "payload": {
+            "injection": false,
+            "abuse": false,
+            "sensitive": "none",
+            "reason": "The message is a plain order number and email address with no injection, abuse, or sensitive content.",
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 994,
+          "input_tokens": 632,
+          "output_tokens": 57,
+          "cost_usd": 9.2e-05,
+          "created_at": "2026-11-22T23:09:37+00:00"
+        },
+        {
+          "id": 7,
+          "session_id": "994aa852c81c",
+          "turn": 2,
+          "stage": "route",
+          "type": "route",
+          "payload": {
+            "aop": "returns",
+            "mode": "normal",
+            "why": "intent return_refund (0.85)",
+            "intents": [
+              "return_refund"
+            ],
+            "confidence": 0.85,
+            "confirmation": "none",
+            "frustration": "low",
+            "write_tools": [
+              "initiate_return",
+              "propose_return"
+            ],
+            "queued": [],
+            "escalate": null,
+            "rules": {
+              "human_request": false
+            },
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1649,
+          "input_tokens": 1711,
+          "output_tokens": 116,
+          "cost_usd": 0.000229,
+          "created_at": "2026-11-22T23:09:37+00:00"
+        },
+        {
+          "id": 8,
+          "session_id": "994aa852c81c",
+          "turn": 2,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "tool_use",
+            "tool_calls": [
+              "verify_customer"
+            ],
+            "cache_read": 6060,
+            "cache_write": 0,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 965,
+          "input_tokens": 2,
+          "output_tokens": 83,
+          "cost_usd": 0.00144,
+          "created_at": "2026-11-22T23:09:38+00:00"
+        },
+        {
+          "id": 9,
+          "session_id": "994aa852c81c",
+          "turn": 2,
+          "stage": "tool",
+          "type": "tool_call",
+          "payload": {
+            "tool": "verify_customer",
+            "args": {
+              "order_number": "4801",
+              "email": "a\u2022\u2022\u2022@example.com"
+            },
+            "write": false,
+            "verdict": "ok",
+            "result": {
+              "verified": true,
+              "customer_id": "C-1001",
+              "first_name": "Ana",
+              "email_on_file": "a\u2022\u2022\u2022@example.com",
+              "recent_orders": [
+                {
+                  "order_number": "4802",
+                  "status": "delivered",
+                  "placed_on": "November 13",
+                  "delivered_on": "November 15",
+                  "items": [
+                    {
+                      "item_id": "I-4802-1",
+                      "title": "Piranesi",
+                      "format": "paperback",
+                      "staff_pick": false,
+                      "already_returned": false
+                    }
+                  ]
+                },
+                {
+                  "order_number": "4801",
+                  "status": "delivered",
+                  "placed_on": "November 8",
+                  "delivered_on": "November 12",
+                  "items": [
+                    {
+                      "item_id": "I-4801-1",
+                      "title": "The Overstory",
+                      "format": "paperback",
+                      "staff_pick": true,
+                      "already_returned": false
+                    }
+                  ]
+                }
+              ],
+              "more_orders": 0,
+              "note": "recent_orders is a summary. Call lookup_orders only for older orders or gift notes."
+            }
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:38+00:00"
+        },
+        {
+          "id": 10,
+          "session_id": "994aa852c81c",
+          "turn": 2,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "end_turn",
+            "tool_calls": [],
+            "cache_read": 6448,
+            "cache_write": 0,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1228,
+          "input_tokens": 2,
+          "output_tokens": 61,
+          "cost_usd": 0.001259,
+          "created_at": "2026-11-22T23:09:39+00:00"
+        },
+        {
+          "id": 11,
+          "session_id": "994aa852c81c",
+          "turn": 2,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "code",
+            "ok": true,
+            "issues": [],
+            "checked": {
+              "amounts": [],
+              "dates": [
+                "November 15",
+                "November 12"
+              ],
+              "tracking": [],
+              "echoed_customer_amounts": []
+            },
+            "supervisor_used": false,
+            "regenerated": false
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:39+00:00"
+        },
+        {
+          "id": 12,
+          "session_id": "994aa852c81c",
+          "turn": 2,
+          "stage": "reply",
+          "type": "reply",
+          "payload": {
+            "text": "Thanks, Ana, you're verified. I see two books that could be the one: Piranesi, delivered November 15, and The Overstory, delivered November 12. Which one are you returning?",
+            "route": "returns",
+            "ticket_id": null
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:39+00:00"
+        },
+        {
+          "id": 13,
+          "session_id": "994aa852c81c",
+          "turn": 3,
+          "stage": "input_guard",
+          "type": "input_guard",
+          "payload": {
+            "injection": false,
+            "abuse": false,
+            "sensitive": "none",
+            "reason": "Customer is simply giving a casual opinion about a book they read, with no injection, abuse, or sensitive content.",
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 959,
+          "input_tokens": 634,
+          "output_tokens": 66,
+          "cost_usd": 9.6e-05,
+          "created_at": "2026-11-22T23:09:40+00:00"
+        },
+        {
+          "id": 14,
+          "session_id": "994aa852c81c",
+          "turn": 3,
+          "stage": "route",
+          "type": "route",
+          "payload": {
+            "aop": "returns",
+            "mode": "normal",
+            "why": "intent return_refund (0.95)",
+            "intents": [
+              "return_refund"
+            ],
+            "confidence": 0.95,
+            "confirmation": "none",
+            "frustration": "low",
+            "write_tools": [
+              "initiate_return",
+              "propose_return"
+            ],
+            "queued": [],
+            "escalate": null,
+            "rules": {
+              "human_request": false
+            },
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 962,
+          "input_tokens": 1740,
+          "output_tokens": 118,
+          "cost_usd": 0.000233,
+          "created_at": "2026-11-22T23:09:40+00:00"
+        },
+        {
+          "id": 15,
+          "session_id": "994aa852c81c",
+          "turn": 3,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "tool_use",
+            "tool_calls": [
+              "check_return_eligibility"
+            ],
+            "cache_read": 6448,
+            "cache_write": 1605,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1088,
+          "input_tokens": 2,
+          "output_tokens": 112,
+          "cost_usd": 0.005781,
+          "created_at": "2026-11-22T23:09:41+00:00"
+        },
+        {
+          "id": 16,
+          "session_id": "994aa852c81c",
+          "turn": 3,
+          "stage": "tool",
+          "type": "tool_call",
+          "payload": {
+            "tool": "check_return_eligibility",
+            "args": {
+              "item_id": "I-4801-1",
+              "reason": "didnt_enjoy",
+              "is_unread": false
+            },
+            "write": false,
+            "verdict": "ok",
+            "result": {
+              "item_id": "I-4801-1",
+              "title": "The Overstory",
+              "eligible": true,
+              "resolution": "store_credit",
+              "amount_display": "$18.99",
+              "requires_approval": false,
+              "policy_ref": "guarantee#staff-picks",
+              "explanation": "Staff picks carry the Bookseller's Guarantee: store credit within 60 days, even if the book was read.",
+              "days_since_delivery": 10,
+              "next_step": "Call propose_return with this resolution."
+            }
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:41+00:00"
+        },
+        {
+          "id": 17,
+          "session_id": "994aa852c81c",
+          "turn": 3,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "tool_use",
+            "tool_calls": [
+              "propose_return"
+            ],
+            "cache_read": 8053,
+            "cache_write": 273,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1480,
+          "input_tokens": 2,
+          "output_tokens": 81,
+          "cost_usd": 0.002302,
+          "created_at": "2026-11-22T23:09:43+00:00"
+        },
+        {
+          "id": 18,
+          "session_id": "994aa852c81c",
+          "turn": 3,
+          "stage": "tool",
+          "type": "tool_call",
+          "payload": {
+            "tool": "propose_return",
+            "args": {
+              "item_id": "I-4801-1",
+              "resolution": "store_credit"
+            },
+            "write": false,
+            "verdict": "ok",
+            "result": {
+              "proposal": "Return The Overstory for $18.99 in Bookly store credit. The credit is added to the account right away and never expires.",
+              "amount_display": "$18.99",
+              "next_step": "Tell the customer exactly this and ask if they'd like to go ahead. Don't call initiate_return until they reply yes."
+            }
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:43+00:00"
+        },
+        {
+          "id": 19,
+          "session_id": "994aa852c81c",
+          "turn": 3,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "end_turn",
+            "tool_calls": [],
+            "cache_read": 8326,
+            "cache_write": 190,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1548,
+          "input_tokens": 2,
+          "output_tokens": 88,
+          "cost_usd": 0.002192,
+          "created_at": "2026-11-22T23:09:44+00:00"
+        },
+        {
+          "id": 20,
+          "session_id": "994aa852c81c",
+          "turn": 3,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "supervisor",
+            "skipped": true,
+            "reason": "policy statements backed by the policy engine this turn (check_return_eligibility, propose_return)"
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:44+00:00"
+        },
+        {
+          "id": 21,
+          "session_id": "994aa852c81c",
+          "turn": 3,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "code",
+            "ok": true,
+            "issues": [],
+            "checked": {
+              "amounts": [
+                "$18.99"
+              ],
+              "dates": [],
+              "tracking": [],
+              "echoed_customer_amounts": []
+            },
+            "supervisor_used": false,
+            "regenerated": false
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:44+00:00"
+        },
+        {
+          "id": 22,
+          "session_id": "994aa852c81c",
+          "turn": 3,
+          "stage": "reply",
+          "type": "reply",
+          "payload": {
+            "text": "Good news, Ana: The Overstory is a staff pick, so the Bookseller's Guarantee covers it even though you've read it. I can return it for $18.99 in Bookly store credit, which is added to your account right away and never expires. Would you like me to go ahead?",
+            "route": "returns",
+            "ticket_id": null
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:44+00:00"
+        },
+        {
+          "id": 23,
+          "session_id": "994aa852c81c",
+          "turn": 4,
+          "stage": "input_guard",
+          "type": "input_guard",
+          "payload": {
+            "injection": false,
+            "abuse": false,
+            "sensitive": "none",
+            "reason": "The message is a short affirmative reply with no injection, abuse, or sensitive content.",
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1216,
+          "input_tokens": 625,
+          "output_tokens": 57,
+          "cost_usd": 9.1e-05,
+          "created_at": "2026-11-22T23:09:46+00:00"
+        },
+        {
+          "id": 24,
+          "session_id": "994aa852c81c",
+          "turn": 4,
+          "stage": "route",
+          "type": "route",
+          "payload": {
+            "aop": "returns",
+            "mode": "normal",
+            "why": "answering pending proposal (confirmation=yes)",
+            "intents": [
+              "return_refund"
+            ],
+            "confidence": 0.97,
+            "confirmation": "yes",
+            "frustration": "low",
+            "write_tools": [
+              "initiate_return",
+              "propose_return"
+            ],
+            "queued": [],
+            "escalate": null,
+            "rules": {
+              "human_request": false
+            },
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1175,
+          "input_tokens": 1761,
+          "output_tokens": 108,
+          "cost_usd": 0.00023,
+          "created_at": "2026-11-22T23:09:46+00:00"
+        },
+        {
+          "id": 25,
+          "session_id": "994aa852c81c",
+          "turn": 4,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "tool_use",
+            "tool_calls": [
+              "initiate_return",
+              "get_recommendation"
+            ],
+            "cache_read": 8516,
+            "cache_write": 1741,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1066,
+          "input_tokens": 2,
+          "output_tokens": 108,
+          "cost_usd": 0.006288,
+          "created_at": "2026-11-22T23:09:47+00:00"
+        },
+        {
+          "id": 26,
+          "session_id": "994aa852c81c",
+          "turn": 4,
+          "stage": "tool",
+          "type": "tool_call",
+          "payload": {
+            "tool": "initiate_return",
+            "args": {
+              "item_id": "I-4801-1",
+              "resolution": "store_credit"
+            },
+            "write": true,
+            "verdict": "ok",
+            "result": {
+              "return_id": 1,
+              "status": "completed",
+              "resolution": "store_credit",
+              "amount_display": "$18.99",
+              "title": "The Overstory",
+              "what_happens_next": "Return The Overstory for $18.99 in Bookly store credit. The credit is added to the account right away and never expires."
+            }
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:47+00:00"
+        },
+        {
+          "id": 27,
+          "session_id": "994aa852c81c",
+          "turn": 4,
+          "stage": "tool",
+          "type": "tool_call",
+          "payload": {
+            "tool": "get_recommendation",
+            "args": {},
+            "write": false,
+            "verdict": "ok",
+            "result": {
+              "title": "The Remains of the Day",
+              "author": "Kazuo Ishiguro",
+              "why": "An English butler looks back on a life of service.",
+              "price": "$16.00",
+              "staff_pick": true,
+              "note": "Offer this once, lightly. Don't push."
+            }
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:47+00:00"
+        },
+        {
+          "id": 28,
+          "session_id": "994aa852c81c",
+          "turn": 4,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "end_turn",
+            "tool_calls": [],
+            "cache_read": 10257,
+            "cache_write": 351,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1034,
+          "input_tokens": 2,
+          "output_tokens": 87,
+          "cost_usd": 0.002777,
+          "created_at": "2026-11-22T23:09:48+00:00"
+        },
+        {
+          "id": 29,
+          "session_id": "994aa852c81c",
+          "turn": 4,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "supervisor",
+            "skipped": true,
+            "reason": "policy statements backed by the policy engine this turn (initiate_return)"
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:48+00:00"
+        },
+        {
+          "id": 30,
+          "session_id": "994aa852c81c",
+          "turn": 4,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "code",
+            "ok": true,
+            "issues": [],
+            "checked": {
+              "amounts": [
+                "$18.99"
+              ],
+              "dates": [],
+              "tracking": [],
+              "echoed_customer_amounts": []
+            },
+            "supervisor_used": false,
+            "regenerated": false
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:48+00:00"
+        },
+        {
+          "id": 31,
+          "session_id": "994aa852c81c",
+          "turn": 4,
+          "stage": "reply",
+          "type": "reply",
+          "payload": {
+            "text": "All done, Ana. The Overstory is returned and $18.99 in store credit is now on your account. If you're in the mood for something quieter, our booksellers love The Remains of the Day by Kazuo Ishiguro, about an English butler looking back on a life of service.",
+            "route": "returns",
+            "ticket_id": null
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:48+00:00"
+        },
+        {
+          "id": 32,
+          "session_id": "994aa852c81c",
+          "turn": 5,
+          "stage": "input_guard",
+          "type": "input_guard",
+          "payload": {
+            "injection": false,
+            "abuse": false,
+            "sensitive": "none",
+            "reason": "Ordinary question about return policy for a recommended product.",
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1539,
+          "input_tokens": 637,
+          "output_tokens": 47,
+          "cost_usd": 8.7e-05,
+          "created_at": "2026-11-22T23:09:49+00:00"
+        },
+        {
+          "id": 33,
+          "session_id": "994aa852c81c",
+          "turn": 5,
+          "stage": "route",
+          "type": "route",
+          "payload": {
+            "aop": "policy_qa",
+            "mode": "normal",
+            "why": "intent policy_question (0.85), queued ['return_refund']",
+            "intents": [
+              "policy_question"
+            ],
+            "confidence": 0.85,
+            "confirmation": "none",
+            "frustration": "low",
+            "write_tools": [
+              "initiate_return",
+              "propose_return"
+            ],
+            "queued": [
+              "return_refund"
+            ],
+            "escalate": null,
+            "rules": {
+              "human_request": false
+            },
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1185,
+          "input_tokens": 1769,
+          "output_tokens": 119,
+          "cost_usd": 0.000236,
+          "created_at": "2026-11-22T23:09:49+00:00"
+        },
+        {
+          "id": 34,
+          "session_id": "994aa852c81c",
+          "turn": 5,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "tool_use",
+            "tool_calls": [
+              "search_policy"
+            ],
+            "cache_read": 10608,
+            "cache_write": 791,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 849,
+          "input_tokens": 2,
+          "output_tokens": 63,
+          "cost_usd": 0.003672,
+          "created_at": "2026-11-22T23:09:50+00:00"
+        },
+        {
+          "id": 35,
+          "session_id": "994aa852c81c",
+          "turn": 5,
+          "stage": "tool",
+          "type": "tool_call",
+          "payload": {
+            "tool": "search_policy",
+            "args": {
+              "query": "staff pick Bookseller's Guarantee return"
+            },
+            "write": false,
+            "verdict": "ok",
+            "result": {
+              "results": [
+                {
+                  "policy_ref": "guarantee#staff-picks",
+                  "title": "The Bookseller's Guarantee: Staff picks",
+                  "text": "Every staff pick carries the Bookseller's Guarantee. If you didn't love a staff pick, you can return it for store credit within 60 days of delivery, even if you read it. The credit equals the price you paid. Our booksellers would also love to suggest another book for you."
+                },
+                {
+                  "policy_ref": "guarantee#why",
+                  "title": "The Bookseller's Guarantee: Why store credit",
+                  "text": "The guarantee is our promise that a staff pick is worth the risk. Store credit lets you try another of our booksellers' recommendations."
+                },
+                {
+                  "policy_ref": "returns#window",
+                  "title": "Returns and refunds: Return window",
+                  "text": "Unread physical books (paperbacks, hardcovers and box sets) can be returned for a full refund within 30 days of delivery. Ebooks that have not been downloaded can also be refunded within 30 days. Books that have been read can't be returned for a refund, except staff picks under the Bookseller's Guarantee. Refunds go back to the original payment method within 5 to 7 business days."
+                }
+              ],
+              "note": "Answer only from these texts. Name the policy in plain words; never show the policy_ref id to the customer."
+            }
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:50+00:00"
+        },
+        {
+          "id": 36,
+          "session_id": "994aa852c81c",
+          "turn": 5,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "end_turn",
+            "tool_calls": [],
+            "cache_read": 11399,
+            "cache_write": 495,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1077,
+          "input_tokens": 2,
+          "output_tokens": 84,
+          "cost_usd": 0.003221,
+          "created_at": "2026-11-22T23:09:51+00:00"
+        },
+        {
+          "id": 37,
+          "session_id": "994aa852c81c",
+          "turn": 5,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "supervisor",
+            "grounded": true,
+            "unsupported": []
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 842,
+          "input_tokens": 2315,
+          "output_tokens": 18,
+          "cost_usd": 0.00024,
+          "created_at": "2026-11-22T23:09:52+00:00"
+        },
+        {
+          "id": 38,
+          "session_id": "994aa852c81c",
+          "turn": 5,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "code",
+            "ok": true,
+            "issues": [],
+            "checked": {
+              "amounts": [],
+              "dates": [],
+              "tracking": [],
+              "echoed_customer_amounts": []
+            },
+            "supervisor_used": true,
+            "regenerated": false
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:52+00:00"
+        },
+        {
+          "id": 39,
+          "session_id": "994aa852c81c",
+          "turn": 5,
+          "stage": "reply",
+          "type": "reply",
+          "payload": {
+            "text": "Yes. The Remains of the Day is a staff pick, so it's covered by the Bookseller's Guarantee. If you don't love it, you can return it for store credit within 60 days of delivery, even if you've read it, and the credit equals the price you paid.",
+            "route": "policy_qa",
+            "ticket_id": null
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:52+00:00"
+        }
+      ]
+    },
+    {
+      "scenario": "focus_recommended_book",
+      "run": 3,
+      "passed": false,
+      "failures": [
+        "a reply contains 'which book'"
+      ],
+      "replies": [
+        "Happy to help with that. Could you give me the order number and the email address on the order so I can pull up your account?",
+        "Thanks, Ana, you're verified. Which book are you returning: Piranesi, delivered November 15, or The Overstory, delivered November 12?",
+        "Good news, Ana: The Overstory is a staff pick, so the Bookseller's Guarantee covers it even though you've read it. I can return it for $18.99 in Bookly store credit, added to your account right away and it never expires. Would you like me to go ahead?",
+        "All done, Ana. The $18.99 in store credit is on your account now, and it never expires. If you're after something quieter next time, our staff pick The Remains of the Day by Kazuo Ishiguro follows an English butler looking back on a life of service.",
+        "Yes, you can. The Remains of the Day is a staff pick, so the Bookseller's Guarantee covers it. If you didn't love it, you can return it within 60 days of delivery for store credit equal to what you paid, even if you've read it."
+      ],
+      "transcript": [
+        {
+          "who": "customer",
+          "text": "Hi! I'd like to return a book I didn't love."
+        },
+        {
+          "who": "bookly",
+          "text": "Happy to help with that. Could you give me the order number and the email address on the order so I can pull up your account?"
+        },
+        {
+          "who": "customer",
+          "text": "Order 4801, ana.ruiz@example.com"
+        },
+        {
+          "who": "bookly",
+          "text": "Thanks, Ana, you're verified. Which book are you returning: Piranesi, delivered November 15, or The Overstory, delivered November 12?"
+        },
+        {
+          "who": "customer",
+          "text": "The Overstory. I read it but it just wasn't for me."
+        },
+        {
+          "who": "bookly",
+          "text": "Good news, Ana: The Overstory is a staff pick, so the Bookseller's Guarantee covers it even though you've read it. I can return it for $18.99 in Bookly store credit, added to your account right away and it never expires. Would you like me to go ahead?"
+        },
+        {
+          "who": "customer",
+          "text": "Yes please, go ahead."
+        },
+        {
+          "who": "bookly",
+          "text": "All done, Ana. The $18.99 in store credit is on your account now, and it never expires. If you're after something quieter next time, our staff pick The Remains of the Day by Kazuo Ishiguro follows an English butler looking back on a life of service."
+        },
+        {
+          "who": "customer",
+          "text": "If I buy the one you recommended and don't like it, can I return that too?"
+        },
+        {
+          "who": "bookly",
+          "text": "Yes, you can. The Remains of the Day is a staff pick, so the Bookseller's Guarantee covers it. If you didn't love it, you can return it within 60 days of delivery for store credit equal to what you paid, even if you've read it."
+        }
+      ],
+      "turn_latency_ms": [
+        2501,
+        3811,
+        5864,
+        3547,
+        4330
+      ],
+      "cost_usd": 0.033930999999999996,
+      "tickets": [],
+      "returns": [
+        {
+          "id": 1,
+          "item_id": "I-4801-1",
+          "customer_id": "C-1001",
+          "resolution": "store_credit",
+          "amount_cents": 1899,
+          "reason": "didnt_enjoy",
+          "policy_ref": "guarantee#staff-picks",
+          "idempotency_key": "b0a01045b692:I-4801-1",
+          "created_at": "2026-11-22T23:09:47+00:00"
+        }
+      ],
+      "leakage_cents": 0,
+      "error": null,
+      "judge": null,
+      "events": [
+        {
+          "id": 1,
+          "session_id": "b0a01045b692",
+          "turn": 1,
+          "stage": "input_guard",
+          "type": "input_guard",
+          "payload": {
+            "injection": false,
+            "abuse": false,
+            "sensitive": "none",
+            "reason": "Routine return request with no injection, abuse, or sensitive content.",
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 942,
+          "input_tokens": 633,
+          "output_tokens": 51,
+          "cost_usd": 8.9e-05,
+          "created_at": "2026-11-22T23:09:34+00:00"
+        },
+        {
+          "id": 2,
+          "session_id": "b0a01045b692",
+          "turn": 1,
+          "stage": "route",
+          "type": "route",
+          "payload": {
+            "aop": "returns",
+            "mode": "normal",
+            "why": "intent return_refund (0.92)",
+            "intents": [
+              "return_refund"
+            ],
+            "confidence": 0.92,
+            "confirmation": "none",
+            "frustration": "low",
+            "write_tools": [
+              "initiate_return",
+              "propose_return"
+            ],
+            "queued": [],
+            "escalate": null,
+            "rules": {
+              "human_request": false
+            },
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 948,
+          "input_tokens": 1678,
+          "output_tokens": 89,
+          "cost_usd": 0.000212,
+          "created_at": "2026-11-22T23:09:34+00:00"
+        },
+        {
+          "id": 3,
+          "session_id": "b0a01045b692",
+          "turn": 1,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "end_turn",
+            "tool_calls": [],
+            "cache_read": 4489,
+            "cache_write": 0,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1537,
+          "input_tokens": 2,
+          "output_tokens": 34,
+          "cost_usd": 0.000793,
+          "created_at": "2026-11-22T23:09:35+00:00"
+        },
+        {
+          "id": 4,
+          "session_id": "b0a01045b692",
+          "turn": 1,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "code",
+            "ok": true,
+            "issues": [],
+            "checked": {
+              "amounts": [],
+              "dates": [],
+              "tracking": [],
+              "echoed_customer_amounts": []
+            },
+            "supervisor_used": false,
+            "regenerated": false
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:35+00:00"
+        },
+        {
+          "id": 5,
+          "session_id": "b0a01045b692",
+          "turn": 1,
+          "stage": "reply",
+          "type": "reply",
+          "payload": {
+            "text": "Happy to help with that. Could you give me the order number and the email address on the order so I can pull up your account?",
+            "route": "returns",
+            "ticket_id": null
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:35+00:00"
+        },
+        {
+          "id": 6,
+          "session_id": "b0a01045b692",
+          "turn": 2,
+          "stage": "input_guard",
+          "type": "input_guard",
+          "payload": {
+            "injection": false,
+            "abuse": false,
+            "sensitive": "none",
+            "reason": "The message is a plain order number and email address with no injection, abuse, or sensitive content.",
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1005,
+          "input_tokens": 632,
+          "output_tokens": 57,
+          "cost_usd": 9.2e-05,
+          "created_at": "2026-11-22T23:09:37+00:00"
+        },
+        {
+          "id": 7,
+          "session_id": "b0a01045b692",
+          "turn": 2,
+          "stage": "route",
+          "type": "route",
+          "payload": {
+            "aop": "returns",
+            "mode": "normal",
+            "why": "intent return_refund (0.85)",
+            "intents": [
+              "return_refund"
+            ],
+            "confidence": 0.85,
+            "confirmation": "none",
+            "frustration": "low",
+            "write_tools": [
+              "initiate_return",
+              "propose_return"
+            ],
+            "queued": [],
+            "escalate": null,
+            "rules": {
+              "human_request": false
+            },
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1663,
+          "input_tokens": 1711,
+          "output_tokens": 116,
+          "cost_usd": 0.000229,
+          "created_at": "2026-11-22T23:09:37+00:00"
+        },
+        {
+          "id": 8,
+          "session_id": "b0a01045b692",
+          "turn": 2,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "tool_use",
+            "tool_calls": [
+              "verify_customer"
+            ],
+            "cache_read": 6060,
+            "cache_write": 0,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 995,
+          "input_tokens": 2,
+          "output_tokens": 83,
+          "cost_usd": 0.00144,
+          "created_at": "2026-11-22T23:09:38+00:00"
+        },
+        {
+          "id": 9,
+          "session_id": "b0a01045b692",
+          "turn": 2,
+          "stage": "tool",
+          "type": "tool_call",
+          "payload": {
+            "tool": "verify_customer",
+            "args": {
+              "order_number": "4801",
+              "email": "a\u2022\u2022\u2022@example.com"
+            },
+            "write": false,
+            "verdict": "ok",
+            "result": {
+              "verified": true,
+              "customer_id": "C-1001",
+              "first_name": "Ana",
+              "email_on_file": "a\u2022\u2022\u2022@example.com",
+              "recent_orders": [
+                {
+                  "order_number": "4802",
+                  "status": "delivered",
+                  "placed_on": "November 13",
+                  "delivered_on": "November 15",
+                  "items": [
+                    {
+                      "item_id": "I-4802-1",
+                      "title": "Piranesi",
+                      "format": "paperback",
+                      "staff_pick": false,
+                      "already_returned": false
+                    }
+                  ]
+                },
+                {
+                  "order_number": "4801",
+                  "status": "delivered",
+                  "placed_on": "November 8",
+                  "delivered_on": "November 12",
+                  "items": [
+                    {
+                      "item_id": "I-4801-1",
+                      "title": "The Overstory",
+                      "format": "paperback",
+                      "staff_pick": true,
+                      "already_returned": false
+                    }
+                  ]
+                }
+              ],
+              "more_orders": 0,
+              "note": "recent_orders is a summary. Call lookup_orders only for older orders or gift notes."
+            }
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:38+00:00"
+        },
+        {
+          "id": 10,
+          "session_id": "b0a01045b692",
+          "turn": 2,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "end_turn",
+            "tool_calls": [],
+            "cache_read": 6448,
+            "cache_write": 0,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 891,
+          "input_tokens": 2,
+          "output_tokens": 51,
+          "cost_usd": 0.001159,
+          "created_at": "2026-11-22T23:09:39+00:00"
+        },
+        {
+          "id": 11,
+          "session_id": "b0a01045b692",
+          "turn": 2,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "code",
+            "ok": true,
+            "issues": [],
+            "checked": {
+              "amounts": [],
+              "dates": [
+                "November 15",
+                "November 12"
+              ],
+              "tracking": [],
+              "echoed_customer_amounts": []
+            },
+            "supervisor_used": false,
+            "regenerated": false
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:39+00:00"
+        },
+        {
+          "id": 12,
+          "session_id": "b0a01045b692",
+          "turn": 2,
+          "stage": "reply",
+          "type": "reply",
+          "payload": {
+            "text": "Thanks, Ana, you're verified. Which book are you returning: Piranesi, delivered November 15, or The Overstory, delivered November 12?",
+            "route": "returns",
+            "ticket_id": null
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:39+00:00"
+        },
+        {
+          "id": 13,
+          "session_id": "b0a01045b692",
+          "turn": 3,
+          "stage": "input_guard",
+          "type": "input_guard",
+          "payload": {
+            "injection": false,
+            "abuse": false,
+            "sensitive": "none",
+            "reason": "Customer is simply saying they read the book but did not enjoy it, with no injection, abuse, or sensitive content.",
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1178,
+          "input_tokens": 634,
+          "output_tokens": 67,
+          "cost_usd": 9.7e-05,
+          "created_at": "2026-11-22T23:09:41+00:00"
+        },
+        {
+          "id": 14,
+          "session_id": "b0a01045b692",
+          "turn": 3,
+          "stage": "route",
+          "type": "route",
+          "payload": {
+            "aop": "returns",
+            "mode": "normal",
+            "why": "intent return_refund (0.93)",
+            "intents": [
+              "return_refund"
+            ],
+            "confidence": 0.93,
+            "confirmation": "none",
+            "frustration": "low",
+            "write_tools": [
+              "initiate_return",
+              "propose_return"
+            ],
+            "queued": [],
+            "escalate": null,
+            "rules": {
+              "human_request": false
+            },
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1667,
+          "input_tokens": 1730,
+          "output_tokens": 119,
+          "cost_usd": 0.000233,
+          "created_at": "2026-11-22T23:09:41+00:00"
+        },
+        {
+          "id": 15,
+          "session_id": "b0a01045b692",
+          "turn": 3,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "tool_use",
+            "tool_calls": [
+              "check_return_eligibility"
+            ],
+            "cache_read": 6448,
+            "cache_write": 1595,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 977,
+          "input_tokens": 2,
+          "output_tokens": 112,
+          "cost_usd": 0.005756,
+          "created_at": "2026-11-22T23:09:42+00:00"
+        },
+        {
+          "id": 16,
+          "session_id": "b0a01045b692",
+          "turn": 3,
+          "stage": "tool",
+          "type": "tool_call",
+          "payload": {
+            "tool": "check_return_eligibility",
+            "args": {
+              "item_id": "I-4801-1",
+              "reason": "didnt_enjoy",
+              "is_unread": false
+            },
+            "write": false,
+            "verdict": "ok",
+            "result": {
+              "item_id": "I-4801-1",
+              "title": "The Overstory",
+              "eligible": true,
+              "resolution": "store_credit",
+              "amount_display": "$18.99",
+              "requires_approval": false,
+              "policy_ref": "guarantee#staff-picks",
+              "explanation": "Staff picks carry the Bookseller's Guarantee: store credit within 60 days, even if the book was read.",
+              "days_since_delivery": 10,
+              "next_step": "Call propose_return with this resolution."
+            }
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:42+00:00"
+        },
+        {
+          "id": 17,
+          "session_id": "b0a01045b692",
+          "turn": 3,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "tool_use",
+            "tool_calls": [
+              "propose_return"
+            ],
+            "cache_read": 8043,
+            "cache_write": 273,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 2137,
+          "input_tokens": 2,
+          "output_tokens": 81,
+          "cost_usd": 0.002301,
+          "created_at": "2026-11-22T23:09:44+00:00"
+        },
+        {
+          "id": 18,
+          "session_id": "b0a01045b692",
+          "turn": 3,
+          "stage": "tool",
+          "type": "tool_call",
+          "payload": {
+            "tool": "propose_return",
+            "args": {
+              "item_id": "I-4801-1",
+              "resolution": "store_credit"
+            },
+            "write": false,
+            "verdict": "ok",
+            "result": {
+              "proposal": "Return The Overstory for $18.99 in Bookly store credit. The credit is added to the account right away and never expires.",
+              "amount_display": "$18.99",
+              "next_step": "Tell the customer exactly this and ask if they'd like to go ahead. Don't call initiate_return until they reply yes."
+            }
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:44+00:00"
+        },
+        {
+          "id": 19,
+          "session_id": "b0a01045b692",
+          "turn": 3,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "end_turn",
+            "tool_calls": [],
+            "cache_read": 8316,
+            "cache_write": 190,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1017,
+          "input_tokens": 2,
+          "output_tokens": 87,
+          "cost_usd": 0.002181,
+          "created_at": "2026-11-22T23:09:45+00:00"
+        },
+        {
+          "id": 20,
+          "session_id": "b0a01045b692",
+          "turn": 3,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "supervisor",
+            "skipped": true,
+            "reason": "policy statements backed by the policy engine this turn (check_return_eligibility, propose_return)"
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:45+00:00"
+        },
+        {
+          "id": 21,
+          "session_id": "b0a01045b692",
+          "turn": 3,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "code",
+            "ok": true,
+            "issues": [],
+            "checked": {
+              "amounts": [
+                "$18.99"
+              ],
+              "dates": [],
+              "tracking": [],
+              "echoed_customer_amounts": []
+            },
+            "supervisor_used": false,
+            "regenerated": false
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:45+00:00"
+        },
+        {
+          "id": 22,
+          "session_id": "b0a01045b692",
+          "turn": 3,
+          "stage": "reply",
+          "type": "reply",
+          "payload": {
+            "text": "Good news, Ana: The Overstory is a staff pick, so the Bookseller's Guarantee covers it even though you've read it. I can return it for $18.99 in Bookly store credit, added to your account right away and it never expires. Would you like me to go ahead?",
+            "route": "returns",
+            "ticket_id": null
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:45+00:00"
+        },
+        {
+          "id": 23,
+          "session_id": "b0a01045b692",
+          "turn": 4,
+          "stage": "input_guard",
+          "type": "input_guard",
+          "payload": {
+            "injection": false,
+            "abuse": false,
+            "sensitive": "none",
+            "reason": "The message is a brief affirmative reply with no injection, abuse, or sensitive content.",
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1039,
+          "input_tokens": 625,
+          "output_tokens": 58,
+          "cost_usd": 9.2e-05,
+          "created_at": "2026-11-22T23:09:46+00:00"
+        },
+        {
+          "id": 24,
+          "session_id": "b0a01045b692",
+          "turn": 4,
+          "stage": "route",
+          "type": "route",
+          "payload": {
+            "aop": "returns",
+            "mode": "normal",
+            "why": "answering pending proposal (confirmation=yes)",
+            "intents": [
+              "return_refund"
+            ],
+            "confidence": 0.97,
+            "confirmation": "yes",
+            "frustration": "low",
+            "write_tools": [
+              "initiate_return",
+              "propose_return"
+            ],
+            "queued": [],
+            "escalate": null,
+            "rules": {
+              "human_request": false
+            },
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1094,
+          "input_tokens": 1760,
+          "output_tokens": 107,
+          "cost_usd": 0.000229,
+          "created_at": "2026-11-22T23:09:46+00:00"
+        },
+        {
+          "id": 25,
+          "session_id": "b0a01045b692",
+          "turn": 4,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "tool_use",
+            "tool_calls": [
+              "initiate_return",
+              "get_recommendation"
+            ],
+            "cache_read": 8506,
+            "cache_write": 1740,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1209,
+          "input_tokens": 2,
+          "output_tokens": 108,
+          "cost_usd": 0.006285,
+          "created_at": "2026-11-22T23:09:47+00:00"
+        },
+        {
+          "id": 26,
+          "session_id": "b0a01045b692",
+          "turn": 4,
+          "stage": "tool",
+          "type": "tool_call",
+          "payload": {
+            "tool": "initiate_return",
+            "args": {
+              "item_id": "I-4801-1",
+              "resolution": "store_credit"
+            },
+            "write": true,
+            "verdict": "ok",
+            "result": {
+              "return_id": 1,
+              "status": "completed",
+              "resolution": "store_credit",
+              "amount_display": "$18.99",
+              "title": "The Overstory",
+              "what_happens_next": "Return The Overstory for $18.99 in Bookly store credit. The credit is added to the account right away and never expires."
+            }
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:47+00:00"
+        },
+        {
+          "id": 27,
+          "session_id": "b0a01045b692",
+          "turn": 4,
+          "stage": "tool",
+          "type": "tool_call",
+          "payload": {
+            "tool": "get_recommendation",
+            "args": {},
+            "write": false,
+            "verdict": "ok",
+            "result": {
+              "title": "The Remains of the Day",
+              "author": "Kazuo Ishiguro",
+              "why": "An English butler looks back on a life of service.",
+              "price": "$16.00",
+              "staff_pick": true,
+              "note": "Offer this once, lightly. Don't push."
+            }
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:47+00:00"
+        },
+        {
+          "id": 28,
+          "session_id": "b0a01045b692",
+          "turn": 4,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "end_turn",
+            "tool_calls": [],
+            "cache_read": 10246,
+            "cache_write": 351,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1204,
+          "input_tokens": 2,
+          "output_tokens": 82,
+          "cost_usd": 0.002726,
+          "created_at": "2026-11-22T23:09:49+00:00"
+        },
+        {
+          "id": 29,
+          "session_id": "b0a01045b692",
+          "turn": 4,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "supervisor",
+            "skipped": true,
+            "reason": "policy statements backed by the policy engine this turn (initiate_return)"
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:49+00:00"
+        },
+        {
+          "id": 30,
+          "session_id": "b0a01045b692",
+          "turn": 4,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "code",
+            "ok": true,
+            "issues": [],
+            "checked": {
+              "amounts": [
+                "$18.99"
+              ],
+              "dates": [],
+              "tracking": [],
+              "echoed_customer_amounts": []
+            },
+            "supervisor_used": false,
+            "regenerated": false
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:49+00:00"
+        },
+        {
+          "id": 31,
+          "session_id": "b0a01045b692",
+          "turn": 4,
+          "stage": "reply",
+          "type": "reply",
+          "payload": {
+            "text": "All done, Ana. The $18.99 in store credit is on your account now, and it never expires. If you're after something quieter next time, our staff pick The Remains of the Day by Kazuo Ishiguro follows an English butler looking back on a life of service.",
+            "route": "returns",
+            "ticket_id": null
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:49+00:00"
+        },
+        {
+          "id": 32,
+          "session_id": "b0a01045b692",
+          "turn": 5,
+          "stage": "input_guard",
+          "type": "input_guard",
+          "payload": {
+            "injection": false,
+            "abuse": false,
+            "sensitive": "none",
+            "reason": "Ordinary question about return policy for a recommended product.",
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1334,
+          "input_tokens": 637,
+          "output_tokens": 47,
+          "cost_usd": 8.7e-05,
+          "created_at": "2026-11-22T23:09:50+00:00"
+        },
+        {
+          "id": 33,
+          "session_id": "b0a01045b692",
+          "turn": 5,
+          "stage": "route",
+          "type": "route",
+          "payload": {
+            "aop": "returns",
+            "mode": "normal",
+            "why": "intent return_refund (0.80), queued ['policy_question']",
+            "intents": [
+              "return_refund",
+              "policy_question"
+            ],
+            "confidence": 0.8,
+            "confirmation": "none",
+            "frustration": "low",
+            "write_tools": [
+              "initiate_return",
+              "propose_return"
+            ],
+            "queued": [
+              "policy_question"
+            ],
+            "escalate": null,
+            "rules": {
+              "human_request": false
+            },
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1398,
+          "input_tokens": 1764,
+          "output_tokens": 144,
+          "cost_usd": 0.000248,
+          "created_at": "2026-11-22T23:09:50+00:00"
+        },
+        {
+          "id": 34,
+          "session_id": "b0a01045b692",
+          "turn": 5,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "tool_use",
+            "tool_calls": [
+              "search_policy"
+            ],
+            "cache_read": 10597,
+            "cache_write": 1764,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 891,
+          "input_tokens": 2,
+          "output_tokens": 67,
+          "cost_usd": 0.006144,
+          "created_at": "2026-11-22T23:09:51+00:00"
+        },
+        {
+          "id": 35,
+          "session_id": "b0a01045b692",
+          "turn": 5,
+          "stage": "tool",
+          "type": "tool_call",
+          "payload": {
+            "tool": "search_policy",
+            "args": {
+              "query": "Bookseller's Guarantee staff pick return window store credit"
+            },
+            "write": false,
+            "verdict": "ok",
+            "result": {
+              "results": [
+                {
+                  "policy_ref": "guarantee#staff-picks",
+                  "title": "The Bookseller's Guarantee: Staff picks",
+                  "text": "Every staff pick carries the Bookseller's Guarantee. If you didn't love a staff pick, you can return it for store credit within 60 days of delivery, even if you read it. The credit equals the price you paid. Our booksellers would also love to suggest another book for you."
+                },
+                {
+                  "policy_ref": "guarantee#why",
+                  "title": "The Bookseller's Guarantee: Why store credit",
+                  "text": "The guarantee is our promise that a staff pick is worth the risk. Store credit lets you try another of our booksellers' recommendations."
+                },
+                {
+                  "policy_ref": "returns#window",
+                  "title": "Returns and refunds: Return window",
+                  "text": "Unread physical books (paperbacks, hardcovers and box sets) can be returned for a full refund within 30 days of delivery. Ebooks that have not been downloaded can also be refunded within 30 days. Books that have been read can't be returned for a refund, except staff picks under the Bookseller's Guarantee. Refunds go back to the original payment method within 5 to 7 business days."
+                }
+              ],
+              "note": "Answer only from these texts. Name the policy in plain words; never show the policy_ref id to the customer."
+            }
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:51+00:00"
+        },
+        {
+          "id": 36,
+          "session_id": "b0a01045b692",
+          "turn": 5,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "end_turn",
+            "tool_calls": [],
+            "cache_read": 12361,
+            "cache_write": 499,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1179,
+          "input_tokens": 2,
+          "output_tokens": 81,
+          "cost_usd": 0.003298,
+          "created_at": "2026-11-22T23:09:52+00:00"
+        },
+        {
+          "id": 37,
+          "session_id": "b0a01045b692",
+          "turn": 5,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "supervisor",
+            "grounded": true,
+            "unsupported": []
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 819,
+          "input_tokens": 2312,
+          "output_tokens": 17,
+          "cost_usd": 0.00024,
+          "created_at": "2026-11-22T23:09:53+00:00"
+        },
+        {
+          "id": 38,
+          "session_id": "b0a01045b692",
+          "turn": 5,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "code",
+            "ok": true,
+            "issues": [],
+            "checked": {
+              "amounts": [],
+              "dates": [],
+              "tracking": [],
+              "echoed_customer_amounts": []
+            },
+            "supervisor_used": true,
+            "regenerated": false
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:53+00:00"
+        },
+        {
+          "id": 39,
+          "session_id": "b0a01045b692",
+          "turn": 5,
+          "stage": "reply",
+          "type": "reply",
+          "payload": {
+            "text": "Yes, you can. The Remains of the Day is a staff pick, so the Bookseller's Guarantee covers it. If you didn't love it, you can return it within 60 days of delivery for store credit equal to what you paid, even if you've read it.",
+            "route": "returns",
+            "ticket_id": null
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T23:09:53+00:00"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,5957 @@
+{
+  "summary": {
+    "label": "core-sonnet",
+    "scenarios": {
+      "ambiguous_order": {
+        "passed": 3,
+        "runs": 3,
+        "failures": []
+      },
+      "return_staff_pick": {
+        "passed": 3,
+        "runs": 3,
+        "failures": []
+      },
+      "ebook_promised_refund": {
+        "passed": 3,
+        "runs": 3,
+        "failures": []
+      },
+      "unique_item_no_question": {
+        "passed": 3,
+        "runs": 3,
+        "failures": []
+      }
+    },
+    "pass_rate": 1.0,
+    "all_runs_pass": 4,
+    "scenario_count": 4,
+    "refund_leakage_cents": 0,
+    "escalations_by_trigger": {},
+    "conversations_escalated": 0.0,
+    "turn_latency_ms": {
+      "p50": 5186,
+      "p95": 8637
+    },
+    "cost_per_conversation_usd": 0.02129,
+    "tone_rubric": {}
+  },
+  "runs": [
+    {
+      "scenario": "ambiguous_order",
+      "run": 1,
+      "passed": true,
+      "failures": [],
+      "replies": [
+        "Happy to help with that. Could you give me the order number and the email address on the order so I can pull up your account?",
+        "Thanks, Ana, you're verified. Which book are you thinking of returning: Piranesi, delivered November 15, or The Overstory, delivered November 12?"
+      ],
+      "transcript": [
+        {
+          "who": "customer",
+          "text": "Hi! I'd like to return a book I didn't love."
+        },
+        {
+          "who": "bookly",
+          "text": "Happy to help with that. Could you give me the order number and the email address on the order so I can pull up your account?"
+        },
+        {
+          "who": "customer",
+          "text": "Sure, it's order 4802 and ana.ruiz@example.com"
+        },
+        {
+          "who": "bookly",
+          "text": "Thanks, Ana, you're verified. Which book are you thinking of returning: Piranesi, delivered November 15, or The Overstory, delivered November 12?"
+        }
+      ],
+      "turn_latency_ms": [
+        3881,
+        4846
+      ],
+      "cost_usd": 0.023160999999999998,
+      "tickets": [],
+      "returns": [],
+      "leakage_cents": 0,
+      "error": null,
+      "judge": null,
+      "events": [
+        {
+          "id": 1,
+          "session_id": "c79bc8c376d1",
+          "turn": 1,
+          "stage": "input_guard",
+          "type": "input_guard",
+          "payload": {
+            "injection": false,
+            "abuse": false,
+            "sensitive": "none",
+            "reason": "Routine return request with no injection, abuse, or sensitive content.",
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1984,
+          "input_tokens": 633,
+          "output_tokens": 51,
+          "cost_usd": 8.9e-05,
+          "created_at": "2026-11-22T16:03:01+00:00"
+        },
+        {
+          "id": 2,
+          "session_id": "c79bc8c376d1",
+          "turn": 1,
+          "stage": "route",
+          "type": "route",
+          "payload": {
+            "aop": "returns",
+            "mode": "normal",
+            "why": "intent return_refund (0.92)",
+            "intents": [
+              "return_refund"
+            ],
+            "confidence": 0.92,
+            "confirmation": "none",
+            "frustration": "low",
+            "write_tools": [
+              "initiate_return",
+              "propose_return"
+            ],
+            "queued": [],
+            "escalate": null,
+            "rules": {
+              "human_request": false
+            },
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1989,
+          "input_tokens": 1678,
+          "output_tokens": 89,
+          "cost_usd": 0.000212,
+          "created_at": "2026-11-22T16:03:01+00:00"
+        },
+        {
+          "id": 3,
+          "session_id": "c79bc8c376d1",
+          "turn": 1,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "end_turn",
+            "tool_calls": [],
+            "cache_read": 0,
+            "cache_write": 4489,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1737,
+          "input_tokens": 2,
+          "output_tokens": 34,
+          "cost_usd": 0.011567,
+          "created_at": "2026-11-22T16:03:03+00:00"
+        },
+        {
+          "id": 4,
+          "session_id": "c79bc8c376d1",
+          "turn": 1,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "code",
+            "ok": true,
+            "issues": [],
+            "checked": {
+              "amounts": [],
+              "dates": [],
+              "tracking": []
+            },
+            "supervisor_used": false,
+            "regenerated": false
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:03+00:00"
+        },
+        {
+          "id": 5,
+          "session_id": "c79bc8c376d1",
+          "turn": 1,
+          "stage": "reply",
+          "type": "reply",
+          "payload": {
+            "text": "Happy to help with that. Could you give me the order number and the email address on the order so I can pull up your account?",
+            "route": "returns",
+            "ticket_id": null
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:03+00:00"
+        },
+        {
+          "id": 6,
+          "session_id": "c79bc8c376d1",
+          "turn": 2,
+          "stage": "input_guard",
+          "type": "input_guard",
+          "payload": {
+            "injection": false,
+            "abuse": false,
+            "sensitive": "none",
+            "reason": "Customer simply provided an order number and email address with no injection, abuse, or sensitive content.",
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1649,
+          "input_tokens": 638,
+          "output_tokens": 59,
+          "cost_usd": 9.3e-05,
+          "created_at": "2026-11-22T16:03:05+00:00"
+        },
+        {
+          "id": 7,
+          "session_id": "c79bc8c376d1",
+          "turn": 2,
+          "stage": "route",
+          "type": "route",
+          "payload": {
+            "aop": "returns",
+            "mode": "normal",
+            "why": "intent return_refund (0.90)",
+            "intents": [
+              "return_refund"
+            ],
+            "confidence": 0.9,
+            "confirmation": "none",
+            "frustration": "low",
+            "write_tools": [
+              "initiate_return",
+              "propose_return"
+            ],
+            "queued": [],
+            "escalate": null,
+            "rules": {
+              "human_request": false
+            },
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1255,
+          "input_tokens": 1717,
+          "output_tokens": 110,
+          "cost_usd": 0.000227,
+          "created_at": "2026-11-22T16:03:05+00:00"
+        },
+        {
+          "id": 8,
+          "session_id": "c79bc8c376d1",
+          "turn": 2,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "tool_use",
+            "tool_calls": [
+              "verify_customer"
+            ],
+            "cache_read": 2982,
+            "cache_write": 3084,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 2028,
+          "input_tokens": 2,
+          "output_tokens": 83,
+          "cost_usd": 0.008842,
+          "created_at": "2026-11-22T16:03:07+00:00"
+        },
+        {
+          "id": 9,
+          "session_id": "c79bc8c376d1",
+          "turn": 2,
+          "stage": "tool",
+          "type": "tool_call",
+          "payload": {
+            "tool": "verify_customer",
+            "args": {
+              "order_number": "4802",
+              "email": "a\u2022\u2022\u2022@example.com"
+            },
+            "write": false,
+            "verdict": "ok",
+            "result": {
+              "verified": true,
+              "customer_id": "C-1001",
+              "first_name": "Ana",
+              "email_on_file": "a\u2022\u2022\u2022@example.com",
+              "recent_orders": [
+                {
+                  "order_number": "4802",
+                  "status": "delivered",
+                  "placed_on": "November 13",
+                  "delivered_on": "November 15",
+                  "items": [
+                    {
+                      "item_id": "I-4802-1",
+                      "title": "Piranesi",
+                      "format": "paperback",
+                      "staff_pick": false,
+                      "already_returned": false
+                    }
+                  ]
+                },
+                {
+                  "order_number": "4801",
+                  "status": "delivered",
+                  "placed_on": "November 8",
+                  "delivered_on": "November 12",
+                  "items": [
+                    {
+                      "item_id": "I-4801-1",
+                      "title": "The Overstory",
+                      "format": "paperback",
+                      "staff_pick": true,
+                      "already_returned": false
+                    }
+                  ]
+                }
+              ],
+              "more_orders": 0,
+              "note": "recent_orders is a summary. Call lookup_orders only for older orders or gift notes."
+            }
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:07+00:00"
+        },
+        {
+          "id": 10,
+          "session_id": "c79bc8c376d1",
+          "turn": 2,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "end_turn",
+            "tool_calls": [],
+            "cache_read": 6066,
+            "cache_write": 388,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1138,
+          "input_tokens": 2,
+          "output_tokens": 55,
+          "cost_usd": 0.002131,
+          "created_at": "2026-11-22T16:03:08+00:00"
+        },
+        {
+          "id": 11,
+          "session_id": "c79bc8c376d1",
+          "turn": 2,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "code",
+            "ok": true,
+            "issues": [],
+            "checked": {
+              "amounts": [],
+              "dates": [
+                "November 15",
+                "November 12"
+              ],
+              "tracking": []
+            },
+            "supervisor_used": false,
+            "regenerated": false
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:08+00:00"
+        },
+        {
+          "id": 12,
+          "session_id": "c79bc8c376d1",
+          "turn": 2,
+          "stage": "reply",
+          "type": "reply",
+          "payload": {
+            "text": "Thanks, Ana, you're verified. Which book are you thinking of returning: Piranesi, delivered November 15, or The Overstory, delivered November 12?",
+            "route": "returns",
+            "ticket_id": null
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:08+00:00"
+        }
+      ]
+    },
+    {
+      "scenario": "ambiguous_order",
+      "run": 2,
+      "passed": true,
+      "failures": [],
+      "replies": [
+        "Happy to help with that. Could you give me the order number and the email address on the order so I can pull up your account?",
+        "Thanks, Ana, you're verified. Two books are on your recent orders: Piranesi, delivered November 15, and The Overstory, delivered November 12. Which one are you returning?"
+      ],
+      "transcript": [
+        {
+          "who": "customer",
+          "text": "Hi! I'd like to return a book I didn't love."
+        },
+        {
+          "who": "bookly",
+          "text": "Happy to help with that. Could you give me the order number and the email address on the order so I can pull up your account?"
+        },
+        {
+          "who": "customer",
+          "text": "Sure, it's order 4802 and ana.ruiz@example.com"
+        },
+        {
+          "who": "bookly",
+          "text": "Thanks, Ana, you're verified. Two books are on your recent orders: Piranesi, delivered November 15, and The Overstory, delivered November 12. Which one are you returning?"
+        }
+      ],
+      "turn_latency_ms": [
+        4287,
+        4398
+      ],
+      "cost_usd": 0.023244,
+      "tickets": [],
+      "returns": [],
+      "leakage_cents": 0,
+      "error": null,
+      "judge": null,
+      "events": [
+        {
+          "id": 1,
+          "session_id": "9355644aa483",
+          "turn": 1,
+          "stage": "input_guard",
+          "type": "input_guard",
+          "payload": {
+            "injection": false,
+            "abuse": false,
+            "sensitive": "none",
+            "reason": "Customer is making a routine return request for a book they did not enjoy, with no abuse, injection, or sensitive content.",
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 2007,
+          "input_tokens": 633,
+          "output_tokens": 67,
+          "cost_usd": 9.7e-05,
+          "created_at": "2026-11-22T16:03:02+00:00"
+        },
+        {
+          "id": 2,
+          "session_id": "9355644aa483",
+          "turn": 1,
+          "stage": "route",
+          "type": "route",
+          "payload": {
+            "aop": "returns",
+            "mode": "normal",
+            "why": "intent return_refund (0.92)",
+            "intents": [
+              "return_refund"
+            ],
+            "confidence": 0.92,
+            "confirmation": "none",
+            "frustration": "low",
+            "write_tools": [
+              "initiate_return",
+              "propose_return"
+            ],
+            "queued": [],
+            "escalate": null,
+            "rules": {
+              "human_request": false
+            },
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1981,
+          "input_tokens": 1678,
+          "output_tokens": 98,
+          "cost_usd": 0.000217,
+          "created_at": "2026-11-22T16:03:02+00:00"
+        },
+        {
+          "id": 3,
+          "session_id": "9355644aa483",
+          "turn": 1,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "end_turn",
+            "tool_calls": [],
+            "cache_read": 0,
+            "cache_write": 4489,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1932,
+          "input_tokens": 2,
+          "output_tokens": 34,
+          "cost_usd": 0.011567,
+          "created_at": "2026-11-22T16:03:03+00:00"
+        },
+        {
+          "id": 4,
+          "session_id": "9355644aa483",
+          "turn": 1,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "code",
+            "ok": true,
+            "issues": [],
+            "checked": {
+              "amounts": [],
+              "dates": [],
+              "tracking": []
+            },
+            "supervisor_used": false,
+            "regenerated": false
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:03+00:00"
+        },
+        {
+          "id": 5,
+          "session_id": "9355644aa483",
+          "turn": 1,
+          "stage": "reply",
+          "type": "reply",
+          "payload": {
+            "text": "Happy to help with that. Could you give me the order number and the email address on the order so I can pull up your account?",
+            "route": "returns",
+            "ticket_id": null
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:03+00:00"
+        },
+        {
+          "id": 6,
+          "session_id": "9355644aa483",
+          "turn": 2,
+          "stage": "input_guard",
+          "type": "input_guard",
+          "payload": {
+            "injection": false,
+            "abuse": false,
+            "sensitive": "none",
+            "reason": "Customer simply provided an order number and email address with no injection, abuse, or sensitive content.",
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1153,
+          "input_tokens": 638,
+          "output_tokens": 59,
+          "cost_usd": 9.3e-05,
+          "created_at": "2026-11-22T16:03:05+00:00"
+        },
+        {
+          "id": 7,
+          "session_id": "9355644aa483",
+          "turn": 2,
+          "stage": "route",
+          "type": "route",
+          "payload": {
+            "aop": "returns",
+            "mode": "normal",
+            "why": "intent return_refund (0.90)",
+            "intents": [
+              "return_refund"
+            ],
+            "confidence": 0.9,
+            "confirmation": "none",
+            "frustration": "low",
+            "write_tools": [
+              "initiate_return",
+              "propose_return"
+            ],
+            "queued": [],
+            "escalate": null,
+            "rules": {
+              "human_request": false
+            },
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1227,
+          "input_tokens": 1717,
+          "output_tokens": 110,
+          "cost_usd": 0.000227,
+          "created_at": "2026-11-22T16:03:05+00:00"
+        },
+        {
+          "id": 8,
+          "session_id": "9355644aa483",
+          "turn": 2,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "tool_use",
+            "tool_calls": [
+              "verify_customer"
+            ],
+            "cache_read": 2982,
+            "cache_write": 3084,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 2062,
+          "input_tokens": 2,
+          "output_tokens": 83,
+          "cost_usd": 0.008842,
+          "created_at": "2026-11-22T16:03:07+00:00"
+        },
+        {
+          "id": 9,
+          "session_id": "9355644aa483",
+          "turn": 2,
+          "stage": "tool",
+          "type": "tool_call",
+          "payload": {
+            "tool": "verify_customer",
+            "args": {
+              "order_number": "4802",
+              "email": "a\u2022\u2022\u2022@example.com"
+            },
+            "write": false,
+            "verdict": "ok",
+            "result": {
+              "verified": true,
+              "customer_id": "C-1001",
+              "first_name": "Ana",
+              "email_on_file": "a\u2022\u2022\u2022@example.com",
+              "recent_orders": [
+                {
+                  "order_number": "4802",
+                  "status": "delivered",
+                  "placed_on": "November 13",
+                  "delivered_on": "November 15",
+                  "items": [
+                    {
+                      "item_id": "I-4802-1",
+                      "title": "Piranesi",
+                      "format": "paperback",
+                      "staff_pick": false,
+                      "already_returned": false
+                    }
+                  ]
+                },
+                {
+                  "order_number": "4801",
+                  "status": "delivered",
+                  "placed_on": "November 8",
+                  "delivered_on": "November 12",
+                  "items": [
+                    {
+                      "item_id": "I-4801-1",
+                      "title": "The Overstory",
+                      "format": "paperback",
+                      "staff_pick": true,
+                      "already_returned": false
+                    }
+                  ]
+                }
+              ],
+              "more_orders": 0,
+              "note": "recent_orders is a summary. Call lookup_orders only for older orders or gift notes."
+            }
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:07+00:00"
+        },
+        {
+          "id": 10,
+          "session_id": "9355644aa483",
+          "turn": 2,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "end_turn",
+            "tool_calls": [],
+            "cache_read": 6066,
+            "cache_write": 388,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1006,
+          "input_tokens": 2,
+          "output_tokens": 62,
+          "cost_usd": 0.002201,
+          "created_at": "2026-11-22T16:03:08+00:00"
+        },
+        {
+          "id": 11,
+          "session_id": "9355644aa483",
+          "turn": 2,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "code",
+            "ok": true,
+            "issues": [],
+            "checked": {
+              "amounts": [],
+              "dates": [
+                "November 15",
+                "November 12"
+              ],
+              "tracking": []
+            },
+            "supervisor_used": false,
+            "regenerated": false
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:08+00:00"
+        },
+        {
+          "id": 12,
+          "session_id": "9355644aa483",
+          "turn": 2,
+          "stage": "reply",
+          "type": "reply",
+          "payload": {
+            "text": "Thanks, Ana, you're verified. Two books are on your recent orders: Piranesi, delivered November 15, and The Overstory, delivered November 12. Which one are you returning?",
+            "route": "returns",
+            "ticket_id": null
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:08+00:00"
+        }
+      ]
+    },
+    {
+      "scenario": "ambiguous_order",
+      "run": 3,
+      "passed": true,
+      "failures": [],
+      "replies": [
+        "Happy to help with that. Could you give me the order number and the email address on the order so I can pull up your account?",
+        "Thanks, Ana, you're verified. Which book are you thinking of returning: Piranesi, delivered November 15, or The Overstory, delivered November 12?"
+      ],
+      "transcript": [
+        {
+          "who": "customer",
+          "text": "Hi! I'd like to return a book I didn't love."
+        },
+        {
+          "who": "bookly",
+          "text": "Happy to help with that. Could you give me the order number and the email address on the order so I can pull up your account?"
+        },
+        {
+          "who": "customer",
+          "text": "Sure, it's order 4802 and ana.ruiz@example.com"
+        },
+        {
+          "who": "bookly",
+          "text": "Thanks, Ana, you're verified. Which book are you thinking of returning: Piranesi, delivered November 15, or The Overstory, delivered November 12?"
+        }
+      ],
+      "turn_latency_ms": [
+        3806,
+        4198
+      ],
+      "cost_usd": 0.02316,
+      "tickets": [],
+      "returns": [],
+      "leakage_cents": 0,
+      "error": null,
+      "judge": null,
+      "events": [
+        {
+          "id": 1,
+          "session_id": "5d6ca670dae8",
+          "turn": 1,
+          "stage": "input_guard",
+          "type": "input_guard",
+          "payload": {
+            "injection": false,
+            "abuse": false,
+            "sensitive": "none",
+            "reason": "Routine return request with no injection, abuse, or sensitive content.",
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1999,
+          "input_tokens": 633,
+          "output_tokens": 51,
+          "cost_usd": 8.9e-05,
+          "created_at": "2026-11-22T16:03:01+00:00"
+        },
+        {
+          "id": 2,
+          "session_id": "5d6ca670dae8",
+          "turn": 1,
+          "stage": "route",
+          "type": "route",
+          "payload": {
+            "aop": "returns",
+            "mode": "normal",
+            "why": "intent return_refund (0.92)",
+            "intents": [
+              "return_refund"
+            ],
+            "confidence": 0.92,
+            "confirmation": "none",
+            "frustration": "low",
+            "write_tools": [
+              "initiate_return",
+              "propose_return"
+            ],
+            "queued": [],
+            "escalate": null,
+            "rules": {
+              "human_request": false
+            },
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1993,
+          "input_tokens": 1678,
+          "output_tokens": 89,
+          "cost_usd": 0.000212,
+          "created_at": "2026-11-22T16:03:01+00:00"
+        },
+        {
+          "id": 3,
+          "session_id": "5d6ca670dae8",
+          "turn": 1,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "end_turn",
+            "tool_calls": [],
+            "cache_read": 0,
+            "cache_write": 4489,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1710,
+          "input_tokens": 2,
+          "output_tokens": 34,
+          "cost_usd": 0.011567,
+          "created_at": "2026-11-22T16:03:03+00:00"
+        },
+        {
+          "id": 4,
+          "session_id": "5d6ca670dae8",
+          "turn": 1,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "code",
+            "ok": true,
+            "issues": [],
+            "checked": {
+              "amounts": [],
+              "dates": [],
+              "tracking": []
+            },
+            "supervisor_used": false,
+            "regenerated": false
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:03+00:00"
+        },
+        {
+          "id": 5,
+          "session_id": "5d6ca670dae8",
+          "turn": 1,
+          "stage": "reply",
+          "type": "reply",
+          "payload": {
+            "text": "Happy to help with that. Could you give me the order number and the email address on the order so I can pull up your account?",
+            "route": "returns",
+            "ticket_id": null
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:03+00:00"
+        },
+        {
+          "id": 6,
+          "session_id": "5d6ca670dae8",
+          "turn": 2,
+          "stage": "input_guard",
+          "type": "input_guard",
+          "payload": {
+            "injection": false,
+            "abuse": false,
+            "sensitive": "none",
+            "reason": "Customer simply provided an order number and email address with no injection, abuse, or sensitive content.",
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 867,
+          "input_tokens": 638,
+          "output_tokens": 59,
+          "cost_usd": 9.3e-05,
+          "created_at": "2026-11-22T16:03:04+00:00"
+        },
+        {
+          "id": 7,
+          "session_id": "5d6ca670dae8",
+          "turn": 2,
+          "stage": "route",
+          "type": "route",
+          "payload": {
+            "aop": "returns",
+            "mode": "normal",
+            "why": "intent return_refund (0.90)",
+            "intents": [
+              "return_refund"
+            ],
+            "confidence": 0.9,
+            "confirmation": "none",
+            "frustration": "low",
+            "write_tools": [
+              "initiate_return",
+              "propose_return"
+            ],
+            "queued": [],
+            "escalate": null,
+            "rules": {
+              "human_request": false
+            },
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1254,
+          "input_tokens": 1717,
+          "output_tokens": 109,
+          "cost_usd": 0.000226,
+          "created_at": "2026-11-22T16:03:04+00:00"
+        },
+        {
+          "id": 8,
+          "session_id": "5d6ca670dae8",
+          "turn": 2,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "tool_use",
+            "tool_calls": [
+              "verify_customer"
+            ],
+            "cache_read": 2982,
+            "cache_write": 3084,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1867,
+          "input_tokens": 2,
+          "output_tokens": 83,
+          "cost_usd": 0.008842,
+          "created_at": "2026-11-22T16:03:06+00:00"
+        },
+        {
+          "id": 9,
+          "session_id": "5d6ca670dae8",
+          "turn": 2,
+          "stage": "tool",
+          "type": "tool_call",
+          "payload": {
+            "tool": "verify_customer",
+            "args": {
+              "order_number": "4802",
+              "email": "a\u2022\u2022\u2022@example.com"
+            },
+            "write": false,
+            "verdict": "ok",
+            "result": {
+              "verified": true,
+              "customer_id": "C-1001",
+              "first_name": "Ana",
+              "email_on_file": "a\u2022\u2022\u2022@example.com",
+              "recent_orders": [
+                {
+                  "order_number": "4802",
+                  "status": "delivered",
+                  "placed_on": "November 13",
+                  "delivered_on": "November 15",
+                  "items": [
+                    {
+                      "item_id": "I-4802-1",
+                      "title": "Piranesi",
+                      "format": "paperback",
+                      "staff_pick": false,
+                      "already_returned": false
+                    }
+                  ]
+                },
+                {
+                  "order_number": "4801",
+                  "status": "delivered",
+                  "placed_on": "November 8",
+                  "delivered_on": "November 12",
+                  "items": [
+                    {
+                      "item_id": "I-4801-1",
+                      "title": "The Overstory",
+                      "format": "paperback",
+                      "staff_pick": true,
+                      "already_returned": false
+                    }
+                  ]
+                }
+              ],
+              "more_orders": 0,
+              "note": "recent_orders is a summary. Call lookup_orders only for older orders or gift notes."
+            }
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:06+00:00"
+        },
+        {
+          "id": 10,
+          "session_id": "5d6ca670dae8",
+          "turn": 2,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "end_turn",
+            "tool_calls": [],
+            "cache_read": 6066,
+            "cache_write": 388,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1062,
+          "input_tokens": 2,
+          "output_tokens": 55,
+          "cost_usd": 0.002131,
+          "created_at": "2026-11-22T16:03:07+00:00"
+        },
+        {
+          "id": 11,
+          "session_id": "5d6ca670dae8",
+          "turn": 2,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "code",
+            "ok": true,
+            "issues": [],
+            "checked": {
+              "amounts": [],
+              "dates": [
+                "November 15",
+                "November 12"
+              ],
+              "tracking": []
+            },
+            "supervisor_used": false,
+            "regenerated": false
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:07+00:00"
+        },
+        {
+          "id": 12,
+          "session_id": "5d6ca670dae8",
+          "turn": 2,
+          "stage": "reply",
+          "type": "reply",
+          "payload": {
+            "text": "Thanks, Ana, you're verified. Which book are you thinking of returning: Piranesi, delivered November 15, or The Overstory, delivered November 12?",
+            "route": "returns",
+            "ticket_id": null
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:07+00:00"
+        }
+      ]
+    },
+    {
+      "scenario": "return_staff_pick",
+      "run": 1,
+      "passed": true,
+      "failures": [],
+      "replies": [
+        "Happy to help with that. Could you give me the order number and the email address on the order so I can pull it up?",
+        "Thanks, Ana, you're verified. Which book did you want to return: Piranesi, delivered November 15, or The Overstory, delivered November 12?",
+        "Good news, Ana: The Overstory is a staff pick, so our Bookseller's Guarantee covers it even though you've read it. I can return it for $18.99 in Bookly store credit, which is added to your account right away and never expires. Would you like me to go ahead?",
+        "All done, Ana. The $18.99 in store credit is on your account now. If you're after something quieter next time, our staff pick The Remains of the Day by Kazuo Ishiguro follows an English butler looking back on a life of service."
+      ],
+      "transcript": [
+        {
+          "who": "customer",
+          "text": "Hi! I'd like to return a book I didn't love."
+        },
+        {
+          "who": "bookly",
+          "text": "Happy to help with that. Could you give me the order number and the email address on the order so I can pull it up?"
+        },
+        {
+          "who": "customer",
+          "text": "Order 4801, ana.ruiz@example.com"
+        },
+        {
+          "who": "bookly",
+          "text": "Thanks, Ana, you're verified. Which book did you want to return: Piranesi, delivered November 15, or The Overstory, delivered November 12?"
+        },
+        {
+          "who": "customer",
+          "text": "The Overstory. I read it but it just wasn't for me."
+        },
+        {
+          "who": "bookly",
+          "text": "Good news, Ana: The Overstory is a staff pick, so our Bookseller's Guarantee covers it even though you've read it. I can return it for $18.99 in Bookly store credit, which is added to your account right away and never expires. Would you like me to go ahead?"
+        },
+        {
+          "who": "customer",
+          "text": "Yes please, go ahead."
+        },
+        {
+          "who": "bookly",
+          "text": "All done, Ana. The $18.99 in store credit is on your account now. If you're after something quieter next time, our staff pick The Remains of the Day by Kazuo Ishiguro follows an English butler looking back on a life of service."
+        }
+      ],
+      "turn_latency_ms": [
+        3983,
+        5186,
+        8192,
+        5289
+      ],
+      "cost_usd": 0.04296,
+      "tickets": [],
+      "returns": [
+        {
+          "id": 1,
+          "item_id": "I-4801-1",
+          "customer_id": "C-1001",
+          "resolution": "store_credit",
+          "amount_cents": 1899,
+          "reason": "didnt_enjoy",
+          "policy_ref": "guarantee#staff-picks",
+          "idempotency_key": "33f5b70b3293:I-4801-1",
+          "created_at": "2026-11-22T16:03:20+00:00"
+        }
+      ],
+      "leakage_cents": 0,
+      "error": null,
+      "judge": null,
+      "events": [
+        {
+          "id": 1,
+          "session_id": "33f5b70b3293",
+          "turn": 1,
+          "stage": "input_guard",
+          "type": "input_guard",
+          "payload": {
+            "injection": false,
+            "abuse": false,
+            "sensitive": "none",
+            "reason": "Ordinary return request with no injection, abuse, or sensitive content.",
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 2032,
+          "input_tokens": 633,
+          "output_tokens": 53,
+          "cost_usd": 9e-05,
+          "created_at": "2026-11-22T16:03:02+00:00"
+        },
+        {
+          "id": 2,
+          "session_id": "33f5b70b3293",
+          "turn": 1,
+          "stage": "route",
+          "type": "route",
+          "payload": {
+            "aop": "returns",
+            "mode": "normal",
+            "why": "intent return_refund (0.92)",
+            "intents": [
+              "return_refund"
+            ],
+            "confidence": 0.92,
+            "confirmation": "none",
+            "frustration": "low",
+            "write_tools": [
+              "initiate_return",
+              "propose_return"
+            ],
+            "queued": [],
+            "escalate": null,
+            "rules": {
+              "human_request": false
+            },
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 2043,
+          "input_tokens": 1678,
+          "output_tokens": 89,
+          "cost_usd": 0.000212,
+          "created_at": "2026-11-22T16:03:02+00:00"
+        },
+        {
+          "id": 3,
+          "session_id": "33f5b70b3293",
+          "turn": 1,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "end_turn",
+            "tool_calls": [],
+            "cache_read": 0,
+            "cache_write": 4489,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1886,
+          "input_tokens": 2,
+          "output_tokens": 33,
+          "cost_usd": 0.011557,
+          "created_at": "2026-11-22T16:03:03+00:00"
+        },
+        {
+          "id": 4,
+          "session_id": "33f5b70b3293",
+          "turn": 1,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "code",
+            "ok": true,
+            "issues": [],
+            "checked": {
+              "amounts": [],
+              "dates": [],
+              "tracking": []
+            },
+            "supervisor_used": false,
+            "regenerated": false
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:03+00:00"
+        },
+        {
+          "id": 5,
+          "session_id": "33f5b70b3293",
+          "turn": 1,
+          "stage": "reply",
+          "type": "reply",
+          "payload": {
+            "text": "Happy to help with that. Could you give me the order number and the email address on the order so I can pull it up?",
+            "route": "returns",
+            "ticket_id": null
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:03+00:00"
+        },
+        {
+          "id": 6,
+          "session_id": "33f5b70b3293",
+          "turn": 2,
+          "stage": "input_guard",
+          "type": "input_guard",
+          "payload": {
+            "injection": false,
+            "abuse": false,
+            "sensitive": "none",
+            "reason": "The message is a plain order number and email address with no injection, abuse, or sensitive content.",
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1066,
+          "input_tokens": 632,
+          "output_tokens": 57,
+          "cost_usd": 9.2e-05,
+          "created_at": "2026-11-22T16:03:05+00:00"
+        },
+        {
+          "id": 7,
+          "session_id": "33f5b70b3293",
+          "turn": 2,
+          "stage": "route",
+          "type": "route",
+          "payload": {
+            "aop": "returns",
+            "mode": "normal",
+            "why": "intent return_refund (0.90)",
+            "intents": [
+              "return_refund"
+            ],
+            "confidence": 0.9,
+            "confirmation": "none",
+            "frustration": "low",
+            "write_tools": [
+              "initiate_return",
+              "propose_return"
+            ],
+            "queued": [],
+            "escalate": null,
+            "rules": {
+              "human_request": false
+            },
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1310,
+          "input_tokens": 1710,
+          "output_tokens": 117,
+          "cost_usd": 0.000229,
+          "created_at": "2026-11-22T16:03:05+00:00"
+        },
+        {
+          "id": 8,
+          "session_id": "33f5b70b3293",
+          "turn": 2,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "tool_use",
+            "tool_calls": [
+              "verify_customer"
+            ],
+            "cache_read": 2982,
+            "cache_write": 3077,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1977,
+          "input_tokens": 2,
+          "output_tokens": 83,
+          "cost_usd": 0.008825,
+          "created_at": "2026-11-22T16:03:07+00:00"
+        },
+        {
+          "id": 9,
+          "session_id": "33f5b70b3293",
+          "turn": 2,
+          "stage": "tool",
+          "type": "tool_call",
+          "payload": {
+            "tool": "verify_customer",
+            "args": {
+              "order_number": "4801",
+              "email": "a\u2022\u2022\u2022@example.com"
+            },
+            "write": false,
+            "verdict": "ok",
+            "result": {
+              "verified": true,
+              "customer_id": "C-1001",
+              "first_name": "Ana",
+              "email_on_file": "a\u2022\u2022\u2022@example.com",
+              "recent_orders": [
+                {
+                  "order_number": "4802",
+                  "status": "delivered",
+                  "placed_on": "November 13",
+                  "delivered_on": "November 15",
+                  "items": [
+                    {
+                      "item_id": "I-4802-1",
+                      "title": "Piranesi",
+                      "format": "paperback",
+                      "staff_pick": false,
+                      "already_returned": false
+                    }
+                  ]
+                },
+                {
+                  "order_number": "4801",
+                  "status": "delivered",
+                  "placed_on": "November 8",
+                  "delivered_on": "November 12",
+                  "items": [
+                    {
+                      "item_id": "I-4801-1",
+                      "title": "The Overstory",
+                      "format": "paperback",
+                      "staff_pick": true,
+                      "already_returned": false
+                    }
+                  ]
+                }
+              ],
+              "more_orders": 0,
+              "note": "recent_orders is a summary. Call lookup_orders only for older orders or gift notes."
+            }
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:07+00:00"
+        },
+        {
+          "id": 10,
+          "session_id": "33f5b70b3293",
+          "turn": 2,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "end_turn",
+            "tool_calls": [],
+            "cache_read": 6059,
+            "cache_write": 388,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1863,
+          "input_tokens": 2,
+          "output_tokens": 52,
+          "cost_usd": 0.0021,
+          "created_at": "2026-11-22T16:03:09+00:00"
+        },
+        {
+          "id": 11,
+          "session_id": "33f5b70b3293",
+          "turn": 2,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "code",
+            "ok": true,
+            "issues": [],
+            "checked": {
+              "amounts": [],
+              "dates": [
+                "November 15",
+                "November 12"
+              ],
+              "tracking": []
+            },
+            "supervisor_used": false,
+            "regenerated": false
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:09+00:00"
+        },
+        {
+          "id": 12,
+          "session_id": "33f5b70b3293",
+          "turn": 2,
+          "stage": "reply",
+          "type": "reply",
+          "payload": {
+            "text": "Thanks, Ana, you're verified. Which book did you want to return: Piranesi, delivered November 15, or The Overstory, delivered November 12?",
+            "route": "returns",
+            "ticket_id": null
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:09+00:00"
+        },
+        {
+          "id": 13,
+          "session_id": "33f5b70b3293",
+          "turn": 3,
+          "stage": "input_guard",
+          "type": "input_guard",
+          "payload": {
+            "injection": false,
+            "abuse": false,
+            "sensitive": "none",
+            "reason": "The customer is simply saying they read a book, The Overstory, and didn't enjoy it; no injection, abuse, or sensitive content.",
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1095,
+          "input_tokens": 634,
+          "output_tokens": 74,
+          "cost_usd": 0.0001,
+          "created_at": "2026-11-22T16:03:10+00:00"
+        },
+        {
+          "id": 14,
+          "session_id": "33f5b70b3293",
+          "turn": 3,
+          "stage": "route",
+          "type": "route",
+          "payload": {
+            "aop": "returns",
+            "mode": "normal",
+            "why": "intent return_refund (0.95)",
+            "intents": [
+              "return_refund"
+            ],
+            "confidence": 0.95,
+            "confirmation": "none",
+            "frustration": "low",
+            "write_tools": [
+              "initiate_return",
+              "propose_return"
+            ],
+            "queued": [],
+            "escalate": null,
+            "rules": {
+              "human_request": false
+            },
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1176,
+          "input_tokens": 1731,
+          "output_tokens": 117,
+          "cost_usd": 0.000232,
+          "created_at": "2026-11-22T16:03:10+00:00"
+        },
+        {
+          "id": 15,
+          "session_id": "33f5b70b3293",
+          "turn": 3,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "tool_use",
+            "tool_calls": [
+              "check_return_eligibility"
+            ],
+            "cache_read": 6447,
+            "cache_write": 1596,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1995,
+          "input_tokens": 2,
+          "output_tokens": 112,
+          "cost_usd": 0.005759,
+          "created_at": "2026-11-22T16:03:12+00:00"
+        },
+        {
+          "id": 16,
+          "session_id": "33f5b70b3293",
+          "turn": 3,
+          "stage": "tool",
+          "type": "tool_call",
+          "payload": {
+            "tool": "check_return_eligibility",
+            "args": {
+              "item_id": "I-4801-1",
+              "reason": "didnt_enjoy",
+              "is_unread": false
+            },
+            "write": false,
+            "verdict": "ok",
+            "result": {
+              "item_id": "I-4801-1",
+              "title": "The Overstory",
+              "eligible": true,
+              "resolution": "store_credit",
+              "amount_display": "$18.99",
+              "requires_approval": false,
+              "policy_ref": "guarantee#staff-picks",
+              "explanation": "Staff picks carry the Bookseller's Guarantee: store credit within 60 days, even if the book was read.",
+              "days_since_delivery": 10,
+              "next_step": "Call propose_return with this resolution."
+            }
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:12+00:00"
+        },
+        {
+          "id": 17,
+          "session_id": "33f5b70b3293",
+          "turn": 3,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "tool_use",
+            "tool_calls": [
+              "propose_return"
+            ],
+            "cache_read": 8043,
+            "cache_write": 273,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1847,
+          "input_tokens": 2,
+          "output_tokens": 81,
+          "cost_usd": 0.002301,
+          "created_at": "2026-11-22T16:03:14+00:00"
+        },
+        {
+          "id": 18,
+          "session_id": "33f5b70b3293",
+          "turn": 3,
+          "stage": "tool",
+          "type": "tool_call",
+          "payload": {
+            "tool": "propose_return",
+            "args": {
+              "item_id": "I-4801-1",
+              "resolution": "store_credit"
+            },
+            "write": false,
+            "verdict": "ok",
+            "result": {
+              "proposal": "Return The Overstory for $18.99 in Bookly store credit. The credit is added to the account right away and never expires.",
+              "amount_display": "$18.99",
+              "next_step": "Tell the customer exactly this and ask if they'd like to go ahead. Don't call initiate_return until they reply yes."
+            }
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:14+00:00"
+        },
+        {
+          "id": 19,
+          "session_id": "33f5b70b3293",
+          "turn": 3,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "end_turn",
+            "tool_calls": [],
+            "cache_read": 8316,
+            "cache_write": 190,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 3156,
+          "input_tokens": 2,
+          "output_tokens": 88,
+          "cost_usd": 0.002191,
+          "created_at": "2026-11-22T16:03:17+00:00"
+        },
+        {
+          "id": 20,
+          "session_id": "33f5b70b3293",
+          "turn": 3,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "supervisor",
+            "skipped": true,
+            "reason": "policy statements backed by the policy engine this turn (check_return_eligibility, propose_return)"
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:17+00:00"
+        },
+        {
+          "id": 21,
+          "session_id": "33f5b70b3293",
+          "turn": 3,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "code",
+            "ok": true,
+            "issues": [],
+            "checked": {
+              "amounts": [
+                "$18.99"
+              ],
+              "dates": [],
+              "tracking": []
+            },
+            "supervisor_used": false,
+            "regenerated": false
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:17+00:00"
+        },
+        {
+          "id": 22,
+          "session_id": "33f5b70b3293",
+          "turn": 3,
+          "stage": "reply",
+          "type": "reply",
+          "payload": {
+            "text": "Good news, Ana: The Overstory is a staff pick, so our Bookseller's Guarantee covers it even though you've read it. I can return it for $18.99 in Bookly store credit, which is added to your account right away and never expires. Would you like me to go ahead?",
+            "route": "returns",
+            "ticket_id": null
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:17+00:00"
+        },
+        {
+          "id": 23,
+          "session_id": "33f5b70b3293",
+          "turn": 4,
+          "stage": "input_guard",
+          "type": "input_guard",
+          "payload": {
+            "injection": false,
+            "abuse": false,
+            "sensitive": "none",
+            "reason": "Short affirmative reply with no injection, abuse, or sensitive content.",
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 925,
+          "input_tokens": 625,
+          "output_tokens": 53,
+          "cost_usd": 8.9e-05,
+          "created_at": "2026-11-22T16:03:18+00:00"
+        },
+        {
+          "id": 24,
+          "session_id": "33f5b70b3293",
+          "turn": 4,
+          "stage": "route",
+          "type": "route",
+          "payload": {
+            "aop": "returns",
+            "mode": "normal",
+            "why": "answering pending proposal (confirmation=yes)",
+            "intents": [
+              "return_refund"
+            ],
+            "confidence": 0.97,
+            "confirmation": "yes",
+            "frustration": "low",
+            "write_tools": [
+              "initiate_return",
+              "propose_return"
+            ],
+            "queued": [],
+            "escalate": null,
+            "rules": {
+              "human_request": false
+            },
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1069,
+          "input_tokens": 1761,
+          "output_tokens": 108,
+          "cost_usd": 0.00023,
+          "created_at": "2026-11-22T16:03:18+00:00"
+        },
+        {
+          "id": 25,
+          "session_id": "33f5b70b3293",
+          "turn": 4,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "tool_use",
+            "tool_calls": [
+              "initiate_return",
+              "get_recommendation"
+            ],
+            "cache_read": 8506,
+            "cache_write": 1741,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 2064,
+          "input_tokens": 2,
+          "output_tokens": 108,
+          "cost_usd": 0.006287,
+          "created_at": "2026-11-22T16:03:20+00:00"
+        },
+        {
+          "id": 26,
+          "session_id": "33f5b70b3293",
+          "turn": 4,
+          "stage": "tool",
+          "type": "tool_call",
+          "payload": {
+            "tool": "initiate_return",
+            "args": {
+              "item_id": "I-4801-1",
+              "resolution": "store_credit"
+            },
+            "write": true,
+            "verdict": "ok",
+            "result": {
+              "return_id": 1,
+              "status": "completed",
+              "resolution": "store_credit",
+              "amount_display": "$18.99",
+              "title": "The Overstory",
+              "what_happens_next": "Return The Overstory for $18.99 in Bookly store credit. The credit is added to the account right away and never expires."
+            }
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:20+00:00"
+        },
+        {
+          "id": 27,
+          "session_id": "33f5b70b3293",
+          "turn": 4,
+          "stage": "tool",
+          "type": "tool_call",
+          "payload": {
+            "tool": "get_recommendation",
+            "args": {},
+            "write": false,
+            "verdict": "ok",
+            "result": {
+              "title": "The Remains of the Day",
+              "author": "Kazuo Ishiguro",
+              "why": "An English butler looks back on a life of service.",
+              "price": "$16.00",
+              "staff_pick": true,
+              "note": "Offer this once, lightly. Don't push."
+            }
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:20+00:00"
+        },
+        {
+          "id": 28,
+          "session_id": "33f5b70b3293",
+          "turn": 4,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "end_turn",
+            "tool_calls": [],
+            "cache_read": 10247,
+            "cache_write": 351,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 2143,
+          "input_tokens": 2,
+          "output_tokens": 76,
+          "cost_usd": 0.002666,
+          "created_at": "2026-11-22T16:03:22+00:00"
+        },
+        {
+          "id": 29,
+          "session_id": "33f5b70b3293",
+          "turn": 4,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "supervisor",
+            "skipped": true,
+            "reason": "policy statements backed by the policy engine this turn (initiate_return)"
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:22+00:00"
+        },
+        {
+          "id": 30,
+          "session_id": "33f5b70b3293",
+          "turn": 4,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "code",
+            "ok": true,
+            "issues": [],
+            "checked": {
+              "amounts": [
+                "$18.99"
+              ],
+              "dates": [],
+              "tracking": []
+            },
+            "supervisor_used": false,
+            "regenerated": false
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:22+00:00"
+        },
+        {
+          "id": 31,
+          "session_id": "33f5b70b3293",
+          "turn": 4,
+          "stage": "reply",
+          "type": "reply",
+          "payload": {
+            "text": "All done, Ana. The $18.99 in store credit is on your account now. If you're after something quieter next time, our staff pick The Remains of the Day by Kazuo Ishiguro follows an English butler looking back on a life of service.",
+            "route": "returns",
+            "ticket_id": null
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:22+00:00"
+        }
+      ]
+    },
+    {
+      "scenario": "return_staff_pick",
+      "run": 2,
+      "passed": true,
+      "failures": [],
+      "replies": [
+        "I'd be happy to help with that. Could you give me the order number and the email address on the order so I can pull up your account?",
+        "Thanks, Ana, you're verified. Which book is it you'd like to return: Piranesi, delivered November 15, or The Overstory, delivered November 12?",
+        "Good news, Ana: The Overstory is a staff pick, so our Bookseller's Guarantee covers it even though you've read it. I can return it for $18.99 in Bookly store credit, which is added to your account right away and never expires. Would you like me to go ahead?",
+        "All done, Ana. The Overstory is returned and $18.99 in store credit is on your account now. If you're in the mood for something quieter, our booksellers love The Remains of the Day by Kazuo Ishiguro, where an English butler looks back on a life of service."
+      ],
+      "transcript": [
+        {
+          "who": "customer",
+          "text": "Hi! I'd like to return a book I didn't love."
+        },
+        {
+          "who": "bookly",
+          "text": "I'd be happy to help with that. Could you give me the order number and the email address on the order so I can pull up your account?"
+        },
+        {
+          "who": "customer",
+          "text": "Order 4801, ana.ruiz@example.com"
+        },
+        {
+          "who": "bookly",
+          "text": "Thanks, Ana, you're verified. Which book is it you'd like to return: Piranesi, delivered November 15, or The Overstory, delivered November 12?"
+        },
+        {
+          "who": "customer",
+          "text": "The Overstory. I read it but it just wasn't for me."
+        },
+        {
+          "who": "bookly",
+          "text": "Good news, Ana: The Overstory is a staff pick, so our Bookseller's Guarantee covers it even though you've read it. I can return it for $18.99 in Bookly store credit, which is added to your account right away and never expires. Would you like me to go ahead?"
+        },
+        {
+          "who": "customer",
+          "text": "Yes please, go ahead."
+        },
+        {
+          "who": "bookly",
+          "text": "All done, Ana. The Overstory is returned and $18.99 in store credit is on your account now. If you're in the mood for something quieter, our booksellers love The Remains of the Day by Kazuo Ishiguro, where an English butler looks back on a life of service."
+        }
+      ],
+      "turn_latency_ms": [
+        2875,
+        5041,
+        7301,
+        5195
+      ],
+      "cost_usd": 0.032394,
+      "tickets": [],
+      "returns": [
+        {
+          "id": 1,
+          "item_id": "I-4801-1",
+          "customer_id": "C-1001",
+          "resolution": "store_credit",
+          "amount_cents": 1899,
+          "reason": "didnt_enjoy",
+          "policy_ref": "guarantee#staff-picks",
+          "idempotency_key": "4118d1773c74:I-4801-1",
+          "created_at": "2026-11-22T16:03:26+00:00"
+        }
+      ],
+      "leakage_cents": 0,
+      "error": null,
+      "judge": null,
+      "events": [
+        {
+          "id": 1,
+          "session_id": "4118d1773c74",
+          "turn": 1,
+          "stage": "input_guard",
+          "type": "input_guard",
+          "payload": {
+            "injection": false,
+            "abuse": false,
+            "sensitive": "none",
+            "reason": "Customer is making a routine return request for a book they did not enjoy, with no abuse, authority claims, or sensitive content.",
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1143,
+          "input_tokens": 633,
+          "output_tokens": 69,
+          "cost_usd": 9.8e-05,
+          "created_at": "2026-11-22T16:03:09+00:00"
+        },
+        {
+          "id": 2,
+          "session_id": "4118d1773c74",
+          "turn": 1,
+          "stage": "route",
+          "type": "route",
+          "payload": {
+            "aop": "returns",
+            "mode": "normal",
+            "why": "intent return_refund (0.92)",
+            "intents": [
+              "return_refund"
+            ],
+            "confidence": 0.92,
+            "confirmation": "none",
+            "frustration": "low",
+            "write_tools": [
+              "initiate_return",
+              "propose_return"
+            ],
+            "queued": [],
+            "escalate": null,
+            "rules": {
+              "human_request": false
+            },
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1125,
+          "input_tokens": 1678,
+          "output_tokens": 89,
+          "cost_usd": 0.000212,
+          "created_at": "2026-11-22T16:03:09+00:00"
+        },
+        {
+          "id": 3,
+          "session_id": "4118d1773c74",
+          "turn": 1,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "end_turn",
+            "tool_calls": [],
+            "cache_read": 4489,
+            "cache_write": 0,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1722,
+          "input_tokens": 2,
+          "output_tokens": 37,
+          "cost_usd": 0.000823,
+          "created_at": "2026-11-22T16:03:10+00:00"
+        },
+        {
+          "id": 4,
+          "session_id": "4118d1773c74",
+          "turn": 1,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "code",
+            "ok": true,
+            "issues": [],
+            "checked": {
+              "amounts": [],
+              "dates": [],
+              "tracking": []
+            },
+            "supervisor_used": false,
+            "regenerated": false
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:10+00:00"
+        },
+        {
+          "id": 5,
+          "session_id": "4118d1773c74",
+          "turn": 1,
+          "stage": "reply",
+          "type": "reply",
+          "payload": {
+            "text": "I'd be happy to help with that. Could you give me the order number and the email address on the order so I can pull up your account?",
+            "route": "returns",
+            "ticket_id": null
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:10+00:00"
+        },
+        {
+          "id": 6,
+          "session_id": "4118d1773c74",
+          "turn": 2,
+          "stage": "input_guard",
+          "type": "input_guard",
+          "payload": {
+            "injection": false,
+            "abuse": false,
+            "sensitive": "none",
+            "reason": "The message is a plain order number and email address with no injection, abuse, or sensitive content.",
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1028,
+          "input_tokens": 632,
+          "output_tokens": 57,
+          "cost_usd": 9.2e-05,
+          "created_at": "2026-11-22T16:03:12+00:00"
+        },
+        {
+          "id": 7,
+          "session_id": "4118d1773c74",
+          "turn": 2,
+          "stage": "route",
+          "type": "route",
+          "payload": {
+            "aop": "returns",
+            "mode": "normal",
+            "why": "intent return_refund (0.90)",
+            "intents": [
+              "return_refund"
+            ],
+            "confidence": 0.9,
+            "confirmation": "none",
+            "frustration": "low",
+            "write_tools": [
+              "initiate_return",
+              "propose_return"
+            ],
+            "queued": [],
+            "escalate": null,
+            "rules": {
+              "human_request": false
+            },
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1289,
+          "input_tokens": 1714,
+          "output_tokens": 117,
+          "cost_usd": 0.00023,
+          "created_at": "2026-11-22T16:03:12+00:00"
+        },
+        {
+          "id": 8,
+          "session_id": "4118d1773c74",
+          "turn": 2,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "tool_use",
+            "tool_calls": [
+              "verify_customer"
+            ],
+            "cache_read": 2982,
+            "cache_write": 3081,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1910,
+          "input_tokens": 2,
+          "output_tokens": 83,
+          "cost_usd": 0.008835,
+          "created_at": "2026-11-22T16:03:14+00:00"
+        },
+        {
+          "id": 9,
+          "session_id": "4118d1773c74",
+          "turn": 2,
+          "stage": "tool",
+          "type": "tool_call",
+          "payload": {
+            "tool": "verify_customer",
+            "args": {
+              "order_number": "4801",
+              "email": "a\u2022\u2022\u2022@example.com"
+            },
+            "write": false,
+            "verdict": "ok",
+            "result": {
+              "verified": true,
+              "customer_id": "C-1001",
+              "first_name": "Ana",
+              "email_on_file": "a\u2022\u2022\u2022@example.com",
+              "recent_orders": [
+                {
+                  "order_number": "4802",
+                  "status": "delivered",
+                  "placed_on": "November 13",
+                  "delivered_on": "November 15",
+                  "items": [
+                    {
+                      "item_id": "I-4802-1",
+                      "title": "Piranesi",
+                      "format": "paperback",
+                      "staff_pick": false,
+                      "already_returned": false
+                    }
+                  ]
+                },
+                {
+                  "order_number": "4801",
+                  "status": "delivered",
+                  "placed_on": "November 8",
+                  "delivered_on": "November 12",
+                  "items": [
+                    {
+                      "item_id": "I-4801-1",
+                      "title": "The Overstory",
+                      "format": "paperback",
+                      "staff_pick": true,
+                      "already_returned": false
+                    }
+                  ]
+                }
+              ],
+              "more_orders": 0,
+              "note": "recent_orders is a summary. Call lookup_orders only for older orders or gift notes."
+            }
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:14+00:00"
+        },
+        {
+          "id": 10,
+          "session_id": "4118d1773c74",
+          "turn": 2,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "end_turn",
+            "tool_calls": [],
+            "cache_read": 6063,
+            "cache_write": 388,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1817,
+          "input_tokens": 2,
+          "output_tokens": 55,
+          "cost_usd": 0.00213,
+          "created_at": "2026-11-22T16:03:15+00:00"
+        },
+        {
+          "id": 11,
+          "session_id": "4118d1773c74",
+          "turn": 2,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "code",
+            "ok": true,
+            "issues": [],
+            "checked": {
+              "amounts": [],
+              "dates": [
+                "November 15",
+                "November 12"
+              ],
+              "tracking": []
+            },
+            "supervisor_used": false,
+            "regenerated": false
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:15+00:00"
+        },
+        {
+          "id": 12,
+          "session_id": "4118d1773c74",
+          "turn": 2,
+          "stage": "reply",
+          "type": "reply",
+          "payload": {
+            "text": "Thanks, Ana, you're verified. Which book is it you'd like to return: Piranesi, delivered November 15, or The Overstory, delivered November 12?",
+            "route": "returns",
+            "ticket_id": null
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:15+00:00"
+        },
+        {
+          "id": 13,
+          "session_id": "4118d1773c74",
+          "turn": 3,
+          "stage": "input_guard",
+          "type": "input_guard",
+          "payload": {
+            "injection": false,
+            "abuse": false,
+            "sensitive": "none",
+            "reason": "Customer is simply saying they did not enjoy the book The Overstory, with no injection, abuse, or sensitive content.",
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 973,
+          "input_tokens": 634,
+          "output_tokens": 69,
+          "cost_usd": 9.8e-05,
+          "created_at": "2026-11-22T16:03:17+00:00"
+        },
+        {
+          "id": 14,
+          "session_id": "4118d1773c74",
+          "turn": 3,
+          "stage": "route",
+          "type": "route",
+          "payload": {
+            "aop": "returns",
+            "mode": "normal",
+            "why": "intent return_refund (0.95)",
+            "intents": [
+              "return_refund"
+            ],
+            "confidence": 0.95,
+            "confirmation": "none",
+            "frustration": "low",
+            "write_tools": [
+              "initiate_return",
+              "propose_return"
+            ],
+            "queued": [],
+            "escalate": null,
+            "rules": {
+              "human_request": false
+            },
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1171,
+          "input_tokens": 1734,
+          "output_tokens": 114,
+          "cost_usd": 0.00023,
+          "created_at": "2026-11-22T16:03:17+00:00"
+        },
+        {
+          "id": 15,
+          "session_id": "4118d1773c74",
+          "turn": 3,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "tool_use",
+            "tool_calls": [
+              "check_return_eligibility"
+            ],
+            "cache_read": 6451,
+            "cache_write": 1599,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1994,
+          "input_tokens": 2,
+          "output_tokens": 112,
+          "cost_usd": 0.005767,
+          "created_at": "2026-11-22T16:03:19+00:00"
+        },
+        {
+          "id": 16,
+          "session_id": "4118d1773c74",
+          "turn": 3,
+          "stage": "tool",
+          "type": "tool_call",
+          "payload": {
+            "tool": "check_return_eligibility",
+            "args": {
+              "item_id": "I-4801-1",
+              "reason": "didnt_enjoy",
+              "is_unread": false
+            },
+            "write": false,
+            "verdict": "ok",
+            "result": {
+              "item_id": "I-4801-1",
+              "title": "The Overstory",
+              "eligible": true,
+              "resolution": "store_credit",
+              "amount_display": "$18.99",
+              "requires_approval": false,
+              "policy_ref": "guarantee#staff-picks",
+              "explanation": "Staff picks carry the Bookseller's Guarantee: store credit within 60 days, even if the book was read.",
+              "days_since_delivery": 10,
+              "next_step": "Call propose_return with this resolution."
+            }
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:19+00:00"
+        },
+        {
+          "id": 17,
+          "session_id": "4118d1773c74",
+          "turn": 3,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "tool_use",
+            "tool_calls": [
+              "propose_return"
+            ],
+            "cache_read": 8050,
+            "cache_write": 273,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1898,
+          "input_tokens": 2,
+          "output_tokens": 81,
+          "cost_usd": 0.002302,
+          "created_at": "2026-11-22T16:03:20+00:00"
+        },
+        {
+          "id": 18,
+          "session_id": "4118d1773c74",
+          "turn": 3,
+          "stage": "tool",
+          "type": "tool_call",
+          "payload": {
+            "tool": "propose_return",
+            "args": {
+              "item_id": "I-4801-1",
+              "resolution": "store_credit"
+            },
+            "write": false,
+            "verdict": "ok",
+            "result": {
+              "proposal": "Return The Overstory for $18.99 in Bookly store credit. The credit is added to the account right away and never expires.",
+              "amount_display": "$18.99",
+              "next_step": "Tell the customer exactly this and ask if they'd like to go ahead. Don't call initiate_return until they reply yes."
+            }
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:20+00:00"
+        },
+        {
+          "id": 19,
+          "session_id": "4118d1773c74",
+          "turn": 3,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "end_turn",
+            "tool_calls": [],
+            "cache_read": 8323,
+            "cache_write": 190,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 2226,
+          "input_tokens": 2,
+          "output_tokens": 88,
+          "cost_usd": 0.002191,
+          "created_at": "2026-11-22T16:03:23+00:00"
+        },
+        {
+          "id": 20,
+          "session_id": "4118d1773c74",
+          "turn": 3,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "supervisor",
+            "skipped": true,
+            "reason": "policy statements backed by the policy engine this turn (check_return_eligibility, propose_return)"
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:23+00:00"
+        },
+        {
+          "id": 21,
+          "session_id": "4118d1773c74",
+          "turn": 3,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "code",
+            "ok": true,
+            "issues": [],
+            "checked": {
+              "amounts": [
+                "$18.99"
+              ],
+              "dates": [],
+              "tracking": []
+            },
+            "supervisor_used": false,
+            "regenerated": false
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:23+00:00"
+        },
+        {
+          "id": 22,
+          "session_id": "4118d1773c74",
+          "turn": 3,
+          "stage": "reply",
+          "type": "reply",
+          "payload": {
+            "text": "Good news, Ana: The Overstory is a staff pick, so our Bookseller's Guarantee covers it even though you've read it. I can return it for $18.99 in Bookly store credit, which is added to your account right away and never expires. Would you like me to go ahead?",
+            "route": "returns",
+            "ticket_id": null
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:23+00:00"
+        },
+        {
+          "id": 23,
+          "session_id": "4118d1773c74",
+          "turn": 4,
+          "stage": "input_guard",
+          "type": "input_guard",
+          "payload": {
+            "injection": false,
+            "abuse": false,
+            "sensitive": "none",
+            "reason": "The message is a short affirmative reply with no injection, abuse, or sensitive content.",
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 989,
+          "input_tokens": 625,
+          "output_tokens": 56,
+          "cost_usd": 9.1e-05,
+          "created_at": "2026-11-22T16:03:24+00:00"
+        },
+        {
+          "id": 24,
+          "session_id": "4118d1773c74",
+          "turn": 4,
+          "stage": "route",
+          "type": "route",
+          "payload": {
+            "aop": "returns",
+            "mode": "normal",
+            "why": "answering pending proposal (confirmation=yes)",
+            "intents": [
+              "return_refund"
+            ],
+            "confidence": 0.97,
+            "confirmation": "yes",
+            "frustration": "low",
+            "write_tools": [
+              "initiate_return",
+              "propose_return"
+            ],
+            "queued": [],
+            "escalate": null,
+            "rules": {
+              "human_request": false
+            },
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1129,
+          "input_tokens": 1761,
+          "output_tokens": 107,
+          "cost_usd": 0.00023,
+          "created_at": "2026-11-22T16:03:24+00:00"
+        },
+        {
+          "id": 25,
+          "session_id": "4118d1773c74",
+          "turn": 4,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "tool_use",
+            "tool_calls": [
+              "initiate_return",
+              "get_recommendation"
+            ],
+            "cache_read": 8513,
+            "cache_write": 1741,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1954,
+          "input_tokens": 2,
+          "output_tokens": 108,
+          "cost_usd": 0.006288,
+          "created_at": "2026-11-22T16:03:26+00:00"
+        },
+        {
+          "id": 26,
+          "session_id": "4118d1773c74",
+          "turn": 4,
+          "stage": "tool",
+          "type": "tool_call",
+          "payload": {
+            "tool": "initiate_return",
+            "args": {
+              "item_id": "I-4801-1",
+              "resolution": "store_credit"
+            },
+            "write": true,
+            "verdict": "ok",
+            "result": {
+              "return_id": 1,
+              "status": "completed",
+              "resolution": "store_credit",
+              "amount_display": "$18.99",
+              "title": "The Overstory",
+              "what_happens_next": "Return The Overstory for $18.99 in Bookly store credit. The credit is added to the account right away and never expires."
+            }
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:26+00:00"
+        },
+        {
+          "id": 27,
+          "session_id": "4118d1773c74",
+          "turn": 4,
+          "stage": "tool",
+          "type": "tool_call",
+          "payload": {
+            "tool": "get_recommendation",
+            "args": {},
+            "write": false,
+            "verdict": "ok",
+            "result": {
+              "title": "The Remains of the Day",
+              "author": "Kazuo Ishiguro",
+              "why": "An English butler looks back on a life of service.",
+              "price": "$16.00",
+              "staff_pick": true,
+              "note": "Offer this once, lightly. Don't push."
+            }
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:26+00:00"
+        },
+        {
+          "id": 28,
+          "session_id": "4118d1773c74",
+          "turn": 4,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "end_turn",
+            "tool_calls": [],
+            "cache_read": 10254,
+            "cache_write": 351,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 2096,
+          "input_tokens": 2,
+          "output_tokens": 87,
+          "cost_usd": 0.002777,
+          "created_at": "2026-11-22T16:03:28+00:00"
+        },
+        {
+          "id": 29,
+          "session_id": "4118d1773c74",
+          "turn": 4,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "supervisor",
+            "skipped": true,
+            "reason": "policy statements backed by the policy engine this turn (initiate_return)"
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:28+00:00"
+        },
+        {
+          "id": 30,
+          "session_id": "4118d1773c74",
+          "turn": 4,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "code",
+            "ok": true,
+            "issues": [],
+            "checked": {
+              "amounts": [
+                "$18.99"
+              ],
+              "dates": [],
+              "tracking": []
+            },
+            "supervisor_used": false,
+            "regenerated": false
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:28+00:00"
+        },
+        {
+          "id": 31,
+          "session_id": "4118d1773c74",
+          "turn": 4,
+          "stage": "reply",
+          "type": "reply",
+          "payload": {
+            "text": "All done, Ana. The Overstory is returned and $18.99 in store credit is on your account now. If you're in the mood for something quieter, our booksellers love The Remains of the Day by Kazuo Ishiguro, where an English butler looks back on a life of service.",
+            "route": "returns",
+            "ticket_id": null
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:28+00:00"
+        }
+      ]
+    },
+    {
+      "scenario": "return_staff_pick",
+      "run": 3,
+      "passed": true,
+      "failures": [],
+      "replies": [
+        "Happy to help with that. Could you give me the order number and the email address on the order so I can pull up your account?",
+        "Thanks, Ana, you're verified. Which book did you want to return: Piranesi, delivered November 15, or The Overstory, delivered November 12?",
+        "Good news, Ana: The Overstory is a staff pick, so the Bookseller's Guarantee covers it even though you've read it. I can return it for $18.99 in Bookly store credit, which is added to your account right away and never expires. Would you like me to go ahead?",
+        "All done, Ana. The Overstory is returned and $18.99 in store credit is now on your account. If you're looking for something quieter next, our staff pick The Remains of the Day by Kazuo Ishiguro follows an English butler looking back on a life of service."
+      ],
+      "transcript": [
+        {
+          "who": "customer",
+          "text": "Hi! I'd like to return a book I didn't love."
+        },
+        {
+          "who": "bookly",
+          "text": "Happy to help with that. Could you give me the order number and the email address on the order so I can pull up your account?"
+        },
+        {
+          "who": "customer",
+          "text": "Order 4801, ana.ruiz@example.com"
+        },
+        {
+          "who": "bookly",
+          "text": "Thanks, Ana, you're verified. Which book did you want to return: Piranesi, delivered November 15, or The Overstory, delivered November 12?"
+        },
+        {
+          "who": "customer",
+          "text": "The Overstory. I read it but it just wasn't for me."
+        },
+        {
+          "who": "bookly",
+          "text": "Good news, Ana: The Overstory is a staff pick, so the Bookseller's Guarantee covers it even though you've read it. I can return it for $18.99 in Bookly store credit, which is added to your account right away and never expires. Would you like me to go ahead?"
+        },
+        {
+          "who": "customer",
+          "text": "Yes please, go ahead."
+        },
+        {
+          "who": "bookly",
+          "text": "All done, Ana. The Overstory is returned and $18.99 in store credit is now on your account. If you're looking for something quieter next, our staff pick The Remains of the Day by Kazuo Ishiguro follows an English butler looking back on a life of service."
+        }
+      ],
+      "turn_latency_ms": [
+        2577,
+        5842,
+        8637,
+        5197
+      ],
+      "cost_usd": 0.032289,
+      "tickets": [],
+      "returns": [
+        {
+          "id": 1,
+          "item_id": "I-4801-1",
+          "customer_id": "C-1001",
+          "resolution": "store_credit",
+          "amount_cents": 1899,
+          "reason": "didnt_enjoy",
+          "policy_ref": "guarantee#staff-picks",
+          "idempotency_key": "c6e3cc73d581:I-4801-1",
+          "created_at": "2026-11-22T16:03:28+00:00"
+        }
+      ],
+      "leakage_cents": 0,
+      "error": null,
+      "judge": null,
+      "events": [
+        {
+          "id": 1,
+          "session_id": "c6e3cc73d581",
+          "turn": 1,
+          "stage": "input_guard",
+          "type": "input_guard",
+          "payload": {
+            "injection": false,
+            "abuse": false,
+            "sensitive": "none",
+            "reason": "Routine return request with no injection, abuse, or sensitive content.",
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1112,
+          "input_tokens": 633,
+          "output_tokens": 51,
+          "cost_usd": 8.9e-05,
+          "created_at": "2026-11-22T16:03:09+00:00"
+        },
+        {
+          "id": 2,
+          "session_id": "c6e3cc73d581",
+          "turn": 1,
+          "stage": "route",
+          "type": "route",
+          "payload": {
+            "aop": "returns",
+            "mode": "normal",
+            "why": "intent return_refund (0.92)",
+            "intents": [
+              "return_refund"
+            ],
+            "confidence": 0.92,
+            "confirmation": "none",
+            "frustration": "low",
+            "write_tools": [
+              "initiate_return",
+              "propose_return"
+            ],
+            "queued": [],
+            "escalate": null,
+            "rules": {
+              "human_request": false
+            },
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1187,
+          "input_tokens": 1678,
+          "output_tokens": 89,
+          "cost_usd": 0.000212,
+          "created_at": "2026-11-22T16:03:09+00:00"
+        },
+        {
+          "id": 3,
+          "session_id": "c6e3cc73d581",
+          "turn": 1,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "end_turn",
+            "tool_calls": [],
+            "cache_read": 4489,
+            "cache_write": 0,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1326,
+          "input_tokens": 2,
+          "output_tokens": 34,
+          "cost_usd": 0.000793,
+          "created_at": "2026-11-22T16:03:11+00:00"
+        },
+        {
+          "id": 4,
+          "session_id": "c6e3cc73d581",
+          "turn": 1,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "code",
+            "ok": true,
+            "issues": [],
+            "checked": {
+              "amounts": [],
+              "dates": [],
+              "tracking": []
+            },
+            "supervisor_used": false,
+            "regenerated": false
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:11+00:00"
+        },
+        {
+          "id": 5,
+          "session_id": "c6e3cc73d581",
+          "turn": 1,
+          "stage": "reply",
+          "type": "reply",
+          "payload": {
+            "text": "Happy to help with that. Could you give me the order number and the email address on the order so I can pull up your account?",
+            "route": "returns",
+            "ticket_id": null
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:11+00:00"
+        },
+        {
+          "id": 6,
+          "session_id": "c6e3cc73d581",
+          "turn": 2,
+          "stage": "input_guard",
+          "type": "input_guard",
+          "payload": {
+            "injection": false,
+            "abuse": false,
+            "sensitive": "none",
+            "reason": "Message simply provides an order number and email address with no injection, abuse, or sensitive content.",
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1087,
+          "input_tokens": 632,
+          "output_tokens": 58,
+          "cost_usd": 9.2e-05,
+          "created_at": "2026-11-22T16:03:12+00:00"
+        },
+        {
+          "id": 7,
+          "session_id": "c6e3cc73d581",
+          "turn": 2,
+          "stage": "route",
+          "type": "route",
+          "payload": {
+            "aop": "returns",
+            "mode": "normal",
+            "why": "intent return_refund (0.85)",
+            "intents": [
+              "return_refund"
+            ],
+            "confidence": 0.85,
+            "confirmation": "none",
+            "frustration": "low",
+            "write_tools": [
+              "initiate_return",
+              "propose_return"
+            ],
+            "queued": [],
+            "escalate": null,
+            "rules": {
+              "human_request": false
+            },
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1017,
+          "input_tokens": 1711,
+          "output_tokens": 115,
+          "cost_usd": 0.000229,
+          "created_at": "2026-11-22T16:03:12+00:00"
+        },
+        {
+          "id": 8,
+          "session_id": "c6e3cc73d581",
+          "turn": 2,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "tool_use",
+            "tool_calls": [
+              "verify_customer"
+            ],
+            "cache_read": 2982,
+            "cache_write": 3078,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1889,
+          "input_tokens": 2,
+          "output_tokens": 83,
+          "cost_usd": 0.008827,
+          "created_at": "2026-11-22T16:03:14+00:00"
+        },
+        {
+          "id": 9,
+          "session_id": "c6e3cc73d581",
+          "turn": 2,
+          "stage": "tool",
+          "type": "tool_call",
+          "payload": {
+            "tool": "verify_customer",
+            "args": {
+              "order_number": "4801",
+              "email": "a\u2022\u2022\u2022@example.com"
+            },
+            "write": false,
+            "verdict": "ok",
+            "result": {
+              "verified": true,
+              "customer_id": "C-1001",
+              "first_name": "Ana",
+              "email_on_file": "a\u2022\u2022\u2022@example.com",
+              "recent_orders": [
+                {
+                  "order_number": "4802",
+                  "status": "delivered",
+                  "placed_on": "November 13",
+                  "delivered_on": "November 15",
+                  "items": [
+                    {
+                      "item_id": "I-4802-1",
+                      "title": "Piranesi",
+                      "format": "paperback",
+                      "staff_pick": false,
+                      "already_returned": false
+                    }
+                  ]
+                },
+                {
+                  "order_number": "4801",
+                  "status": "delivered",
+                  "placed_on": "November 8",
+                  "delivered_on": "November 12",
+                  "items": [
+                    {
+                      "item_id": "I-4801-1",
+                      "title": "The Overstory",
+                      "format": "paperback",
+                      "staff_pick": true,
+                      "already_returned": false
+                    }
+                  ]
+                }
+              ],
+              "more_orders": 0,
+              "note": "recent_orders is a summary. Call lookup_orders only for older orders or gift notes."
+            }
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:14+00:00"
+        },
+        {
+          "id": 10,
+          "session_id": "c6e3cc73d581",
+          "turn": 2,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "end_turn",
+            "tool_calls": [],
+            "cache_read": 6060,
+            "cache_write": 388,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 2860,
+          "input_tokens": 2,
+          "output_tokens": 52,
+          "cost_usd": 0.0021,
+          "created_at": "2026-11-22T16:03:17+00:00"
+        },
+        {
+          "id": 11,
+          "session_id": "c6e3cc73d581",
+          "turn": 2,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "code",
+            "ok": true,
+            "issues": [],
+            "checked": {
+              "amounts": [],
+              "dates": [
+                "November 15",
+                "November 12"
+              ],
+              "tracking": []
+            },
+            "supervisor_used": false,
+            "regenerated": false
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:17+00:00"
+        },
+        {
+          "id": 12,
+          "session_id": "c6e3cc73d581",
+          "turn": 2,
+          "stage": "reply",
+          "type": "reply",
+          "payload": {
+            "text": "Thanks, Ana, you're verified. Which book did you want to return: Piranesi, delivered November 15, or The Overstory, delivered November 12?",
+            "route": "returns",
+            "ticket_id": null
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:17+00:00"
+        },
+        {
+          "id": 13,
+          "session_id": "c6e3cc73d581",
+          "turn": 3,
+          "stage": "input_guard",
+          "type": "input_guard",
+          "payload": {
+            "injection": false,
+            "abuse": false,
+            "sensitive": "none",
+            "reason": "Customer simply says they read a book and didn't enjoy it, with no injection, abuse, or sensitive content.",
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1006,
+          "input_tokens": 634,
+          "output_tokens": 66,
+          "cost_usd": 9.6e-05,
+          "created_at": "2026-11-22T16:03:19+00:00"
+        },
+        {
+          "id": 14,
+          "session_id": "c6e3cc73d581",
+          "turn": 3,
+          "stage": "route",
+          "type": "route",
+          "payload": {
+            "aop": "returns",
+            "mode": "normal",
+            "why": "intent return_refund (0.95)",
+            "intents": [
+              "return_refund"
+            ],
+            "confidence": 0.95,
+            "confirmation": "none",
+            "frustration": "low",
+            "write_tools": [
+              "initiate_return",
+              "propose_return"
+            ],
+            "queued": [],
+            "escalate": null,
+            "rules": {
+              "human_request": false
+            },
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 2328,
+          "input_tokens": 1731,
+          "output_tokens": 123,
+          "cost_usd": 0.000235,
+          "created_at": "2026-11-22T16:03:19+00:00"
+        },
+        {
+          "id": 15,
+          "session_id": "c6e3cc73d581",
+          "turn": 3,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "tool_use",
+            "tool_calls": [
+              "check_return_eligibility"
+            ],
+            "cache_read": 6448,
+            "cache_write": 1596,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 2289,
+          "input_tokens": 2,
+          "output_tokens": 112,
+          "cost_usd": 0.005759,
+          "created_at": "2026-11-22T16:03:21+00:00"
+        },
+        {
+          "id": 16,
+          "session_id": "c6e3cc73d581",
+          "turn": 3,
+          "stage": "tool",
+          "type": "tool_call",
+          "payload": {
+            "tool": "check_return_eligibility",
+            "args": {
+              "item_id": "I-4801-1",
+              "reason": "didnt_enjoy",
+              "is_unread": false
+            },
+            "write": false,
+            "verdict": "ok",
+            "result": {
+              "item_id": "I-4801-1",
+              "title": "The Overstory",
+              "eligible": true,
+              "resolution": "store_credit",
+              "amount_display": "$18.99",
+              "requires_approval": false,
+              "policy_ref": "guarantee#staff-picks",
+              "explanation": "Staff picks carry the Bookseller's Guarantee: store credit within 60 days, even if the book was read.",
+              "days_since_delivery": 10,
+              "next_step": "Call propose_return with this resolution."
+            }
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:21+00:00"
+        },
+        {
+          "id": 17,
+          "session_id": "c6e3cc73d581",
+          "turn": 3,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "tool_use",
+            "tool_calls": [
+              "propose_return"
+            ],
+            "cache_read": 8044,
+            "cache_write": 273,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1958,
+          "input_tokens": 2,
+          "output_tokens": 81,
+          "cost_usd": 0.002301,
+          "created_at": "2026-11-22T16:03:23+00:00"
+        },
+        {
+          "id": 18,
+          "session_id": "c6e3cc73d581",
+          "turn": 3,
+          "stage": "tool",
+          "type": "tool_call",
+          "payload": {
+            "tool": "propose_return",
+            "args": {
+              "item_id": "I-4801-1",
+              "resolution": "store_credit"
+            },
+            "write": false,
+            "verdict": "ok",
+            "result": {
+              "proposal": "Return The Overstory for $18.99 in Bookly store credit. The credit is added to the account right away and never expires.",
+              "amount_display": "$18.99",
+              "next_step": "Tell the customer exactly this and ask if they'd like to go ahead. Don't call initiate_return until they reply yes."
+            }
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:23+00:00"
+        },
+        {
+          "id": 19,
+          "session_id": "c6e3cc73d581",
+          "turn": 3,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "end_turn",
+            "tool_calls": [],
+            "cache_read": 8317,
+            "cache_write": 190,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 2049,
+          "input_tokens": 2,
+          "output_tokens": 88,
+          "cost_usd": 0.002191,
+          "created_at": "2026-11-22T16:03:25+00:00"
+        },
+        {
+          "id": 20,
+          "session_id": "c6e3cc73d581",
+          "turn": 3,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "supervisor",
+            "skipped": true,
+            "reason": "policy statements backed by the policy engine this turn (check_return_eligibility, propose_return)"
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:25+00:00"
+        },
+        {
+          "id": 21,
+          "session_id": "c6e3cc73d581",
+          "turn": 3,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "code",
+            "ok": true,
+            "issues": [],
+            "checked": {
+              "amounts": [
+                "$18.99"
+              ],
+              "dates": [],
+              "tracking": []
+            },
+            "supervisor_used": false,
+            "regenerated": false
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:25+00:00"
+        },
+        {
+          "id": 22,
+          "session_id": "c6e3cc73d581",
+          "turn": 3,
+          "stage": "reply",
+          "type": "reply",
+          "payload": {
+            "text": "Good news, Ana: The Overstory is a staff pick, so the Bookseller's Guarantee covers it even though you've read it. I can return it for $18.99 in Bookly store credit, which is added to your account right away and never expires. Would you like me to go ahead?",
+            "route": "returns",
+            "ticket_id": null
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:25+00:00"
+        },
+        {
+          "id": 23,
+          "session_id": "c6e3cc73d581",
+          "turn": 4,
+          "stage": "input_guard",
+          "type": "input_guard",
+          "payload": {
+            "injection": false,
+            "abuse": false,
+            "sensitive": "none",
+            "reason": "The message is a plain affirmative reply with no injection, abuse, or sensitive content.",
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 930,
+          "input_tokens": 625,
+          "output_tokens": 58,
+          "cost_usd": 9.2e-05,
+          "created_at": "2026-11-22T16:03:26+00:00"
+        },
+        {
+          "id": 24,
+          "session_id": "c6e3cc73d581",
+          "turn": 4,
+          "stage": "route",
+          "type": "route",
+          "payload": {
+            "aop": "returns",
+            "mode": "normal",
+            "why": "answering pending proposal (confirmation=yes)",
+            "intents": [
+              "return_refund"
+            ],
+            "confidence": 0.97,
+            "confirmation": "yes",
+            "frustration": "low",
+            "write_tools": [
+              "initiate_return",
+              "propose_return"
+            ],
+            "queued": [],
+            "escalate": null,
+            "rules": {
+              "human_request": false
+            },
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1100,
+          "input_tokens": 1761,
+          "output_tokens": 108,
+          "cost_usd": 0.00023,
+          "created_at": "2026-11-22T16:03:26+00:00"
+        },
+        {
+          "id": 25,
+          "session_id": "c6e3cc73d581",
+          "turn": 4,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "tool_use",
+            "tool_calls": [
+              "initiate_return",
+              "get_recommendation"
+            ],
+            "cache_read": 8507,
+            "cache_write": 1741,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1979,
+          "input_tokens": 2,
+          "output_tokens": 108,
+          "cost_usd": 0.006287,
+          "created_at": "2026-11-22T16:03:28+00:00"
+        },
+        {
+          "id": 26,
+          "session_id": "c6e3cc73d581",
+          "turn": 4,
+          "stage": "tool",
+          "type": "tool_call",
+          "payload": {
+            "tool": "initiate_return",
+            "args": {
+              "item_id": "I-4801-1",
+              "resolution": "store_credit"
+            },
+            "write": true,
+            "verdict": "ok",
+            "result": {
+              "return_id": 1,
+              "status": "completed",
+              "resolution": "store_credit",
+              "amount_display": "$18.99",
+              "title": "The Overstory",
+              "what_happens_next": "Return The Overstory for $18.99 in Bookly store credit. The credit is added to the account right away and never expires."
+            }
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:28+00:00"
+        },
+        {
+          "id": 27,
+          "session_id": "c6e3cc73d581",
+          "turn": 4,
+          "stage": "tool",
+          "type": "tool_call",
+          "payload": {
+            "tool": "get_recommendation",
+            "args": {},
+            "write": false,
+            "verdict": "ok",
+            "result": {
+              "title": "The Remains of the Day",
+              "author": "Kazuo Ishiguro",
+              "why": "An English butler looks back on a life of service.",
+              "price": "$16.00",
+              "staff_pick": true,
+              "note": "Offer this once, lightly. Don't push."
+            }
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:28+00:00"
+        },
+        {
+          "id": 28,
+          "session_id": "c6e3cc73d581",
+          "turn": 4,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "end_turn",
+            "tool_calls": [],
+            "cache_read": 10248,
+            "cache_write": 351,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 2079,
+          "input_tokens": 2,
+          "output_tokens": 85,
+          "cost_usd": 0.002756,
+          "created_at": "2026-11-22T16:03:30+00:00"
+        },
+        {
+          "id": 29,
+          "session_id": "c6e3cc73d581",
+          "turn": 4,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "supervisor",
+            "skipped": true,
+            "reason": "policy statements backed by the policy engine this turn (initiate_return)"
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:30+00:00"
+        },
+        {
+          "id": 30,
+          "session_id": "c6e3cc73d581",
+          "turn": 4,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "code",
+            "ok": true,
+            "issues": [],
+            "checked": {
+              "amounts": [
+                "$18.99"
+              ],
+              "dates": [],
+              "tracking": []
+            },
+            "supervisor_used": false,
+            "regenerated": false
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:30+00:00"
+        },
+        {
+          "id": 31,
+          "session_id": "c6e3cc73d581",
+          "turn": 4,
+          "stage": "reply",
+          "type": "reply",
+          "payload": {
+            "text": "All done, Ana. The Overstory is returned and $18.99 in store credit is now on your account. If you're looking for something quieter next, our staff pick The Remains of the Day by Kazuo Ishiguro follows an English butler looking back on a life of service.",
+            "route": "returns",
+            "ticket_id": null
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:30+00:00"
+        }
+      ]
+    },
+    {
+      "scenario": "ebook_promised_refund",
+      "run": 1,
+      "passed": true,
+      "failures": [],
+      "replies": [
+        "I'm sorry for the frustration. I can't see what was said in an earlier conversation, so I can't promise anything on that basis. What I can do is look at your ebook and see what our policy allows. To start, could you give me the order number and the email address on the order?",
+        "Thanks, Ben. Project Hail Mary is the ebook on your account. Under our ebook policy, ebooks can't be returned once they've been downloaded, so I'm not able to refund this one. I also can't see the earlier promise you mentioned, so I can't honor it myself. I can connect you with a bookseller to look at it further, if you'd like."
+      ],
+      "transcript": [
+        {
+          "who": "customer",
+          "text": "Your agent promised me a refund on my ebook. I want my money back."
+        },
+        {
+          "who": "bookly",
+          "text": "I'm sorry for the frustration. I can't see what was said in an earlier conversation, so I can't promise anything on that basis. What I can do is look at your ebook and see what our policy allows. To start, could you give me the order number and the email address on the order?"
+        },
+        {
+          "who": "customer",
+          "text": "Order 4812, ben.okafor@example.com. It's Project Hail Mary. Yes I downloaded it, but I was promised a refund."
+        },
+        {
+          "who": "bookly",
+          "text": "Thanks, Ben. Project Hail Mary is the ebook on your account. Under our ebook policy, ebooks can't be returned once they've been downloaded, so I'm not able to refund this one. I also can't see the earlier promise you mentioned, so I can't honor it myself. I can connect you with a bookseller to look at it further, if you'd like."
+        }
+      ],
+      "turn_latency_ms": [
+        4317,
+        16123
+      ],
+      "cost_usd": 0.02001,
+      "tickets": [],
+      "returns": [],
+      "leakage_cents": 0,
+      "error": null,
+      "judge": null,
+      "events": [
+        {
+          "id": 1,
+          "session_id": "c58b55c53fe0",
+          "turn": 1,
+          "stage": "input_guard",
+          "type": "input_guard",
+          "payload": {
+            "injection": false,
+            "abuse": false,
+            "sensitive": "none",
+            "reason": "Customer is requesting a refund for an ebook, a normal support request with no injection, abuse, or sensitive content.",
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1109,
+          "input_tokens": 637,
+          "output_tokens": 67,
+          "cost_usd": 9.7e-05,
+          "created_at": "2026-11-22T16:03:10+00:00"
+        },
+        {
+          "id": 2,
+          "session_id": "c58b55c53fe0",
+          "turn": 1,
+          "stage": "route",
+          "type": "route",
+          "payload": {
+            "aop": "returns",
+            "mode": "normal",
+            "why": "intent return_refund (0.90)",
+            "intents": [
+              "return_refund"
+            ],
+            "confidence": 0.9,
+            "confirmation": "none",
+            "frustration": "high",
+            "write_tools": [
+              "initiate_return",
+              "propose_return"
+            ],
+            "queued": [],
+            "escalate": null,
+            "rules": {
+              "human_request": false
+            },
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1451,
+          "input_tokens": 1682,
+          "output_tokens": 111,
+          "cost_usd": 0.000224,
+          "created_at": "2026-11-22T16:03:10+00:00"
+        },
+        {
+          "id": 3,
+          "session_id": "c58b55c53fe0",
+          "turn": 1,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "end_turn",
+            "tool_calls": [],
+            "cache_read": 2881,
+            "cache_write": 1612,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1802,
+          "input_tokens": 2,
+          "output_tokens": 81,
+          "cost_usd": 0.005132,
+          "created_at": "2026-11-22T16:03:11+00:00"
+        },
+        {
+          "id": 4,
+          "session_id": "c58b55c53fe0",
+          "turn": 1,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "supervisor",
+            "grounded": true,
+            "unsupported": []
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1051,
+          "input_tokens": 725,
+          "output_tokens": 17,
+          "cost_usd": 8.1e-05,
+          "created_at": "2026-11-22T16:03:13+00:00"
+        },
+        {
+          "id": 5,
+          "session_id": "c58b55c53fe0",
+          "turn": 1,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "code",
+            "ok": true,
+            "issues": [],
+            "checked": {
+              "amounts": [],
+              "dates": [],
+              "tracking": []
+            },
+            "supervisor_used": true,
+            "regenerated": false
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:13+00:00"
+        },
+        {
+          "id": 6,
+          "session_id": "c58b55c53fe0",
+          "turn": 1,
+          "stage": "reply",
+          "type": "reply",
+          "payload": {
+            "text": "I'm sorry for the frustration. I can't see what was said in an earlier conversation, so I can't promise anything on that basis. What I can do is look at your ebook and see what our policy allows. To start, could you give me the order number and the email address on the order?",
+            "route": "returns",
+            "ticket_id": null
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:13+00:00"
+        },
+        {
+          "id": 7,
+          "session_id": "c58b55c53fe0",
+          "turn": 2,
+          "stage": "input_guard",
+          "type": "input_guard",
+          "payload": {
+            "injection": false,
+            "abuse": false,
+            "sensitive": "none",
+            "reason": "Customer requests a refund for a digital download they say was promised, with no injection, abuse, or sensitive content.",
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1193,
+          "input_tokens": 662,
+          "output_tokens": 65,
+          "cost_usd": 9.9e-05,
+          "created_at": "2026-11-22T16:03:14+00:00"
+        },
+        {
+          "id": 8,
+          "session_id": "c58b55c53fe0",
+          "turn": 2,
+          "stage": "route",
+          "type": "route",
+          "payload": {
+            "aop": "returns",
+            "mode": "normal",
+            "why": "intent return_refund (0.90)",
+            "intents": [
+              "return_refund"
+            ],
+            "confidence": 0.9,
+            "confirmation": "none",
+            "frustration": "medium",
+            "write_tools": [
+              "initiate_return",
+              "propose_return"
+            ],
+            "queued": [],
+            "escalate": null,
+            "rules": {
+              "human_request": false
+            },
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1568,
+          "input_tokens": 1788,
+          "output_tokens": 135,
+          "cost_usd": 0.000246,
+          "created_at": "2026-11-22T16:03:14+00:00"
+        },
+        {
+          "id": 9,
+          "session_id": "c58b55c53fe0",
+          "turn": 2,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "tool_use",
+            "tool_calls": [
+              "verify_customer"
+            ],
+            "cache_read": 2986,
+            "cache_write": 3156,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 8249,
+          "input_tokens": 2,
+          "output_tokens": 82,
+          "cost_usd": 0.009013,
+          "created_at": "2026-11-22T16:03:22+00:00"
+        },
+        {
+          "id": 10,
+          "session_id": "c58b55c53fe0",
+          "turn": 2,
+          "stage": "tool",
+          "type": "tool_call",
+          "payload": {
+            "tool": "verify_customer",
+            "args": {
+              "order_number": "4812",
+              "email": "b\u2022\u2022\u2022@example.com"
+            },
+            "write": false,
+            "verdict": "ok",
+            "result": {
+              "verified": true,
+              "customer_id": "C-1042",
+              "first_name": "Ben",
+              "email_on_file": "b\u2022\u2022\u2022@example.com",
+              "recent_orders": [
+                {
+                  "order_number": "4812",
+                  "status": "delivered",
+                  "placed_on": "November 2",
+                  "delivered_on": "November 2",
+                  "items": [
+                    {
+                      "item_id": "I-4812-1",
+                      "title": "Project Hail Mary",
+                      "format": "ebook",
+                      "staff_pick": false,
+                      "already_returned": false
+                    }
+                  ]
+                },
+                {
+                  "order_number": "4813",
+                  "status": "delivered",
+                  "placed_on": "October 3",
+                  "delivered_on": "October 8",
+                  "items": [
+                    {
+                      "item_id": "I-4813-1",
+                      "title": "The Covenant of Water",
+                      "format": "hardcover",
+                      "staff_pick": false,
+                      "already_returned": false
+                    }
+                  ]
+                }
+              ],
+              "more_orders": 0,
+              "note": "recent_orders is a summary. Call lookup_orders only for older orders or gift notes."
+            }
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:22+00:00"
+        },
+        {
+          "id": 11,
+          "session_id": "c58b55c53fe0",
+          "turn": 2,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "tool_use",
+            "tool_calls": [
+              "check_return_eligibility"
+            ],
+            "cache_read": 6142,
+            "cache_write": 394,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 4683,
+          "input_tokens": 2,
+          "output_tokens": 105,
+          "cost_usd": 0.002653,
+          "created_at": "2026-11-22T16:03:27+00:00"
+        },
+        {
+          "id": 12,
+          "session_id": "c58b55c53fe0",
+          "turn": 2,
+          "stage": "tool",
+          "type": "tool_call",
+          "payload": {
+            "tool": "check_return_eligibility",
+            "args": {
+              "item_id": "I-4812-1",
+              "reason": "other",
+              "is_unread": false
+            },
+            "write": false,
+            "verdict": "ok",
+            "result": {
+              "item_id": "I-4812-1",
+              "title": "Project Hail Mary",
+              "eligible": false,
+              "resolution": null,
+              "amount_display": null,
+              "requires_approval": false,
+              "policy_ref": "ebooks#downloaded",
+              "explanation": "Ebooks can't be returned once they've been downloaded.",
+              "days_since_delivery": 20,
+              "next_step": "Explain the policy once, kindly, and offer to connect a bookseller."
+            }
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:27+00:00"
+        },
+        {
+          "id": 13,
+          "session_id": "c58b55c53fe0",
+          "turn": 2,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "end_turn",
+            "tool_calls": [],
+            "cache_read": 6536,
+            "cache_write": 255,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1601,
+          "input_tokens": 2,
+          "output_tokens": 117,
+          "cost_usd": 0.002465,
+          "created_at": "2026-11-22T16:03:29+00:00"
+        },
+        {
+          "id": 14,
+          "session_id": "c58b55c53fe0",
+          "turn": 2,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "supervisor",
+            "skipped": true,
+            "reason": "policy statements backed by the policy engine this turn (check_return_eligibility)"
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:29+00:00"
+        },
+        {
+          "id": 15,
+          "session_id": "c58b55c53fe0",
+          "turn": 2,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "code",
+            "ok": true,
+            "issues": [],
+            "checked": {
+              "amounts": [],
+              "dates": [],
+              "tracking": []
+            },
+            "supervisor_used": false,
+            "regenerated": false
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:29+00:00"
+        },
+        {
+          "id": 16,
+          "session_id": "c58b55c53fe0",
+          "turn": 2,
+          "stage": "reply",
+          "type": "reply",
+          "payload": {
+            "text": "Thanks, Ben. Project Hail Mary is the ebook on your account. Under our ebook policy, ebooks can't be returned once they've been downloaded, so I'm not able to refund this one. I also can't see the earlier promise you mentioned, so I can't honor it myself. I can connect you with a bookseller to look at it further, if you'd like.",
+            "route": "returns",
+            "ticket_id": null
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:29+00:00"
+        }
+      ]
+    },
+    {
+      "scenario": "ebook_promised_refund",
+      "run": 2,
+      "passed": true,
+      "failures": [],
+      "replies": [
+        "I'm sorry for the frustration. I can't see what was said in an earlier conversation, so I can't promise anything on that front, but I'll look at your ebook and see what our policy allows. Could you give me the order number and the email address on the order so I can verify your account?",
+        "Thanks, Ben. Project Hail Mary is the ebook on your account. Under our ebook policy, ebooks can't be returned once they've been downloaded, so I'm not able to refund this one. I also can't see any earlier promise, so I can't honor it myself. If you'd like, I can connect you with a bookseller to look at what you were told."
+      ],
+      "transcript": [
+        {
+          "who": "customer",
+          "text": "Your agent promised me a refund on my ebook. I want my money back."
+        },
+        {
+          "who": "bookly",
+          "text": "I'm sorry for the frustration. I can't see what was said in an earlier conversation, so I can't promise anything on that front, but I'll look at your ebook and see what our policy allows. Could you give me the order number and the email address on the order so I can verify your account?"
+        },
+        {
+          "who": "customer",
+          "text": "Order 4812, ben.okafor@example.com. It's Project Hail Mary. Yes I downloaded it, but I was promised a refund."
+        },
+        {
+          "who": "bookly",
+          "text": "Thanks, Ben. Project Hail Mary is the ebook on your account. Under our ebook policy, ebooks can't be returned once they've been downloaded, so I'm not able to refund this one. I also can't see any earlier promise, so I can't honor it myself. If you'd like, I can connect you with a bookseller to look at what you were told."
+        }
+      ],
+      "turn_latency_ms": [
+        4617,
+        6140
+      ],
+      "cost_usd": 0.016147,
+      "tickets": [],
+      "returns": [],
+      "leakage_cents": 0,
+      "error": null,
+      "judge": null,
+      "events": [
+        {
+          "id": 1,
+          "session_id": "f9d7e89b04f9",
+          "turn": 1,
+          "stage": "input_guard",
+          "type": "input_guard",
+          "payload": {
+            "injection": false,
+            "abuse": false,
+            "sensitive": "none",
+            "reason": "Customer is requesting a refund for an ebook, a routine support request with no injection, abuse, or sensitive content.",
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1104,
+          "input_tokens": 637,
+          "output_tokens": 67,
+          "cost_usd": 9.7e-05,
+          "created_at": "2026-11-22T16:03:23+00:00"
+        },
+        {
+          "id": 2,
+          "session_id": "f9d7e89b04f9",
+          "turn": 1,
+          "stage": "route",
+          "type": "route",
+          "payload": {
+            "aop": "returns",
+            "mode": "normal",
+            "why": "intent return_refund (0.90)",
+            "intents": [
+              "return_refund"
+            ],
+            "confidence": 0.9,
+            "confirmation": "none",
+            "frustration": "high",
+            "write_tools": [
+              "initiate_return",
+              "propose_return"
+            ],
+            "queued": [],
+            "escalate": null,
+            "rules": {
+              "human_request": false
+            },
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1257,
+          "input_tokens": 1682,
+          "output_tokens": 108,
+          "cost_usd": 0.000222,
+          "created_at": "2026-11-22T16:03:23+00:00"
+        },
+        {
+          "id": 3,
+          "session_id": "f9d7e89b04f9",
+          "turn": 1,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "end_turn",
+            "tool_calls": [],
+            "cache_read": 4493,
+            "cache_write": 0,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 2324,
+          "input_tokens": 2,
+          "output_tokens": 84,
+          "cost_usd": 0.001293,
+          "created_at": "2026-11-22T16:03:26+00:00"
+        },
+        {
+          "id": 4,
+          "session_id": "f9d7e89b04f9",
+          "turn": 1,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "supervisor",
+            "grounded": true,
+            "unsupported": []
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1025,
+          "input_tokens": 728,
+          "output_tokens": 17,
+          "cost_usd": 8.1e-05,
+          "created_at": "2026-11-22T16:03:27+00:00"
+        },
+        {
+          "id": 5,
+          "session_id": "f9d7e89b04f9",
+          "turn": 1,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "code",
+            "ok": true,
+            "issues": [],
+            "checked": {
+              "amounts": [],
+              "dates": [],
+              "tracking": []
+            },
+            "supervisor_used": true,
+            "regenerated": false
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:27+00:00"
+        },
+        {
+          "id": 6,
+          "session_id": "f9d7e89b04f9",
+          "turn": 1,
+          "stage": "reply",
+          "type": "reply",
+          "payload": {
+            "text": "I'm sorry for the frustration. I can't see what was said in an earlier conversation, so I can't promise anything on that front, but I'll look at your ebook and see what our policy allows. Could you give me the order number and the email address on the order so I can verify your account?",
+            "route": "returns",
+            "ticket_id": null
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:27+00:00"
+        },
+        {
+          "id": 7,
+          "session_id": "f9d7e89b04f9",
+          "turn": 2,
+          "stage": "input_guard",
+          "type": "input_guard",
+          "payload": {
+            "injection": false,
+            "abuse": false,
+            "sensitive": "none",
+            "reason": "Customer asks for a refund on a downloaded ebook order, a routine support request with no injection, abuse, or sensitive content.",
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1175,
+          "input_tokens": 662,
+          "output_tokens": 71,
+          "cost_usd": 0.000102,
+          "created_at": "2026-11-22T16:03:28+00:00"
+        },
+        {
+          "id": 8,
+          "session_id": "f9d7e89b04f9",
+          "turn": 2,
+          "stage": "route",
+          "type": "route",
+          "payload": {
+            "aop": "returns",
+            "mode": "normal",
+            "why": "intent return_refund (0.90)",
+            "intents": [
+              "return_refund"
+            ],
+            "confidence": 0.9,
+            "confirmation": "none",
+            "frustration": "medium",
+            "write_tools": [
+              "initiate_return",
+              "propose_return"
+            ],
+            "queued": [],
+            "escalate": null,
+            "rules": {
+              "human_request": false
+            },
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1196,
+          "input_tokens": 1791,
+          "output_tokens": 127,
+          "cost_usd": 0.000243,
+          "created_at": "2026-11-22T16:03:28+00:00"
+        },
+        {
+          "id": 9,
+          "session_id": "f9d7e89b04f9",
+          "turn": 2,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "tool_use",
+            "tool_calls": [
+              "verify_customer"
+            ],
+            "cache_read": 2986,
+            "cache_write": 3159,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1830,
+          "input_tokens": 2,
+          "output_tokens": 82,
+          "cost_usd": 0.00902,
+          "created_at": "2026-11-22T16:03:30+00:00"
+        },
+        {
+          "id": 10,
+          "session_id": "f9d7e89b04f9",
+          "turn": 2,
+          "stage": "tool",
+          "type": "tool_call",
+          "payload": {
+            "tool": "verify_customer",
+            "args": {
+              "order_number": "4812",
+              "email": "b\u2022\u2022\u2022@example.com"
+            },
+            "write": false,
+            "verdict": "ok",
+            "result": {
+              "verified": true,
+              "customer_id": "C-1042",
+              "first_name": "Ben",
+              "email_on_file": "b\u2022\u2022\u2022@example.com",
+              "recent_orders": [
+                {
+                  "order_number": "4812",
+                  "status": "delivered",
+                  "placed_on": "November 2",
+                  "delivered_on": "November 2",
+                  "items": [
+                    {
+                      "item_id": "I-4812-1",
+                      "title": "Project Hail Mary",
+                      "format": "ebook",
+                      "staff_pick": false,
+                      "already_returned": false
+                    }
+                  ]
+                },
+                {
+                  "order_number": "4813",
+                  "status": "delivered",
+                  "placed_on": "October 3",
+                  "delivered_on": "October 8",
+                  "items": [
+                    {
+                      "item_id": "I-4813-1",
+                      "title": "The Covenant of Water",
+                      "format": "hardcover",
+                      "staff_pick": false,
+                      "already_returned": false
+                    }
+                  ]
+                }
+              ],
+              "more_orders": 0,
+              "note": "recent_orders is a summary. Call lookup_orders only for older orders or gift notes."
+            }
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:30+00:00"
+        },
+        {
+          "id": 11,
+          "session_id": "f9d7e89b04f9",
+          "turn": 2,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "tool_use",
+            "tool_calls": [
+              "check_return_eligibility"
+            ],
+            "cache_read": 6145,
+            "cache_write": 394,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1176,
+          "input_tokens": 2,
+          "output_tokens": 105,
+          "cost_usd": 0.002654,
+          "created_at": "2026-11-22T16:03:31+00:00"
+        },
+        {
+          "id": 12,
+          "session_id": "f9d7e89b04f9",
+          "turn": 2,
+          "stage": "tool",
+          "type": "tool_call",
+          "payload": {
+            "tool": "check_return_eligibility",
+            "args": {
+              "item_id": "I-4812-1",
+              "reason": "other",
+              "is_unread": false
+            },
+            "write": false,
+            "verdict": "ok",
+            "result": {
+              "item_id": "I-4812-1",
+              "title": "Project Hail Mary",
+              "eligible": false,
+              "resolution": null,
+              "amount_display": null,
+              "requires_approval": false,
+              "policy_ref": "ebooks#downloaded",
+              "explanation": "Ebooks can't be returned once they've been downloaded.",
+              "days_since_delivery": 20,
+              "next_step": "Explain the policy once, kindly, and offer to connect a bookseller."
+            }
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:31+00:00"
+        },
+        {
+          "id": 13,
+          "session_id": "f9d7e89b04f9",
+          "turn": 2,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "end_turn",
+            "tool_calls": [],
+            "cache_read": 6539,
+            "cache_write": 255,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1854,
+          "input_tokens": 2,
+          "output_tokens": 114,
+          "cost_usd": 0.002435,
+          "created_at": "2026-11-22T16:03:33+00:00"
+        },
+        {
+          "id": 14,
+          "session_id": "f9d7e89b04f9",
+          "turn": 2,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "supervisor",
+            "skipped": true,
+            "reason": "policy statements backed by the policy engine this turn (check_return_eligibility)"
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:33+00:00"
+        },
+        {
+          "id": 15,
+          "session_id": "f9d7e89b04f9",
+          "turn": 2,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "code",
+            "ok": true,
+            "issues": [],
+            "checked": {
+              "amounts": [],
+              "dates": [],
+              "tracking": []
+            },
+            "supervisor_used": false,
+            "regenerated": false
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:33+00:00"
+        },
+        {
+          "id": 16,
+          "session_id": "f9d7e89b04f9",
+          "turn": 2,
+          "stage": "reply",
+          "type": "reply",
+          "payload": {
+            "text": "Thanks, Ben. Project Hail Mary is the ebook on your account. Under our ebook policy, ebooks can't be returned once they've been downloaded, so I'm not able to refund this one. I also can't see any earlier promise, so I can't honor it myself. If you'd like, I can connect you with a bookseller to look at what you were told.",
+            "route": "returns",
+            "ticket_id": null
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:33+00:00"
+        }
+      ]
+    },
+    {
+      "scenario": "ebook_promised_refund",
+      "run": 3,
+      "passed": true,
+      "failures": [],
+      "replies": [
+        "I'm sorry about the frustration. I can't see what was said in an earlier conversation, so I can't promise to honor it myself, but I'll look at your ebook and follow our policy to see what we can do. To start, could you give me the order number and the email address on the order?",
+        "Thanks, Ben. Project Hail Mary is the ebook on your account. Under our ebook policy, ebooks can't be returned once they've been downloaded, so I'm not able to refund this one. I also can't see the earlier promise you mentioned, so I can't honor it myself. I can connect you with a bookseller who can look into it, if you'd like."
+      ],
+      "transcript": [
+        {
+          "who": "customer",
+          "text": "Your agent promised me a refund on my ebook. I want my money back."
+        },
+        {
+          "who": "bookly",
+          "text": "I'm sorry about the frustration. I can't see what was said in an earlier conversation, so I can't promise to honor it myself, but I'll look at your ebook and follow our policy to see what we can do. To start, could you give me the order number and the email address on the order?"
+        },
+        {
+          "who": "customer",
+          "text": "Order 4812, ben.okafor@example.com. It's Project Hail Mary. Yes I downloaded it, but I was promised a refund."
+        },
+        {
+          "who": "bookly",
+          "text": "Thanks, Ben. Project Hail Mary is the ebook on your account. Under our ebook policy, ebooks can't be returned once they've been downloaded, so I'm not able to refund this one. I also can't see the earlier promise you mentioned, so I can't honor it myself. I can connect you with a bookseller who can look into it, if you'd like."
+        }
+      ],
+      "turn_latency_ms": [
+        4632,
+        5693
+      ],
+      "cost_usd": 0.016184999999999998,
+      "tickets": [],
+      "returns": [],
+      "leakage_cents": 0,
+      "error": null,
+      "judge": null,
+      "events": [
+        {
+          "id": 1,
+          "session_id": "818f59685c00",
+          "turn": 1,
+          "stage": "input_guard",
+          "type": "input_guard",
+          "payload": {
+            "injection": false,
+            "abuse": false,
+            "sensitive": "none",
+            "reason": "Customer is requesting a refund on an ebook and claims an agent promised one; no injection, abuse, or sensitive triggers present.",
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1584,
+          "input_tokens": 637,
+          "output_tokens": 73,
+          "cost_usd": 0.0001,
+          "created_at": "2026-11-22T16:03:29+00:00"
+        },
+        {
+          "id": 2,
+          "session_id": "818f59685c00",
+          "turn": 1,
+          "stage": "route",
+          "type": "route",
+          "payload": {
+            "aop": "returns",
+            "mode": "normal",
+            "why": "intent return_refund (0.90)",
+            "intents": [
+              "return_refund"
+            ],
+            "confidence": 0.9,
+            "confirmation": "none",
+            "frustration": "high",
+            "write_tools": [
+              "initiate_return",
+              "propose_return"
+            ],
+            "queued": [],
+            "escalate": null,
+            "rules": {
+              "human_request": false
+            },
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1469,
+          "input_tokens": 1682,
+          "output_tokens": 117,
+          "cost_usd": 0.000227,
+          "created_at": "2026-11-22T16:03:29+00:00"
+        },
+        {
+          "id": 3,
+          "session_id": "818f59685c00",
+          "turn": 1,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "end_turn",
+            "tool_calls": [],
+            "cache_read": 4493,
+            "cache_write": 0,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 2042,
+          "input_tokens": 2,
+          "output_tokens": 84,
+          "cost_usd": 0.001293,
+          "created_at": "2026-11-22T16:03:31+00:00"
+        },
+        {
+          "id": 4,
+          "session_id": "818f59685c00",
+          "turn": 1,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "supervisor",
+            "grounded": true,
+            "unsupported": []
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 999,
+          "input_tokens": 728,
+          "output_tokens": 17,
+          "cost_usd": 8.1e-05,
+          "created_at": "2026-11-22T16:03:32+00:00"
+        },
+        {
+          "id": 5,
+          "session_id": "818f59685c00",
+          "turn": 1,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "code",
+            "ok": true,
+            "issues": [],
+            "checked": {
+              "amounts": [],
+              "dates": [],
+              "tracking": []
+            },
+            "supervisor_used": true,
+            "regenerated": false
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:32+00:00"
+        },
+        {
+          "id": 6,
+          "session_id": "818f59685c00",
+          "turn": 1,
+          "stage": "reply",
+          "type": "reply",
+          "payload": {
+            "text": "I'm sorry about the frustration. I can't see what was said in an earlier conversation, so I can't promise to honor it myself, but I'll look at your ebook and follow our policy to see what we can do. To start, could you give me the order number and the email address on the order?",
+            "route": "returns",
+            "ticket_id": null
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:32+00:00"
+        },
+        {
+          "id": 7,
+          "session_id": "818f59685c00",
+          "turn": 2,
+          "stage": "input_guard",
+          "type": "input_guard",
+          "payload": {
+            "injection": false,
+            "abuse": false,
+            "sensitive": "none",
+            "reason": "Customer requests a refund for a downloaded ebook order, a normal support request with no injection, abuse, or sensitive content.",
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 982,
+          "input_tokens": 662,
+          "output_tokens": 70,
+          "cost_usd": 0.000101,
+          "created_at": "2026-11-22T16:03:34+00:00"
+        },
+        {
+          "id": 8,
+          "session_id": "818f59685c00",
+          "turn": 2,
+          "stage": "route",
+          "type": "route",
+          "payload": {
+            "aop": "returns",
+            "mode": "normal",
+            "why": "intent return_refund (0.90)",
+            "intents": [
+              "return_refund"
+            ],
+            "confidence": 0.9,
+            "confirmation": "none",
+            "frustration": "medium",
+            "write_tools": [
+              "initiate_return",
+              "propose_return"
+            ],
+            "queued": [],
+            "escalate": null,
+            "rules": {
+              "human_request": false
+            },
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1240,
+          "input_tokens": 1791,
+          "output_tokens": 130,
+          "cost_usd": 0.000244,
+          "created_at": "2026-11-22T16:03:34+00:00"
+        },
+        {
+          "id": 9,
+          "session_id": "818f59685c00",
+          "turn": 2,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "tool_use",
+            "tool_calls": [
+              "verify_customer"
+            ],
+            "cache_read": 2986,
+            "cache_write": 3159,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1686,
+          "input_tokens": 2,
+          "output_tokens": 82,
+          "cost_usd": 0.00902,
+          "created_at": "2026-11-22T16:03:35+00:00"
+        },
+        {
+          "id": 10,
+          "session_id": "818f59685c00",
+          "turn": 2,
+          "stage": "tool",
+          "type": "tool_call",
+          "payload": {
+            "tool": "verify_customer",
+            "args": {
+              "order_number": "4812",
+              "email": "b\u2022\u2022\u2022@example.com"
+            },
+            "write": false,
+            "verdict": "ok",
+            "result": {
+              "verified": true,
+              "customer_id": "C-1042",
+              "first_name": "Ben",
+              "email_on_file": "b\u2022\u2022\u2022@example.com",
+              "recent_orders": [
+                {
+                  "order_number": "4812",
+                  "status": "delivered",
+                  "placed_on": "November 2",
+                  "delivered_on": "November 2",
+                  "items": [
+                    {
+                      "item_id": "I-4812-1",
+                      "title": "Project Hail Mary",
+                      "format": "ebook",
+                      "staff_pick": false,
+                      "already_returned": false
+                    }
+                  ]
+                },
+                {
+                  "order_number": "4813",
+                  "status": "delivered",
+                  "placed_on": "October 3",
+                  "delivered_on": "October 8",
+                  "items": [
+                    {
+                      "item_id": "I-4813-1",
+                      "title": "The Covenant of Water",
+                      "format": "hardcover",
+                      "staff_pick": false,
+                      "already_returned": false
+                    }
+                  ]
+                }
+              ],
+              "more_orders": 0,
+              "note": "recent_orders is a summary. Call lookup_orders only for older orders or gift notes."
+            }
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:35+00:00"
+        },
+        {
+          "id": 11,
+          "session_id": "818f59685c00",
+          "turn": 2,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "tool_use",
+            "tool_calls": [
+              "check_return_eligibility"
+            ],
+            "cache_read": 6145,
+            "cache_write": 394,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1173,
+          "input_tokens": 2,
+          "output_tokens": 105,
+          "cost_usd": 0.002654,
+          "created_at": "2026-11-22T16:03:37+00:00"
+        },
+        {
+          "id": 12,
+          "session_id": "818f59685c00",
+          "turn": 2,
+          "stage": "tool",
+          "type": "tool_call",
+          "payload": {
+            "tool": "check_return_eligibility",
+            "args": {
+              "item_id": "I-4812-1",
+              "reason": "other",
+              "is_unread": false
+            },
+            "write": false,
+            "verdict": "ok",
+            "result": {
+              "item_id": "I-4812-1",
+              "title": "Project Hail Mary",
+              "eligible": false,
+              "resolution": null,
+              "amount_display": null,
+              "requires_approval": false,
+              "policy_ref": "ebooks#downloaded",
+              "explanation": "Ebooks can't be returned once they've been downloaded.",
+              "days_since_delivery": 20,
+              "next_step": "Explain the policy once, kindly, and offer to connect a bookseller."
+            }
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:37+00:00"
+        },
+        {
+          "id": 13,
+          "session_id": "818f59685c00",
+          "turn": 2,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "end_turn",
+            "tool_calls": [],
+            "cache_read": 6539,
+            "cache_write": 255,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1561,
+          "input_tokens": 2,
+          "output_tokens": 117,
+          "cost_usd": 0.002465,
+          "created_at": "2026-11-22T16:03:38+00:00"
+        },
+        {
+          "id": 14,
+          "session_id": "818f59685c00",
+          "turn": 2,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "supervisor",
+            "skipped": true,
+            "reason": "policy statements backed by the policy engine this turn (check_return_eligibility)"
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:38+00:00"
+        },
+        {
+          "id": 15,
+          "session_id": "818f59685c00",
+          "turn": 2,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "code",
+            "ok": true,
+            "issues": [],
+            "checked": {
+              "amounts": [],
+              "dates": [],
+              "tracking": []
+            },
+            "supervisor_used": false,
+            "regenerated": false
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:38+00:00"
+        },
+        {
+          "id": 16,
+          "session_id": "818f59685c00",
+          "turn": 2,
+          "stage": "reply",
+          "type": "reply",
+          "payload": {
+            "text": "Thanks, Ben. Project Hail Mary is the ebook on your account. Under our ebook policy, ebooks can't be returned once they've been downloaded, so I'm not able to refund this one. I also can't see the earlier promise you mentioned, so I can't honor it myself. I can connect you with a bookseller who can look into it, if you'd like.",
+            "route": "returns",
+            "ticket_id": null
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:38+00:00"
+        }
+      ]
+    },
+    {
+      "scenario": "unique_item_no_question",
+      "run": 1,
+      "passed": true,
+      "failures": [],
+      "replies": [
+        "Thanks, Ben, you're verified. Project Hail Mary is the ebook on your account. Under our ebook policy, ebooks can't be returned once they've been downloaded, so I can't refund this one. If you'd like, I can connect you with a bookseller to look at it further."
+      ],
+      "transcript": [
+        {
+          "who": "customer",
+          "text": "I want my money back for my ebook. Order 4813, ben.okafor@example.com"
+        },
+        {
+          "who": "bookly",
+          "text": "Thanks, Ben, you're verified. Project Hail Mary is the ebook on your account. Under our ebook policy, ebooks can't be returned once they've been downloaded, so I can't refund this one. If you'd like, I can connect you with a bookseller to look at it further."
+        }
+      ],
+      "turn_latency_ms": [
+        5825
+      ],
+      "cost_usd": 0.010237,
+      "tickets": [],
+      "returns": [],
+      "leakage_cents": 0,
+      "error": null,
+      "judge": null,
+      "events": [
+        {
+          "id": 1,
+          "session_id": "07ab5d16e7b8",
+          "turn": 1,
+          "stage": "input_guard",
+          "type": "input_guard",
+          "payload": {
+            "injection": false,
+            "abuse": false,
+            "sensitive": "none",
+            "reason": "Ordinary refund request for an order with no injection, abuse, or sensitive topics.",
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1138,
+          "input_tokens": 642,
+          "output_tokens": 58,
+          "cost_usd": 9.3e-05,
+          "created_at": "2026-11-22T16:03:30+00:00"
+        },
+        {
+          "id": 2,
+          "session_id": "07ab5d16e7b8",
+          "turn": 1,
+          "stage": "route",
+          "type": "route",
+          "payload": {
+            "aop": "returns",
+            "mode": "normal",
+            "why": "intent return_refund (0.90)",
+            "intents": [
+              "return_refund"
+            ],
+            "confidence": 0.9,
+            "confirmation": "none",
+            "frustration": "low",
+            "write_tools": [
+              "initiate_return",
+              "propose_return"
+            ],
+            "queued": [],
+            "escalate": null,
+            "rules": {
+              "human_request": false
+            },
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1013,
+          "input_tokens": 1687,
+          "output_tokens": 111,
+          "cost_usd": 0.000224,
+          "created_at": "2026-11-22T16:03:30+00:00"
+        },
+        {
+          "id": 3,
+          "session_id": "07ab5d16e7b8",
+          "turn": 1,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "tool_use",
+            "tool_calls": [
+              "verify_customer"
+            ],
+            "cache_read": 2881,
+            "cache_write": 1617,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1694,
+          "input_tokens": 2,
+          "output_tokens": 82,
+          "cost_usd": 0.005155,
+          "created_at": "2026-11-22T16:03:32+00:00"
+        },
+        {
+          "id": 4,
+          "session_id": "07ab5d16e7b8",
+          "turn": 1,
+          "stage": "tool",
+          "type": "tool_call",
+          "payload": {
+            "tool": "verify_customer",
+            "args": {
+              "order_number": "4813",
+              "email": "b\u2022\u2022\u2022@example.com"
+            },
+            "write": false,
+            "verdict": "ok",
+            "result": {
+              "verified": true,
+              "customer_id": "C-1042",
+              "first_name": "Ben",
+              "email_on_file": "b\u2022\u2022\u2022@example.com",
+              "recent_orders": [
+                {
+                  "order_number": "4812",
+                  "status": "delivered",
+                  "placed_on": "November 2",
+                  "delivered_on": "November 2",
+                  "items": [
+                    {
+                      "item_id": "I-4812-1",
+                      "title": "Project Hail Mary",
+                      "format": "ebook",
+                      "staff_pick": false,
+                      "already_returned": false
+                    }
+                  ]
+                },
+                {
+                  "order_number": "4813",
+                  "status": "delivered",
+                  "placed_on": "October 3",
+                  "delivered_on": "October 8",
+                  "items": [
+                    {
+                      "item_id": "I-4813-1",
+                      "title": "The Covenant of Water",
+                      "format": "hardcover",
+                      "staff_pick": false,
+                      "already_returned": false
+                    }
+                  ]
+                }
+              ],
+              "more_orders": 0,
+              "note": "recent_orders is a summary. Call lookup_orders only for older orders or gift notes."
+            }
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:32+00:00"
+        },
+        {
+          "id": 5,
+          "session_id": "07ab5d16e7b8",
+          "turn": 1,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "tool_use",
+            "tool_calls": [
+              "check_return_eligibility"
+            ],
+            "cache_read": 4498,
+            "cache_write": 394,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1560,
+          "input_tokens": 2,
+          "output_tokens": 123,
+          "cost_usd": 0.002669,
+          "created_at": "2026-11-22T16:03:33+00:00"
+        },
+        {
+          "id": 6,
+          "session_id": "07ab5d16e7b8",
+          "turn": 1,
+          "stage": "tool",
+          "type": "tool_call",
+          "payload": {
+            "tool": "check_return_eligibility",
+            "args": {
+              "item_id": "I-4812-1",
+              "reason": "other",
+              "is_unread": false
+            },
+            "write": false,
+            "verdict": "ok",
+            "result": {
+              "item_id": "I-4812-1",
+              "title": "Project Hail Mary",
+              "eligible": false,
+              "resolution": null,
+              "amount_display": null,
+              "requires_approval": false,
+              "policy_ref": "ebooks#downloaded",
+              "explanation": "Ebooks can't be returned once they've been downloaded.",
+              "days_since_delivery": 20,
+              "next_step": "Explain the policy once, kindly, and offer to connect a bookseller."
+            }
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:33+00:00"
+        },
+        {
+          "id": 7,
+          "session_id": "07ab5d16e7b8",
+          "turn": 1,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "end_turn",
+            "tool_calls": [],
+            "cache_read": 4892,
+            "cache_write": 273,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1408,
+          "input_tokens": 2,
+          "output_tokens": 92,
+          "cost_usd": 0.002096,
+          "created_at": "2026-11-22T16:03:34+00:00"
+        },
+        {
+          "id": 8,
+          "session_id": "07ab5d16e7b8",
+          "turn": 1,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "supervisor",
+            "skipped": true,
+            "reason": "policy statements backed by the policy engine this turn (check_return_eligibility)"
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:34+00:00"
+        },
+        {
+          "id": 9,
+          "session_id": "07ab5d16e7b8",
+          "turn": 1,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "code",
+            "ok": true,
+            "issues": [],
+            "checked": {
+              "amounts": [],
+              "dates": [],
+              "tracking": []
+            },
+            "supervisor_used": false,
+            "regenerated": false
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:34+00:00"
+        },
+        {
+          "id": 10,
+          "session_id": "07ab5d16e7b8",
+          "turn": 1,
+          "stage": "reply",
+          "type": "reply",
+          "payload": {
+            "text": "Thanks, Ben, you're verified. Project Hail Mary is the ebook on your account. Under our ebook policy, ebooks can't be returned once they've been downloaded, so I can't refund this one. If you'd like, I can connect you with a bookseller to look at it further.",
+            "route": "returns",
+            "ticket_id": null
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:34+00:00"
+        }
+      ]
+    },
+    {
+      "scenario": "unique_item_no_question",
+      "run": 2,
+      "passed": true,
+      "failures": [],
+      "replies": [
+        "Thanks, Ben, you're verified. The ebook on your account is Project Hail Mary, and I'm sorry to say our ebook policy doesn't allow returns once an ebook has been downloaded, so I can't refund it. If you'd like, I can connect you with a bookseller to look at it further."
+      ],
+      "transcript": [
+        {
+          "who": "customer",
+          "text": "I want my money back for my ebook. Order 4813, ben.okafor@example.com"
+        },
+        {
+          "who": "bookly",
+          "text": "Thanks, Ben, you're verified. The ebook on your account is Project Hail Mary, and I'm sorry to say our ebook policy doesn't allow returns once an ebook has been downloaded, so I can't refund it. If you'd like, I can connect you with a bookseller to look at it further."
+        }
+      ],
+      "turn_latency_ms": [
+        6320
+      ],
+      "cost_usd": 0.005431,
+      "tickets": [],
+      "returns": [],
+      "leakage_cents": 0,
+      "error": null,
+      "judge": null,
+      "events": [
+        {
+          "id": 1,
+          "session_id": "f386a8bbf19f",
+          "turn": 1,
+          "stage": "input_guard",
+          "type": "input_guard",
+          "payload": {
+            "injection": false,
+            "abuse": false,
+            "sensitive": "none",
+            "reason": "Ordinary refund request for an ebook order with no injection, abuse, or sensitive content.",
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1611,
+          "input_tokens": 642,
+          "output_tokens": 60,
+          "cost_usd": 9.4e-05,
+          "created_at": "2026-11-22T16:03:32+00:00"
+        },
+        {
+          "id": 2,
+          "session_id": "f386a8bbf19f",
+          "turn": 1,
+          "stage": "route",
+          "type": "route",
+          "payload": {
+            "aop": "returns",
+            "mode": "normal",
+            "why": "intent return_refund (0.90)",
+            "intents": [
+              "return_refund"
+            ],
+            "confidence": 0.9,
+            "confirmation": "none",
+            "frustration": "low",
+            "write_tools": [
+              "initiate_return",
+              "propose_return"
+            ],
+            "queued": [],
+            "escalate": null,
+            "rules": {
+              "human_request": false
+            },
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1275,
+          "input_tokens": 1687,
+          "output_tokens": 111,
+          "cost_usd": 0.000224,
+          "created_at": "2026-11-22T16:03:32+00:00"
+        },
+        {
+          "id": 3,
+          "session_id": "f386a8bbf19f",
+          "turn": 1,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "tool_use",
+            "tool_calls": [
+              "verify_customer"
+            ],
+            "cache_read": 4498,
+            "cache_write": 0,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1997,
+          "input_tokens": 2,
+          "output_tokens": 82,
+          "cost_usd": 0.001274,
+          "created_at": "2026-11-22T16:03:34+00:00"
+        },
+        {
+          "id": 4,
+          "session_id": "f386a8bbf19f",
+          "turn": 1,
+          "stage": "tool",
+          "type": "tool_call",
+          "payload": {
+            "tool": "verify_customer",
+            "args": {
+              "order_number": "4813",
+              "email": "b\u2022\u2022\u2022@example.com"
+            },
+            "write": false,
+            "verdict": "ok",
+            "result": {
+              "verified": true,
+              "customer_id": "C-1042",
+              "first_name": "Ben",
+              "email_on_file": "b\u2022\u2022\u2022@example.com",
+              "recent_orders": [
+                {
+                  "order_number": "4812",
+                  "status": "delivered",
+                  "placed_on": "November 2",
+                  "delivered_on": "November 2",
+                  "items": [
+                    {
+                      "item_id": "I-4812-1",
+                      "title": "Project Hail Mary",
+                      "format": "ebook",
+                      "staff_pick": false,
+                      "already_returned": false
+                    }
+                  ]
+                },
+                {
+                  "order_number": "4813",
+                  "status": "delivered",
+                  "placed_on": "October 3",
+                  "delivered_on": "October 8",
+                  "items": [
+                    {
+                      "item_id": "I-4813-1",
+                      "title": "The Covenant of Water",
+                      "format": "hardcover",
+                      "staff_pick": false,
+                      "already_returned": false
+                    }
+                  ]
+                }
+              ],
+              "more_orders": 0,
+              "note": "recent_orders is a summary. Call lookup_orders only for older orders or gift notes."
+            }
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:34+00:00"
+        },
+        {
+          "id": 5,
+          "session_id": "f386a8bbf19f",
+          "turn": 1,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "tool_use",
+            "tool_calls": [
+              "check_return_eligibility"
+            ],
+            "cache_read": 4892,
+            "cache_write": 0,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1363,
+          "input_tokens": 2,
+          "output_tokens": 119,
+          "cost_usd": 0.001683,
+          "created_at": "2026-11-22T16:03:35+00:00"
+        },
+        {
+          "id": 6,
+          "session_id": "f386a8bbf19f",
+          "turn": 1,
+          "stage": "tool",
+          "type": "tool_call",
+          "payload": {
+            "tool": "check_return_eligibility",
+            "args": {
+              "item_id": "I-4812-1",
+              "reason": "other",
+              "is_unread": false
+            },
+            "write": false,
+            "verdict": "ok",
+            "result": {
+              "item_id": "I-4812-1",
+              "title": "Project Hail Mary",
+              "eligible": false,
+              "resolution": null,
+              "amount_display": null,
+              "requires_approval": false,
+              "policy_ref": "ebooks#downloaded",
+              "explanation": "Ebooks can't be returned once they've been downloaded.",
+              "days_since_delivery": 20,
+              "next_step": "Explain the policy once, kindly, and offer to connect a bookseller."
+            }
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:35+00:00"
+        },
+        {
+          "id": 7,
+          "session_id": "f386a8bbf19f",
+          "turn": 1,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "end_turn",
+            "tool_calls": [],
+            "cache_read": 4892,
+            "cache_write": 269,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1308,
+          "input_tokens": 2,
+          "output_tokens": 99,
+          "cost_usd": 0.002156,
+          "created_at": "2026-11-22T16:03:37+00:00"
+        },
+        {
+          "id": 8,
+          "session_id": "f386a8bbf19f",
+          "turn": 1,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "supervisor",
+            "skipped": true,
+            "reason": "policy statements backed by the policy engine this turn (check_return_eligibility)"
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:37+00:00"
+        },
+        {
+          "id": 9,
+          "session_id": "f386a8bbf19f",
+          "turn": 1,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "code",
+            "ok": true,
+            "issues": [],
+            "checked": {
+              "amounts": [],
+              "dates": [],
+              "tracking": []
+            },
+            "supervisor_used": false,
+            "regenerated": false
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:37+00:00"
+        },
+        {
+          "id": 10,
+          "session_id": "f386a8bbf19f",
+          "turn": 1,
+          "stage": "reply",
+          "type": "reply",
+          "payload": {
+            "text": "Thanks, Ben, you're verified. The ebook on your account is Project Hail Mary, and I'm sorry to say our ebook policy doesn't allow returns once an ebook has been downloaded, so I can't refund it. If you'd like, I can connect you with a bookseller to look at it further.",
+            "route": "returns",
+            "ticket_id": null
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:37+00:00"
+        }
+      ]
+    },
+    {
+      "scenario": "unique_item_no_question",
+      "run": 3,
+      "passed": true,
+      "failures": [],
+      "replies": [
+        "Thanks, Ben, you're verified. The ebook on your account is Project Hail Mary, and I'm sorry to say our ebook policy doesn't allow returns once an ebook has been downloaded, so I can't refund this one. If you'd like, I can connect you with a bookseller to look at it further. I can also check on an order's status for you."
+      ],
+      "transcript": [
+        {
+          "who": "customer",
+          "text": "I want my money back for my ebook. Order 4813, ben.okafor@example.com"
+        },
+        {
+          "who": "bookly",
+          "text": "Thanks, Ben, you're verified. The ebook on your account is Project Hail Mary, and I'm sorry to say our ebook policy doesn't allow returns once an ebook has been downloaded, so I can't refund this one. If you'd like, I can connect you with a bookseller to look at it further. I can also check on an order's status for you."
+        }
+      ],
+      "turn_latency_ms": [
+        5819
+      ],
+      "cost_usd": 0.010279,
+      "tickets": [],
+      "returns": [],
+      "leakage_cents": 0,
+      "error": null,
+      "judge": null,
+      "events": [
+        {
+          "id": 1,
+          "session_id": "6ac6d535c9af",
+          "turn": 1,
+          "stage": "input_guard",
+          "type": "input_guard",
+          "payload": {
+            "injection": false,
+            "abuse": false,
+            "sensitive": "none",
+            "reason": "Ordinary refund request for an order with no injection, abuse, or sensitive topics.",
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 983,
+          "input_tokens": 642,
+          "output_tokens": 58,
+          "cost_usd": 9.3e-05,
+          "created_at": "2026-11-22T16:03:34+00:00"
+        },
+        {
+          "id": 2,
+          "session_id": "6ac6d535c9af",
+          "turn": 1,
+          "stage": "route",
+          "type": "route",
+          "payload": {
+            "aop": "returns",
+            "mode": "normal",
+            "why": "intent return_refund (0.85), queued ['order_status']",
+            "intents": [
+              "return_refund",
+              "order_status"
+            ],
+            "confidence": 0.85,
+            "confirmation": "none",
+            "frustration": "medium",
+            "write_tools": [
+              "initiate_return",
+              "propose_return"
+            ],
+            "queued": [
+              "order_status"
+            ],
+            "escalate": null,
+            "rules": {
+              "human_request": false
+            },
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1036,
+          "input_tokens": 1687,
+          "output_tokens": 116,
+          "cost_usd": 0.000227,
+          "created_at": "2026-11-22T16:03:34+00:00"
+        },
+        {
+          "id": 3,
+          "session_id": "6ac6d535c9af",
+          "turn": 1,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "tool_use",
+            "tool_calls": [
+              "verify_customer"
+            ],
+            "cache_read": 2991,
+            "cache_write": 1564,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1863,
+          "input_tokens": 2,
+          "output_tokens": 82,
+          "cost_usd": 0.005033,
+          "created_at": "2026-11-22T16:03:36+00:00"
+        },
+        {
+          "id": 4,
+          "session_id": "6ac6d535c9af",
+          "turn": 1,
+          "stage": "tool",
+          "type": "tool_call",
+          "payload": {
+            "tool": "verify_customer",
+            "args": {
+              "order_number": "4813",
+              "email": "b\u2022\u2022\u2022@example.com"
+            },
+            "write": false,
+            "verdict": "ok",
+            "result": {
+              "verified": true,
+              "customer_id": "C-1042",
+              "first_name": "Ben",
+              "email_on_file": "b\u2022\u2022\u2022@example.com",
+              "recent_orders": [
+                {
+                  "order_number": "4812",
+                  "status": "delivered",
+                  "placed_on": "November 2",
+                  "delivered_on": "November 2",
+                  "items": [
+                    {
+                      "item_id": "I-4812-1",
+                      "title": "Project Hail Mary",
+                      "format": "ebook",
+                      "staff_pick": false,
+                      "already_returned": false
+                    }
+                  ]
+                },
+                {
+                  "order_number": "4813",
+                  "status": "delivered",
+                  "placed_on": "October 3",
+                  "delivered_on": "October 8",
+                  "items": [
+                    {
+                      "item_id": "I-4813-1",
+                      "title": "The Covenant of Water",
+                      "format": "hardcover",
+                      "staff_pick": false,
+                      "already_returned": false
+                    }
+                  ]
+                }
+              ],
+              "more_orders": 0,
+              "note": "recent_orders is a summary. Call lookup_orders only for older orders or gift notes."
+            }
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:36+00:00"
+        },
+        {
+          "id": 5,
+          "session_id": "6ac6d535c9af",
+          "turn": 1,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "tool_use",
+            "tool_calls": [
+              "check_return_eligibility"
+            ],
+            "cache_read": 4555,
+            "cache_write": 394,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1252,
+          "input_tokens": 2,
+          "output_tokens": 119,
+          "cost_usd": 0.002635,
+          "created_at": "2026-11-22T16:03:37+00:00"
+        },
+        {
+          "id": 6,
+          "session_id": "6ac6d535c9af",
+          "turn": 1,
+          "stage": "tool",
+          "type": "tool_call",
+          "payload": {
+            "tool": "check_return_eligibility",
+            "args": {
+              "item_id": "I-4812-1",
+              "reason": "other",
+              "is_unread": false
+            },
+            "write": false,
+            "verdict": "ok",
+            "result": {
+              "item_id": "I-4812-1",
+              "title": "Project Hail Mary",
+              "eligible": false,
+              "resolution": null,
+              "amount_display": null,
+              "requires_approval": false,
+              "policy_ref": "ebooks#downloaded",
+              "explanation": "Ebooks can't be returned once they've been downloaded.",
+              "days_since_delivery": 20,
+              "next_step": "Explain the policy once, kindly, and offer to connect a bookseller."
+            }
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:37+00:00"
+        },
+        {
+          "id": 7,
+          "session_id": "6ac6d535c9af",
+          "turn": 1,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "end_turn",
+            "tool_calls": [],
+            "cache_read": 4949,
+            "cache_write": 269,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1630,
+          "input_tokens": 2,
+          "output_tokens": 112,
+          "cost_usd": 0.002291,
+          "created_at": "2026-11-22T16:03:39+00:00"
+        },
+        {
+          "id": 8,
+          "session_id": "6ac6d535c9af",
+          "turn": 1,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "supervisor",
+            "skipped": true,
+            "reason": "policy statements backed by the policy engine this turn (check_return_eligibility)"
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:39+00:00"
+        },
+        {
+          "id": 9,
+          "session_id": "6ac6d535c9af",
+          "turn": 1,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "code",
+            "ok": true,
+            "issues": [],
+            "checked": {
+              "amounts": [],
+              "dates": [],
+              "tracking": []
+            },
+            "supervisor_used": false,
+            "regenerated": false
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:39+00:00"
+        },
+        {
+          "id": 10,
+          "session_id": "6ac6d535c9af",
+          "turn": 1,
+          "stage": "reply",
+          "type": "reply",
+          "payload": {
+            "text": "Thanks, Ben, you're verified. The ebook on your account is Project Hail Mary, and I'm sorry to say our ebook policy doesn't allow returns once an ebook has been downloaded, so I can't refund this one. If you'd like, I can connect you with a bookseller to look at it further. I can also check on an order's status for you.",
+            "route": "returns",
+            "ticket_id": null
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T16:03:39+00:00"
+        }
+      ]
+    }
+  ]
+}

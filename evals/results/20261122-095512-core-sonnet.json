@@ -1,0 +1,403 @@
+{
+  "summary": {
+    "label": "core-sonnet",
+    "scenarios": {
+      "order_status_happy": {
+        "passed": 1,
+        "runs": 1,
+        "failures": []
+      }
+    },
+    "pass_rate": 1.0,
+    "all_runs_pass": 1,
+    "scenario_count": 1,
+    "refund_leakage_cents": 0,
+    "escalations_by_trigger": {},
+    "conversations_escalated": 0.0,
+    "turn_latency_ms": {
+      "p50": 6218,
+      "p95": 10403
+    },
+    "cost_per_conversation_usd": 0.01646,
+    "tone_rubric": {}
+  },
+  "runs": [
+    {
+      "scenario": "order_status_happy",
+      "run": 1,
+      "passed": true,
+      "failures": [],
+      "replies": [
+        "I'd be happy to check on that. Could you give me the order number and the email address on the order?",
+        "Thanks, Chloe. Your order 4821 is on its way with UPS, and the estimated delivery is November 24. The tracking number is 1Z999AA10123456784, and the last scan showed it departed the regional facility."
+      ],
+      "transcript": [
+        {
+          "who": "customer",
+          "text": "Where's my order?"
+        },
+        {
+          "who": "bookly",
+          "text": "I'd be happy to check on that. Could you give me the order number and the email address on the order?"
+        },
+        {
+          "who": "customer",
+          "text": "It's order 4821 and my email is chloe.park@example.com"
+        },
+        {
+          "who": "bookly",
+          "text": "Thanks, Chloe. Your order 4821 is on its way with UPS, and the estimated delivery is November 24. The tracking number is 1Z999AA10123456784, and the last scan showed it departed the regional facility."
+        }
+      ],
+      "turn_latency_ms": [
+        10403,
+        6218
+      ],
+      "cost_usd": 0.01646,
+      "tickets": [],
+      "returns": [],
+      "leakage_cents": 0,
+      "error": null,
+      "judge": null,
+      "events": [
+        {
+          "id": 1,
+          "session_id": "8603950dbdbe",
+          "turn": 1,
+          "stage": "input_guard",
+          "type": "input_guard",
+          "payload": {
+            "injection": false,
+            "abuse": false,
+            "sensitive": "none",
+            "reason": "Ordinary order status inquiry with no injection, abuse, or sensitive content.",
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 2559,
+          "input_tokens": 621,
+          "output_tokens": 57,
+          "cost_usd": 9.1e-05,
+          "created_at": "2026-11-22T14:54:58+00:00"
+        },
+        {
+          "id": 2,
+          "session_id": "8603950dbdbe",
+          "turn": 1,
+          "stage": "route",
+          "type": "route",
+          "payload": {
+            "aop": "order_status",
+            "mode": "normal",
+            "why": "intent order_status (0.95)",
+            "intents": [
+              "order_status"
+            ],
+            "confidence": 0.95,
+            "confirmation": "none",
+            "frustration": "low",
+            "write_tools": [],
+            "queued": [],
+            "escalate": null,
+            "rules": {
+              "human_request": false
+            },
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 2765,
+          "input_tokens": 1607,
+          "output_tokens": 91,
+          "cost_usd": 0.000206,
+          "created_at": "2026-11-22T14:54:58+00:00"
+        },
+        {
+          "id": 3,
+          "session_id": "8603950dbdbe",
+          "turn": 1,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "end_turn",
+            "tool_calls": [],
+            "cache_read": 0,
+            "cache_write": 3367,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 7611,
+          "input_tokens": 2,
+          "output_tokens": 29,
+          "cost_usd": 0.008712,
+          "created_at": "2026-11-22T14:55:06+00:00"
+        },
+        {
+          "id": 4,
+          "session_id": "8603950dbdbe",
+          "turn": 1,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "code",
+            "ok": true,
+            "issues": [],
+            "checked": {
+              "amounts": [],
+              "dates": [],
+              "tracking": []
+            },
+            "supervisor_used": false,
+            "regenerated": false
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T14:55:06+00:00"
+        },
+        {
+          "id": 5,
+          "session_id": "8603950dbdbe",
+          "turn": 1,
+          "stage": "reply",
+          "type": "reply",
+          "payload": {
+            "text": "I'd be happy to check on that. Could you give me the order number and the email address on the order?",
+            "route": "order_status",
+            "ticket_id": null
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T14:55:06+00:00"
+        },
+        {
+          "id": 6,
+          "session_id": "8603950dbdbe",
+          "turn": 2,
+          "stage": "input_guard",
+          "type": "input_guard",
+          "payload": {
+            "injection": false,
+            "abuse": false,
+            "sensitive": "none",
+            "reason": "Customer simply provides an order number and email address with no injection, abuse, or sensitive content.",
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 996,
+          "input_tokens": 635,
+          "output_tokens": 59,
+          "cost_usd": 9.3e-05,
+          "created_at": "2026-11-22T14:55:08+00:00"
+        },
+        {
+          "id": 7,
+          "session_id": "8603950dbdbe",
+          "turn": 2,
+          "stage": "route",
+          "type": "route",
+          "payload": {
+            "aop": "order_status",
+            "mode": "normal",
+            "why": "intent order_status (0.95)",
+            "intents": [
+              "order_status"
+            ],
+            "confidence": 0.95,
+            "confirmation": "none",
+            "frustration": "low",
+            "write_tools": [],
+            "queued": [],
+            "escalate": null,
+            "rules": {
+              "human_request": false
+            },
+            "error": null
+          },
+          "model": "claude-haiku-5-5",
+          "latency_ms": 1499,
+          "input_tokens": 1651,
+          "output_tokens": 114,
+          "cost_usd": 0.000222,
+          "created_at": "2026-11-22T14:55:08+00:00"
+        },
+        {
+          "id": 8,
+          "session_id": "8603950dbdbe",
+          "turn": 2,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "tool_use",
+            "tool_calls": [
+              "verify_customer"
+            ],
+            "cache_read": 2767,
+            "cache_write": 1262,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 2170,
+          "input_tokens": 2,
+          "output_tokens": 81,
+          "cost_usd": 0.004246,
+          "created_at": "2026-11-22T14:55:10+00:00"
+        },
+        {
+          "id": 9,
+          "session_id": "8603950dbdbe",
+          "turn": 2,
+          "stage": "tool",
+          "type": "tool_call",
+          "payload": {
+            "tool": "verify_customer",
+            "args": {
+              "order_number": "4821",
+              "email": "c\u2022\u2022\u2022@example.com"
+            },
+            "write": false,
+            "verdict": "ok",
+            "result": {
+              "verified": true,
+              "customer_id": "C-1077",
+              "first_name": "Chloe",
+              "email_on_file": "c\u2022\u2022\u2022@example.com"
+            }
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T14:55:10+00:00"
+        },
+        {
+          "id": 10,
+          "session_id": "8603950dbdbe",
+          "turn": 2,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "tool_use",
+            "tool_calls": [
+              "get_order_status"
+            ],
+            "cache_read": 4029,
+            "cache_write": 143,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1191,
+          "input_tokens": 2,
+          "output_tokens": 52,
+          "cost_usd": 0.001284,
+          "created_at": "2026-11-22T14:55:11+00:00"
+        },
+        {
+          "id": 11,
+          "session_id": "8603950dbdbe",
+          "turn": 2,
+          "stage": "tool",
+          "type": "tool_call",
+          "payload": {
+            "tool": "get_order_status",
+            "args": {
+              "order_number": "4821"
+            },
+            "write": false,
+            "verdict": "ok",
+            "result": {
+              "order_number": "4821",
+              "status": "on its way",
+              "placed_on": "November 19",
+              "items": [
+                "Tomorrow, and Tomorrow, and Tomorrow"
+              ],
+              "estimated_delivery": "November 24",
+              "carrier": "UPS",
+              "tracking_number": "1Z999AA10123456784",
+              "last_scan": "Departed regional facility"
+            }
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T14:55:11+00:00"
+        },
+        {
+          "id": 12,
+          "session_id": "8603950dbdbe",
+          "turn": 2,
+          "stage": "executor",
+          "type": "executor",
+          "payload": {
+            "stop_reason": "end_turn",
+            "tool_calls": [],
+            "cache_read": 4172,
+            "cache_write": 174,
+            "served_by": "claude-sonnet-5-5"
+          },
+          "model": "claude-sonnet-5-5",
+          "latency_ms": 1335,
+          "input_tokens": 2,
+          "output_tokens": 75,
+          "cost_usd": 0.001606,
+          "created_at": "2026-11-22T14:55:12+00:00"
+        },
+        {
+          "id": 13,
+          "session_id": "8603950dbdbe",
+          "turn": 2,
+          "stage": "output_guard",
+          "type": "output_check",
+          "payload": {
+            "stage": "code",
+            "ok": true,
+            "issues": [],
+            "checked": {
+              "amounts": [],
+              "dates": [
+                "November 24"
+              ],
+              "tracking": [
+                "1Z999AA10123456784"
+              ]
+            },
+            "supervisor_used": false,
+            "regenerated": false
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T14:55:12+00:00"
+        },
+        {
+          "id": 14,
+          "session_id": "8603950dbdbe",
+          "turn": 2,
+          "stage": "reply",
+          "type": "reply",
+          "payload": {
+            "text": "Thanks, Chloe. Your order 4821 is on its way with UPS, and the estimated delivery is November 24. The tracking number is 1Z999AA10123456784, and the last scan showed it departed the regional facility.",
+            "route": "order_status",
+            "ticket_id": null
+          },
+          "model": null,
+          "latency_ms": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost_usd": null,
+          "created_at": "2026-11-22T14:55:12+00:00"
+        }
+      ]
+    }
+  ]
+}
