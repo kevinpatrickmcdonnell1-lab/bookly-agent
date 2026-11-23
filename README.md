@@ -13,8 +13,8 @@ Open [Claude Code](https://claude.com/claude-code) in an empty folder and paste:
 
 ```
 Clone https://github.com/kevinpatrickmcdonnell1-lab/bookly-agent and get it running.
-Install uv if it's missing (it provides Python 3.11), run `uv sync`, copy .env.example to .env,
-and ask me for my ANTHROPIC_API_KEY (and optionally ELEVENLABS_API_KEY for voice).
+Install uv if it's missing (it provides Python 3.11), run `uv sync`, and copy .env.example to .env if .env doesn't exist yet.
+Don't ask me for any API keys or print them. If ANTHROPIC_API_KEY isn't already exported in my shell or filled in in .env, tell me to paste it into .env myself (and optionally ELEVENLABS_API_KEY for voice), then wait for me to say "done".
 Then run `make web` in the background and open http://localhost:8000.
 ```
 
