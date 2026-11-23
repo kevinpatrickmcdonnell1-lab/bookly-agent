@@ -27,7 +27,7 @@ git clone https://github.com/kevinpatrickmcdonnell1-lab/bookly-agent && cd bookl
 cp .env.example .env      # add ANTHROPIC_API_KEY
 make setup                # uv sync (falls back to pip install -e ".[dev]")
 make web                  # open http://localhost:8000
-make test                 # 199 tests, no key needed
+make test                 # 200 tests, no key needed
 ```
 
 `make chat` runs the same agent in the terminal. `make reset` (or **Reset demo data** in the UI) restores a clean state.
@@ -73,9 +73,9 @@ The loop is [`bookly/agent/loop.py`](bookly/agent/loop.py), on the raw Anthropic
 
 ## Key decisions
 
-1. **Write tools unlock per route.** A policy question can't trigger a refund. *Trade-off:* the guard and router add about 1.4 s to every turn.
+1. **Write tools unlock per route.** A policy question can't trigger a refund. *Trade-off:* the guard and router add about 1.6 s to every turn.
 2. **Code decides money.** The model never passes an amount; the engine returns it with the policy section it applied. *Trade-off:* the model still picks the reason ("damaged", "didn't enjoy it"), and that picks the branch (see Limitations).
-3. **Sonnet stays the default executor, though Haiku matched it in the evals** at about a ninth of the cost. Code already protects the money, so the executor's job is understanding messy customers, and scripted evals don't have any. `EXECUTOR_PRESET=haiku` switches it.
+3. **Sonnet stays the default executor, though Haiku was within one conversation of it in the evals** (88/93 vs 89/93) at about a ninth of the cost. Code already protects the money, so the executor's job is understanding messy customers, and scripted evals don't have any. `EXECUTOR_PRESET=haiku` switches it.
 
 ## Assumptions
 
@@ -87,20 +87,20 @@ The loop is [`bookly/agent/loop.py`](bookly/agent/loop.py), on the raw Anthropic
 
 ## Results
 
-31 scripted scenarios × 3 runs per executor, 2026-11-22/23. Evals assert on database rows and trace events, not wording. Refund leakage was $0.00 in every run.
+31 scripted scenarios × 3 runs per executor, 2026-11-23, all on one recorded commit. Evals assert on database rows and trace events, not wording. Refund leakage was $0.00 in every run.
 
 | Executor | Passed | p50 / p95 turn latency | Cost per conversation |
 | --- | --- | --- | --- |
-| Haiku 5.5 | 92/93 | 4.8 s / 8.4 s | $0.0021 |
-| Sonnet 5.5 (default) | 92/93 | 5.0 s / 9.7 s | $0.0191 |
+| Haiku 5.5 | 88/93 | 4.9 s / 8.4 s | $0.0021 |
+| Sonnet 5.5 (default) | 89/93 | 5.2 s / 9.4 s | $0.0193 |
 
-92/93 still allows a true failure rate of up to about 6%. [docs/EVALS.md](docs/EVALS.md) has the suites, the bugs the evals found, the hybrid setup and the latency work.
+9 of the 10 failures across the three setups were the output supervisor rejecting a true claim (see Limitations). A gap of one conversation is noise: a Haiku run on the same code earlier that day scored 91/93, and 89/93 still allows a true failure rate of up to about 11%. [docs/EVALS.md](docs/EVALS.md) has the suites, the bugs the evals found, the hybrid setup and the latency work.
 
 ## Limitations
 
 - **Damage claims are self-reported.** "It arrived damaged" gets a refund with no evidence. Production needs a photo, a per-customer limit or a re-send first.
 - **Authentication:** order number + email isn't enough for account actions. Production needs a signed-in session or a one-time code before any write.
 - **Output guard:** checks every amount, date and tracking number came from a tool, but not that it's attached to the right item.
-- **Refund timing:** policy search used to miss "5 to 7 business days" for "how long do refunds take?". A retitled section and a search stop word fixed it in every run since, but it isn't its own KB section yet.
-- **The supervisor is over-strict about books the customer doesn't own.** It blocked a true "that's a staff pick" about a recommended book in 1 of 3 runs with the Haiku and hybrid executors, and the customer got the fallback reply. It never let a wrong claim through, so I've left it strict.
+- **Refund timing:** policy search can miss "5 to 7 business days" for "how long do refunds take?". A retitled section and a search stop word fixed it for the next six full runs, but search missed it again in 1 of 3 runs in the latest Sonnet eval. It isn't its own KB section yet.
+- **The supervisor is over-strict.** It caused 9 of the 10 failures in the latest runs by rejecting a true claim, so the customer got the fallback reply. Most were a true "that's a staff pick" about a recommended book the customer doesn't own (2 of 3 runs with Haiku and Sonnet, 1 of 3 with the hybrid). Once, it blocked a valid $20 refund because the reply mentioned the $35 the customer had asked for. No money moved wrongly, so I've left it strict.
 - **Evals:** scripted customers, 3 runs per scenario. Real customers are messier.
