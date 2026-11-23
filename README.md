@@ -2,18 +2,17 @@
 
 A customer support agent for Bookly, a fictional online bookstore. It handles order status, returns and refunds, policy questions and password resets, and hands off to a human with a full summary when it should.
 
-> **The LLM decides what the customer means. Code decides what the customer gets.**
 
 ## Business context
 
+Bookly can't beat Amazon on price or delivery speed. It wins on curation: people buy here because someone with taste picked the books. Support is where that promise is kept. This business need must be balanced against overall concerns about margin protection in a competitive market.
+
 Bookly's customers contact support about three things: where their order is, returning or getting a refund for a book, and general questions (shipping, policies, logging in). A good agent for Bookly:
 
-- **Resolves** those contacts end to end when the policy allows it, without a human.
-- **Never gives away money** the policy doesn't allow, however the customer asks.
-- **Hands off cleanly** when it can't help, so the customer never has to repeat themselves.
-- **Sounds like a bookseller**, not a call-centre script.
-
-The design follows from the second point: a model reads the customer, but eligibility, amounts and identity are decided in code the model can't override.
+Resolves those contacts end to end when the policy allows it, without a human.
+Never gives away money the policy doesn't allow, however the customer asks. Where a remedy is due, it offers a replacement, exchange or store credit alongside the refund. If an eligible customer asks for their money back, they get it.
+Hands off cleanly when it can't help, so the customer never has to repeat themselves.
+Sounds like a bookseller, not a call-centre script. A returned book is a chance to recommend a better fit.
 
 ## Assumptions
 
@@ -25,8 +24,7 @@ The design follows from the second point: a model reads the customer, but eligib
 - **Identity** is order number + email. That's weak for account actions (see Limitations).
 - **Mocked:** carrier tracking, email delivery and password-reset links. Orders, returns and tickets are real rows in SQLite.
 
-## Run it (about 5 minutes)
-
+## Run it 
 Needs Python 3.10+, an Anthropic API key and, ideally, [uv](https://docs.astral.sh/uv/). A full conversation costs about $0.02 on the default models.
 
 ```bash
@@ -38,6 +36,10 @@ make test                 # 194 tests, no key needed
 ```
 
 `make chat` runs the same agent in the terminal. **Reset demo data** in the UI (or `make reset`) restores a clean state; seed dates are relative to today.
+
+## Voice (optional)
+
+Add `ELEVENLABS_API_KEY` to `.env` and a mic button appears. Speech goes through the same guarded pipeline as typed text, and only replies that passed the output guards are spoken. Details and limits: [docs/VOICE.md](docs/VOICE.md).
 
 ## What to try
 
@@ -89,17 +91,6 @@ customer message
 
 The loop is about 300 lines in [`bookly/agent/loop.py`](bookly/agent/loop.py), on the raw Anthropic Messages API, with no agent framework. Memory is session state held in code and shown to the model each turn; the model never holds state that matters.
 
-## Key decisions and trade-offs
-
-**1. Route every turn, unlock writes per route.** A Haiku router classifies each message and code picks the procedure. Read tools are always available; write tools (`propose_return`, `initiate_return`, `send_password_reset`) unlock only on their route, so a policy question can't trigger a refund. A request for a human is caught by rules and escalated before any model call.
-*Trade-off:* the guard and router add about 1.4 s to every turn.
-
-**2. Code decides money.** The model never passes an amount. The policy engine returns eligibility, resolution, amount and the policy section it applied, so the agent cites the rule that made the decision. Every return is propose, then confirm in a separate turn, then execute; the gate enforces that order, the engine re-runs at write time, and the database refuses a second return on the same item.
-*Trade-off:* the model still turns the customer's words into a reason ("damaged", "didn't enjoy it"), and that choice picks the branch. A self-reported damage claim is refunded with no evidence. Production needs a separate path for damage claims (re-send the ebook, a photo, or a per-customer limit).
-
-**3. A model per role, measured.** Haiku 5.5 runs the guard, router and supervisor. Sonnet 5.5 runs the executor by default. `make compare-models` runs the evals on Haiku, Sonnet and a hybrid side by side.
-*Trade-off:* Haiku matched Sonnet in the evals at about a ninth of the cost. Sonnet stays the default because code already protects the money, so the executor's main job is understanding messy customers, and scripted evals don't contain messy customers. `EXECUTOR_PRESET=haiku` switches it.
-
 ## Results
 
 All 29 scripted scenarios × 3 runs per executor, 2026-11-22. Evals assert on database rows and trace events, not wording. Refund leakage was $0.00 in every run.
@@ -120,17 +111,6 @@ All 29 scripted scenarios × 3 runs per executor, 2026-11-22. Evals assert on da
 - **Refund timing:** policy search doesn't find "5 to 7 business days" for "how long do refunds take?". When the agent can't back the claim, the supervisor blocks it and the customer gets a safe fallback reply.
 - **Evals:** scripted customers, 3 runs per scenario. Real customers are messier.
 
-## What I'd change first
-
-1. **Real authentication** before any write.
-2. **Simulated customers built from real failures,** run on every procedure or prompt change.
-3. **A small fine-tuned router and input guard,** trained on labelled traces, to cut per-turn latency and cost.
-4. **Real-time voice:** streamed playback, filler while tools run, a phone channel. The reasoning and guards wouldn't change.
-5. **Post-conversation review and A/B tests** on procedure wording, measured by resolution rate and CSAT, not deflection.
-
-## Voice (optional)
-
-Add `ELEVENLABS_API_KEY` to `.env` and a mic button appears. Speech goes through the same guarded pipeline as typed text, and only replies that passed the output guards are spoken. Details and limits: [docs/VOICE.md](docs/VOICE.md).
 
 ## Repo layout
 
