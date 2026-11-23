@@ -6,6 +6,20 @@ A customer support agent for Bookly, a fictional online bookstore. It handles or
 
 ## Run it
 
+
+## Fastest: let Claude Code set it up
+
+Open [Claude Code](https://claude.com/claude-code) in an empty folder and paste:
+
+```
+Clone https://github.com/kevinpatrickmcdonnell1-lab/bookly-agent and get it running.
+Install uv if it's missing (it provides Python 3.11), run `uv sync`, copy .env.example to .env,
+and ask me for my ANTHROPIC_API_KEY (and optionally ELEVENLABS_API_KEY for voice).
+Then run `make web` in the background and open http://localhost:8000.
+```
+
+or
+
 Needs Python 3.10+, an Anthropic API key and, ideally, [uv](https://docs.astral.sh/uv/). A conversation costs about $0.02 on the default models.
 
 ```bash
@@ -16,7 +30,10 @@ make web                  # open http://localhost:8000
 make test                 # 199 tests, no key needed
 ```
 
-`make chat` runs the same agent in the terminal. `make reset` (or **Reset demo data** in the UI) restores a clean state. Optional voice: add `ELEVENLABS_API_KEY` and a mic button appears ([docs/VOICE.md](docs/VOICE.md)).
+`make chat` runs the same agent in the terminal. `make reset` (or **Reset demo data** in the UI) restores a clean state.
+
+
+Optional voice: add `ELEVENLABS_API_KEY` and a mic button appears ([docs/VOICE.md](docs/VOICE.md)).
 
 ## What to try
 
