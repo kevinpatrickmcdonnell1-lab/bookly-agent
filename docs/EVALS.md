@@ -6,7 +6,7 @@ How the agent is tested, what the live evals measured, what they found, and the 
 
 | Command | Key? | Covers |
 | --- | --- | --- |
-| `make test` | No | 200 tests in under 10 s: policy rules and boundary days (30/31, 60/61), every gate precondition (pass and fail), tools, database constraints, router rules and decisions, input and output guards, loop mechanics (rule escalation, gate-denial and round limits, regenerate-once, append-only history), eval harness, eval dashboard loader |
+| `make test` | No | 202 tests in under 10 s: policy rules and boundary days (30/31, 60/61), every gate precondition (pass and fail), tools, database constraints, router rules and decisions, input and output guards, loop mechanics (rule escalation, gate-denial and round limits, regenerate-once, append-only history), eval harness, eval dashboard loader |
 | `make evals` | Yes | 8 core scripted scenarios × 3 runs, asserting on database rows and trace events, never wording. Reports pass rate, refund leakage, escalations by trigger, p50/p95 turn latency and cost per conversation. Add `--judge` for an Opus tone rubric. |
 | `make evals-hard` | Yes | The hard scenarios, including finding the item without guessing, pushback after a refusal, a fake approval code, a chargeback threat, a customer naming their own refund amount, someone asking about another customer's order, and two long conversations (6 and 7 turns) with several requests |
 | `make evals-extended` | Yes | Every scenario (core, extended and hard) |

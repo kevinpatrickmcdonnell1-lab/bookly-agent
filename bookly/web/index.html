@@ -89,6 +89,25 @@ body.evals #evals { display: block; }
 #evals h2 { font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin: 28px 0 10px; }
 #evals > h2:first-child { margin-top: 0; }
 #evals .sub { color: var(--muted); font-size: 13px; margin: -4px 0 12px; }
+.lede { max-width: 820px; margin: 0 0 14px; font-size: 15px; }
+.how, .findings { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 10px; }
+.how .panel h3, .findings .panel h3 { font-size: 14px; margin: 0 0 6px; }
+.how .panel p, .findings .panel p { margin: 0 0 6px; font-size: 13px; color: var(--muted); }
+.how .panel p:last-child, .findings .panel p:last-child { margin-bottom: 0; }
+.how .big, .findings .big { font-size: 22px; font-weight: 600; font-variant-numeric: tabular-nums; color: var(--ink); margin: 2px 0 6px; }
+.findings ul { margin: 4px 0 0; padding-left: 18px; font-size: 13px; }
+.findings li { margin: 3px 0; }
+.sets { list-style: none; padding: 0; margin: 6px 0 0; font-size: 13px; }
+.sets li { margin: 4px 0; color: var(--muted); }
+.sets b { color: var(--ink); font-weight: 600; }
+.sha { font-family: var(--mono); font-size: 12px; }
+.pill.warn { color: var(--warn); border-color: var(--warn); }
+.pill.ok { color: var(--ok); border-color: var(--ok); }
+.set-h { grid-column: 1 / -1; font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin: 12px 0 2px; }
+.set-h:first-child { margin-top: 0; }
+.checks { margin: 6px 0 10px; padding: 10px 12px 10px 28px; border: 1px solid var(--line); border-radius: 8px; font-size: 13px; background: var(--bg); }
+.checks li { margin: 2px 0; }
+.checks-h { font-size: 12px; color: var(--muted); margin: 10px 0 0; }
 .kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
 .kpi { border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; background: var(--panel); }
 .kpi .v { font-size: 26px; font-weight: 600; font-variant-numeric: tabular-nums; }
@@ -177,13 +196,17 @@ table.runs tbody tr:hover, table.runs tbody tr.sel { background: var(--me); }
   </section>
   <section id="inbox"><div id="tickets"></div></section>
   <section id="evals">
-    <h2>Latest full run</h2>
-    <p class="sub" id="ev-latest-sub"></p>
-    <div class="kpis" id="ev-kpis"></div>
-    <h2>Executor comparison</h2>
-    <p class="sub" id="ev-cmp-sub">Latest full run for each executor setup. Router, input guard and supervisor are Haiku in every setup.</p>
-    <div class="cmp" id="ev-cmp"></div>
+    <h2>How these evals work</h2>
+    <p class="lede">Each scenario is a scripted customer conversation, run against the real models on a fresh copy of the database. It passes only if the agent <em>did</em> the right thing: the refund it issued, the ticket it opened, the tools it called and when. Wording isn't graded, except where a reply has to contain a specific fact.</p>
+    <div class="how" id="ev-how"></div>
+    <h2>Latest comparison</h2>
+    <p class="sub" id="ev-cmp-sub"></p>
+    <div class="panel tbl-wrap"><table class="runs cmp-tbl"><thead><tr><th>Executor setup</th><th>Passed</th><th>Core</th><th>Extended</th><th>Hard</th><th>p50 / p95 turn</th><th>Cost / conv</th><th>Leakage</th><th>Code</th></tr></thead><tbody id="ev-cmp-rows"></tbody></table></div>
+    <div class="cmp" id="ev-cmp" style="margin-top:10px"></div>
+    <h2>What the results say</h2>
+    <div class="findings" id="ev-findings"></div>
     <h2>Pass rate by run</h2>
+    <p class="sub">Every saved run, oldest to newest. Early runs were spent finding and fixing agent bugs, so they score lower. Click a dot to open that run.</p>
     <div class="filters">
       <label>Suite <select id="ev-suite"><option value="">All suites</option></select></label>
       <label>Executor <select id="ev-exec"><option value="">All executors</option></select></label>
@@ -191,7 +214,7 @@ table.runs tbody tr:hover, table.runs tbody tr.sel { background: var(--me); }
     </div>
     <div class="panel" id="trend"></div>
     <h2>Runs</h2>
-    <div class="panel tbl-wrap"><table class="runs"><thead><tr><th>Started</th><th>Suite</th><th>Executor</th><th>Passed</th><th>Pass rate</th><th>Scenarios clean</th><th>Leakage</th><th>p50 / p95 turn</th><th>Cost / conv</th><th>Escalated</th></tr></thead><tbody id="ev-rows"></tbody></table></div>
+    <div class="panel tbl-wrap"><table class="runs"><thead><tr><th>Started</th><th>Suite</th><th>Executor</th><th>Passed</th><th>Pass rate</th><th>Scenarios clean</th><th>Leakage</th><th>p50 / p95 turn</th><th>Cost / conv</th><th>Escalated</th><th>Code</th></tr></thead><tbody id="ev-rows"></tbody></table></div>
     <div id="ev-detail"></div>
   </section>
   <div class="tip" id="tip"></div>
@@ -538,7 +561,7 @@ $("tab-inbox").onclick = () => { showTab("inbox"); loadTickets(); };
 $("tab-evals").onclick = () => { showTab("evals"); loadEvals().catch((err) => { $("evals").innerHTML = `<p class="t-deny">${esc(err.message)}</p>`; }); };
 
 // ---- Evals dashboard -------------------------------------------------------------
-let evalRuns = [], evalSel = null;
+let evalRuns = [], evalSel = null, evalDetail = null;
 const pct = (x) => Math.round(x * 100) + "%";
 const secs = (ms) => (ms / 1000).toFixed(1) + " s";
 const usd = (x) => "$" + x.toFixed(4);
@@ -552,11 +575,26 @@ function tip(ev, text) {
   t.style.top = (ev.clientY + 14) + "px";
 }
 
+let evalCatalog = { sets: {}, scenarios: {} };
+const SETUPS = { haiku: "Haiku for all routes", sonnet: "Sonnet for all routes (default)", hybrid: "Hybrid: Haiku, Sonnet for returns" };
+const SET_ORDER = ["core", "extended", "hard"];
+const SET_ABOUT = {
+  core: "everyday flows: order status, returns, clarifying questions, prompt injection, asking for a human",
+  extended: "edge cases: the $75 approval cap, password resets, policy questions, two requests at once, another customer's order",
+  hard: "finding the right item without guessing, pushback, fake approvals, chargeback threats, customers naming their own refund, long conversations that refer back",
+};
+const short = (sha) => (sha ? sha.slice(0, 7) : "");
+const codeCell = (r) => r.git_commit
+  ? `<span class="sha" title="${esc(r.git_commit)}">${esc(short(r.git_commit))}</span> ${r.git_dirty ? '<span class="pill warn" title="Uncommitted changes in the tree when this ran">dirty</span>' : '<span class="pill ok" title="Clean tree: exactly this commit">clean</span>'}`
+  : '<span class="t-muted" title="Saved before runs recorded their git commit">not recorded</span>';
+
 async function loadEvals() {
-  const { runs } = await api("/api/evals");
+  const { runs, catalog } = await api("/api/evals");
   evalRuns = runs;
+  evalCatalog = catalog || evalCatalog;
+  renderHow();
   if (!runs.length) {
-    $("evals").innerHTML = '<p class="t-muted">No eval results yet. Run <code>make evals</code> or <code>make compare-models</code>. Results land in <code>evals/results/</code> and show up here.</p>';
+    $("ev-cmp-rows").innerHTML = '<tr><td colspan="9" class="t-muted">No eval results yet. Run <code>make evals</code> or <code>make compare-models</code>. Results land in <code>evals/results/</code> and show up here.</td></tr>';
     return;
   }
   for (const [id, key] of [["ev-suite", "suite"], ["ev-exec", "executor"]]) {
@@ -565,32 +603,32 @@ async function loadEvals() {
     for (const v of [...new Set(runs.map((r) => r[key]))].sort()) sel.add(new Option(v, v));
     sel.value = cur;
   }
-  renderLatest(); renderCompare(); renderRuns();
-  showRun(evalSel && runs.some((r) => r.id === evalSel) ? evalSel : (runs.find((r) => !r.spot_check) || runs[0]).id, false);
+  const cmp = comparison();
+  renderCompare(cmp); renderFindings(cmp); renderRuns();
+  const first = cmp.rows[0] || runs.find((r) => !r.spot_check) || runs[0];
+  showRun(evalSel && runs.some((r) => r.id === evalSel) ? evalSel : first.id, false);
 }
 
-function renderLatest() {
-  const r = evalRuns.find((x) => !x.spot_check) || evalRuns[0];
-  $("ev-latest-sub").textContent = `${r.label} · ${when(r.started)} · ${r.scenario_count} scenarios × ${r.runs_per_scenario} runs · executor ${r.executor_models.join(", ") || r.executor}`;
-  const k = [
-    [`${r.passed}/${r.conversations}`, "Conversations passed", pct(r.pass_rate) + " pass rate"],
-    [`${r.all_runs_pass}/${r.scenario_count}`, "Scenarios passing every run", ""],
-    [dollars(r.refund_leakage_cents), "Refund leakage", "target $0.00"],
-    [secs(r.turn_latency_ms.p50), "Turn latency p50", "p95 " + secs(r.turn_latency_ms.p95)],
-    [usd(r.cost_per_conversation_usd), "Cost per conversation", ""],
-    [pct(r.conversations_escalated), "Conversations escalated", Object.entries(r.escalations_by_trigger).map(([a, b]) => `${a} ${b}`).join(" · ")],
+function renderHow() {
+  const sets = evalCatalog.sets || {}, total = Object.values(sets).reduce((a, b) => a + b, 0);
+  const setList = SET_ORDER.filter((k) => sets[k]).map((k) => `<li><b>${esc(k)} · ${sets[k]}</b>: ${esc(SET_ABOUT[k])}</li>`).join("");
+  const cards = [
+    ["Scripted customers", `<div class="big">${total || "—"} scenarios</div><ul class="sets">${setList}</ul>`],
+    ["Three runs each, fresh database", "<p>Model output varies, so every scenario runs three times, each on a freshly seeded database. A result reads as conversations passed out of conversations run: 31 scenarios × 3 = 93.</p>"],
+    ["Graded on outcomes", "<p>Assertions check the return and refund rows written, the tickets opened, which tools ran and in which turn, and trace events from the guards. Open any conversation below to see exactly what its scenario checks.</p>"],
+    ["Refund leakage must be $0.00", "<p>Money that moved when it shouldn't have: a refund the scenario didn't expect, more than the item cost, or cash where only store credit was allowed. It's the one number that must always be zero.</p>"],
+    ["Three executor setups", "<p>Only the model that writes replies and calls tools changes: Haiku, Sonnet, or a hybrid with Sonnet on returns. The router, input guard and output supervisor are Haiku in every setup, and the policy engine and tool gate are plain code.</p>"],
   ];
-  $("ev-kpis").innerHTML = k.map(([v, l, n]) => `<div class="kpi"><div class="l">${esc(l)}</div><div class="v">${esc(v)}</div>${n ? `<div class="n">${esc(n)}</div>` : ""}</div>`).join("");
+  $("ev-how").innerHTML = cards.map(([h, b]) => `<div class="panel"><h3>${esc(h)}</h3>${b}</div>`).join("");
 }
 
-function renderCompare() {
-  // Prefer the all-suite comparison (it includes the hard set); fall back to core.
-  // Compare like with like: runs with the same scenario count, choosing the count
-  // that covers the most executors (ties: the most recent).
+// The latest full run per executor setup, comparing like with like: prefer the all-suite runs (they include the
+// hard set), the same scenario count, the count covering the most setups, and skip runs made with uncommitted changes.
+function comparison() {
   const latestBy = (suite) => {
     const groups = {};
     for (const r of evalRuns) {
-      if (r.suite !== suite || r.spot_check) continue;
+      if (r.suite !== suite || r.spot_check || r.git_dirty === true) continue;
       const g = (groups[r.scenario_count] ||= { latest: r.started, runs: {} });
       if (!g.runs[r.executor]) g.runs[r.executor] = r;
     }
@@ -603,28 +641,62 @@ function renderCompare() {
   const order = ["haiku", "sonnet", "hybrid"];
   const rows = order.filter((e) => latest[e]).map((e) => latest[e])
     .concat(Object.values(latest).filter((r) => !order.includes(r.executor)));
-  if (!rows.length) { $("ev-cmp").innerHTML = '<p class="t-muted">No full runs yet. Run <code>make compare-models</code>.</p>'; return; }
+  return { suite, rows };
+}
+
+function renderCompare({ suite, rows }) {
+  if (!rows.length) { $("ev-cmp-rows").innerHTML = '<tr><td colspan="9" class="t-muted">No full runs yet. Run <code>make compare-models</code>.</td></tr>'; $("ev-cmp").innerHTML = ""; return; }
+  const commits = [...new Set(rows.map((r) => r.git_commit || null))];
+  const code = commits.length === 1 && commits[0]
+    ? `All on commit ${short(commits[0])}${rows.every((r) => r.git_dirty === false) ? " with a clean tree" : ""}, so they describe the same code.`
+    : commits.includes(null) ? "Some of these runs were saved before runs recorded their git commit." : "These runs come from different commits.";
+  $("ev-cmp-sub").textContent = `The latest ${suite === "all" ? "full-suite" : "core"} run for each setup: ${rows[0].scenario_count} scenarios × ${rows[0].runs_per_scenario} runs (${rows.map((r) => `${r.executor} ${when(r.started)}`).join(", ")}). ${code}`;
+  const setCell = (r, set) => { const b = (r.by_set || {})[set]; return b ? `${b.passed}/${b.conversations}` : "—"; };
+  $("ev-cmp-rows").innerHTML = rows.map((r) => `<tr data-id="${esc(r.id)}">
+    <td>${esc(SETUPS[r.executor] || r.executor)}</td>
+    <td class="st ${r.passed === r.conversations ? "pass" : "fail"}">${r.passed}/${r.conversations}</td>
+    ${SET_ORDER.map((k) => `<td>${setCell(r, k)}</td>`).join("")}
+    <td>${secs(r.turn_latency_ms.p50)} / ${secs(r.turn_latency_ms.p95)}</td><td>${usd(r.cost_per_conversation_usd)}</td>
+    <td class="${r.refund_leakage_cents ? "t-deny" : ""}">${dollars(r.refund_leakage_cents)}</td><td>${codeCell(r)}</td></tr>`).join("");
+  for (const tr of $("ev-cmp-rows").querySelectorAll("tr[data-id]")) tr.onclick = () => showRun(tr.dataset.id);
   const chart = (title, get, fmt) => {
     const max = Math.max(...rows.map(get)) || 1;
     return `<div class="panel"><h3>${esc(title)}</h3>${rows.map((r) => `<div class="bar-row" title="${esc(r.label + " · " + when(r.started) + " · " + fmt(get(r)))}"><span>${esc(r.executor)}</span><div class="track"><div class="fill" style="width:${(get(r) / max) * 100}%"></div></div><span class="val">${esc(fmt(get(r)))}</span></div>`).join("")}</div>`;
   };
-  const setRate = (r, set) => { const b = (r.by_set || {})[set]; return b && b.conversations ? b.passed / b.conversations : 0; };
-  const setLabel = (set) => (r) => { const b = (r.by_set || {})[set]; return b ? `${b.passed}/${b.conversations}` : "—"; };
-  const hasHard = rows.some((r) => (r.by_set || {}).hard);
-  $("ev-cmp-sub").textContent = `Latest ${suite === "all" ? "all-suite" : "core"} runs over the same ${rows[0].scenario_count} scenarios, one per executor setup (` + rows.map((r) => `${r.executor} ${when(r.started)}`).join(", ") + "). Router, input guard and supervisor are Haiku in every setup.";
-  const passChart = (title, set) => {
-    const max = 1;
-    return `<div class="panel"><h3>${esc(title)}</h3>${rows.map((r) => {
-      const v = set ? setRate(r, set) : r.pass_rate, lbl = set ? setLabel(set)(r) : `${r.passed}/${r.conversations}`;
-      return `<div class="bar-row" title="${esc(r.label + " · " + when(r.started))}"><span>${esc(r.executor)}</span><div class="track"><div class="fill" style="width:${(v / max) * 100}%"></div></div><span class="val">${esc(lbl)}</span></div>`;
-    }).join("")}</div>`;
-  };
   $("ev-cmp").innerHTML =
-    passChart("Conversations passed, all sets", null) +
-    (hasHard ? passChart("Conversations passed, hard set", "hard") : "") +
+    chart("Pass rate", (r) => r.pass_rate, pct) +
     chart("Cost per conversation", (r) => r.cost_per_conversation_usd, usd) +
     chart("Turn latency p50", (r) => r.turn_latency_ms.p50, secs) +
     chart("Turn latency p95", (r) => r.turn_latency_ms.p95, secs);
+}
+
+// Findings computed from the runs, so they stay current as new runs land.
+function renderFindings({ rows }) {
+  const cards = [];
+  if (rows.length) {
+    const causes = {};
+    for (const r of rows) for (const [k, v] of Object.entries(r.failure_causes || {})) causes[k] = (causes[k] || 0) + v;
+    const failed = Object.values(causes).reduce((a, b) => a + b, 0), conv = rows.reduce((a, r) => a + r.conversations, 0);
+    const label = { supervisor: "the output supervisor rejected a claim in a reply, so the customer got a safe fallback instead of an answer", assertion: "another check failed (a fact missing from a reply, or the wrong action)", crash: "the conversation crashed" };
+    cards.push(["Why conversations failed", failed
+      ? `<div class="big">${failed} of ${conv}</div><p>conversations failed in the comparison above:</p><ul>${Object.entries(causes).sort((a, b) => b[1] - a[1]).map(([k, v]) => `<li><b>${v}</b>: ${esc(label[k] || k)}</li>`).join("")}</ul><p>The supervisor errs strict by design. Open a red cell below to read the reply it rejected.</p>`
+      : `<div class="big">0 of ${conv}</div><p>Every conversation in the comparison passed.</p>`]);
+    const obs = rows.map((r) => (r.conversations - r.passed) / r.conversations), ub = rows.map((r) => r.failure_upper95);
+    const overlap = rows.length > 1 && Math.max(...obs) < Math.min(...ub);
+    cards.push(["How sure we can be", `<ul>${rows.map((r) => `<li>${esc(r.executor)}: ${r.passed}/${r.conversations} passed, so the true failure rate could be up to <b>${pct(r.failure_upper95)}</b></li>`).join("")}</ul><p>Those are 95% upper bounds: three runs per scenario is a small sample.${overlap ? " The ranges overlap, so these runs can't tell the setups apart on pass rate." : ""}</p>`]);
+  }
+  const groups = {};
+  for (const r of evalRuns) if (r.git_commit && !r.spot_check) (groups[`${r.git_commit}|${r.executor}|${r.scenario_count}`] ||= []).push(r);
+  const repeat = Object.values(groups).filter((g) => g.length > 1).sort((a, b) => b[0].started.localeCompare(a[0].started))[0];
+  if (repeat) {
+    const scores = [...repeat].reverse().map((r) => `${r.passed}/${r.conversations}`).join(", then ");
+    cards.push(["Same code, different scores", `<div class="big">${esc(scores)}</div><p>${repeat.length} ${esc(repeat[0].executor)} runs on commit ${esc(short(repeat[0].git_commit))}${repeat.some((r) => r.git_dirty) ? " (one with uncommitted changes in the tree)" : ""}. A spread like this is run-to-run noise from the models, so small gaps between setups aren't a ranking.</p>`]);
+  }
+  const leak = evalRuns.reduce((a, r) => a + r.refund_leakage_cents, 0), convs = evalRuns.reduce((a, r) => a + r.conversations, 0);
+  cards.push(["Money safety", `<div class="big ${leak ? "t-deny" : ""}">${dollars(leak)}</div><p>refund leakage across all ${evalRuns.length} saved runs and ${convs.toLocaleString()} conversations, including early runs from before fixes. Amounts come from the policy engine, never the model.</p>`]);
+  const total = Object.values(evalCatalog.sets || {}).reduce((a, b) => a + b, 0);
+  cards.push(["What these evals can't tell you", `<p>The customers are scripted. Real ones ramble, change their minds and misremember orders. Tone and warmth aren't graded unless a run used the <code>--judge</code> rubric. A pass means the right thing happened in these ${total || ""} scripts, not that it always will.</p>`]);
+  $("ev-findings").innerHTML = cards.map(([h, b]) => `<div class="panel"><h3>${esc(h)}</h3>${b}</div>`).join("");
 }
 
 function filteredRuns() {
@@ -642,8 +714,8 @@ function renderRuns() {
     <td class="st ${clean ? "pass" : "fail"}">${clean ? "✓" : "✗"} ${r.passed}/${r.conversations}</td>
     <td>${pct(r.pass_rate)}</td><td>${r.all_runs_pass}/${r.scenario_count}</td>
     <td class="${r.refund_leakage_cents ? "t-deny" : ""}">${dollars(r.refund_leakage_cents)}</td>
-    <td>${secs(r.turn_latency_ms.p50)} / ${secs(r.turn_latency_ms.p95)}</td><td>${usd(r.cost_per_conversation_usd)}</td><td>${pct(r.conversations_escalated)}</td></tr>`;
-  }).join("") || '<tr><td colspan="10" class="t-muted">No runs match these filters.</td></tr>';
+    <td>${secs(r.turn_latency_ms.p50)} / ${secs(r.turn_latency_ms.p95)}</td><td>${usd(r.cost_per_conversation_usd)}</td><td>${pct(r.conversations_escalated)}</td><td>${codeCell(r)}</td></tr>`;
+  }).join("") || '<tr><td colspan="11" class="t-muted">No runs match these filters.</td></tr>';
   for (const tr of $("ev-rows").querySelectorAll("tr[data-id]")) tr.onclick = () => showRun(tr.dataset.id);
 }
 
@@ -662,8 +734,11 @@ function renderTrend(runs) {
   }
   const multiDay = new Set(runs.map((r) => r.started.slice(0, 10))).size > 1;
   const step = Math.ceil(runs.length / Math.max(2, Math.floor((W - L - R) / (multiDay ? 110 : 56))));
+  const lastTick = Math.floor((runs.length - 1) / step) * step;
   runs.forEach((r, i) => {
-    if (i % step === 0 || i === runs.length - 1) g += `<text class="axis" x="${x(i)}" y="${H - 6}" text-anchor="middle">${esc(multiDay ? when(r.started) : r.started.slice(11, 16))}</text>`;
+    // Label every step-th run plus the newest, dropping the previous tick if it would collide with the newest.
+    const crowded = i === lastTick && i !== runs.length - 1 && runs.length - 1 - i < step * 0.75;
+    if ((i % step === 0 && !crowded) || i === runs.length - 1) g += `<text class="axis" x="${x(i)}" y="${H - 6}" text-anchor="middle">${esc(multiDay ? when(r.started) : r.started.slice(11, 16))}</text>`;
   });
   runs.forEach((r, i) => {
     const miss = r.pass_rate < 1;
@@ -674,7 +749,7 @@ function renderTrend(runs) {
   box.innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Pass rate per eval run, oldest to newest">${g}</svg>`;
   for (const c of box.querySelectorAll(".hit")) {
     const r = runs[+c.dataset.i];
-    c.onmousemove = (ev) => tip(ev, `${r.label} · ${when(r.started)}\n${r.passed}/${r.conversations} passed (${pct(r.pass_rate)})\nleakage ${dollars(r.refund_leakage_cents)} · ${usd(r.cost_per_conversation_usd)}/conv`);
+    c.onmousemove = (ev) => tip(ev, `${r.label} · ${when(r.started)}\n${r.passed}/${r.conversations} passed (${pct(r.pass_rate)})\nleakage ${dollars(r.refund_leakage_cents)} · ${usd(r.cost_per_conversation_usd)}/conv\ncode ${r.git_commit ? short(r.git_commit) + (r.git_dirty ? " (dirty)" : "") : "not recorded"}`);
     c.onmouseleave = (ev) => tip(ev, null);
     c.onclick = () => showRun(r.id);
   }
@@ -689,8 +764,19 @@ async function showRun(id, scroll = true) {
   const by = {};
   for (const c of d.conversations) (by[c.scenario] ||= []).push(c);
   let m = "";
-  for (const [sid, s] of Object.entries(d.scenarios)) {
-    m += `<span class="sid">${esc(sid)}</span>`;
+  evalDetail = d;
+  const cat = d.catalog || {}, setOf = (sid) => (cat[sid] || {}).set || "other";
+  const rank = (sid) => { const i = SET_ORDER.indexOf(setOf(sid)); return i < 0 ? SET_ORDER.length : i; };
+  const ids = Object.keys(d.scenarios).sort((a, b) => rank(a) - rank(b));
+  let lastSet = null;
+  for (const sid of ids) {
+    const s = d.scenarios[sid];
+    if (setOf(sid) !== lastSet) {
+      lastSet = setOf(sid);
+      const inSet = ids.filter((x) => setOf(x) === lastSet), ok = inSet.reduce((a, x) => a + d.scenarios[x].passed, 0), all = inSet.reduce((a, x) => a + d.scenarios[x].runs, 0);
+      m += `<span class="set-h">${esc(lastSet)} · ${inSet.length} scenarios · ${ok}/${all} passed</span>`;
+    }
+    m += `<span class="sid" title="${esc((cat[sid] || {}).opening || "")}">${esc(sid)}</span>`;
     for (let i = 0; i < n; i++) {
       const c = (by[sid] || [])[i];
       m += c ? `<button class="cell ${c.passed ? "" : "fail"}" data-s="${esc(sid)}" data-r="${i}" aria-label="${esc(sid)} run ${c.run}: ${c.passed ? "passed" : "failed"}">${c.passed ? "✓" : "✗"}</button>` : "<span></span>";
@@ -700,7 +786,7 @@ async function showRun(id, scroll = true) {
   const r = d.run;
   const rubric = Object.entries(r.tone_rubric).map(([k, v]) => k + " " + v).join(", ");
   $("ev-detail").innerHTML = `<h2>${esc(r.label)} · ${esc(when(r.started))}</h2>
-    <p class="sub">${r.passed}/${r.conversations} conversations passed · executor ${esc(r.executor_models.join(", ") || r.executor)}${rubric ? " · tone rubric " + esc(rubric) : ""}. Click a cell to read that conversation.</p>
+    <p class="sub">${r.passed}/${r.conversations} conversations passed · executor ${esc(r.executor_models.join(", ") || r.executor)} · code ${r.git_commit ? esc(short(r.git_commit)) + (r.git_dirty ? " (uncommitted changes)" : " (clean)") : "not recorded"}${rubric ? " · tone rubric " + esc(rubric) : ""}. Each ✓ or ✗ is one conversation: click it to read the transcript and what the scenario checks.</p>
     <div class="panel"><div class="matrix" style="--n:${n}">${m}</div><div class="convo" id="ev-convo"></div></div>`;
   const cells = [...$("ev-detail").querySelectorAll(".cell")];
   for (const b of cells) b.onclick = () => {
@@ -718,8 +804,11 @@ function showConvo(c) {
   if (c.returns.length) facts.push("returns " + c.returns.map((x) => `${x.item_id} ${x.resolution} ${dollars(x.amount_cents)}`).join(", "));
   if (c.tickets.length) facts.push("tickets " + c.tickets.map((t) => `${t.queue}/${t.trigger}`).join(", "));
   if (c.leakage_cents) facts.push("LEAKAGE " + dollars(c.leakage_cents));
+  const sc = ((evalDetail && evalDetail.catalog) || {})[c.scenario];
+  const why = c.cause === "supervisor" ? " The output supervisor rejected a claim in a reply, so the customer got the fallback reply." : "";
   $("ev-convo").innerHTML = `<div class="meta">${esc(facts.join(" · "))}</div>`
-    + (c.failures.length ? `<p class="t-deny" style="font-size:13px">${esc(c.failures.join("; "))}</p>` : "")
+    + (sc ? `<p class="checks-h">What this scenario checks (${esc(sc.set)} set, ${sc.turns} customer turn${sc.turns === 1 ? "" : "s"})</p><ul class="checks">${sc.checks.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>` : "")
+    + (c.failures.length ? `<p class="t-deny" style="font-size:13px">Failed: ${esc(c.failures.join("; "))}.${esc(why)}</p>` : "")
     + c.transcript.map((t) => `<div class="line ${t.who === "customer" ? "customer" : "bookly"}">${esc(t.text)}</div>`).join("");
 }
 

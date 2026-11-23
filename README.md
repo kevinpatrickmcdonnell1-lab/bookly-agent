@@ -25,7 +25,7 @@ git clone https://github.com/kevinpatrickmcdonnell1-lab/bookly-agent && cd bookl
 cp .env.example .env      # add ANTHROPIC_API_KEY
 make setup                # uv sync (falls back to pip install -e ".[dev]")
 make web                  # open http://localhost:8000
-make test                 # 200 tests, no key needed
+make test                 # 202 tests, no key needed
 ```
 
 `make chat` runs the same agent in the terminal. `make reset` (or **Reset demo data** in the UI) restores a clean state.
@@ -44,7 +44,7 @@ Click a scenario card to fill in the first message, and watch the **trace panel*
 | C | 4821 + chloe.park@example.com | Order status with tracking, then a refund for a damaged paperback (order 4822), confirmed in a separate turn |
 | D | 4831 + dev.shah@example.com | A $90 return is over the $75 cap, so it becomes a human approval ticket. Also try "I can't log in". |
 
-**Clarifying question:** card A, or type "I have a problem with my order". **Actions:** `initiate_return` writes a return row; `escalate_to_human` writes a ticket you can see in the **Agent Inbox** tab. The **Evals** tab shows saved eval runs and needs no key.
+**Clarifying question:** card A, or type "I have a problem with my order". **Actions:** `initiate_return` writes a return row; `escalate_to_human` writes a ticket you can see in the **Agent Inbox** tab. The **Evals** tab explains how the evals work and shows every saved run, with the commit that produced it. It needs no key.
 
 ## How a turn works
 

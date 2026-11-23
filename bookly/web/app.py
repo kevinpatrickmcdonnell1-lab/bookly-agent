@@ -227,7 +227,7 @@ def returns() -> dict:
 
 @app.get("/api/evals")
 def evals() -> dict:
-    return {"runs": evals_data.list_runs()}
+    return {"runs": evals_data.list_runs(), "catalog": evals_data.catalog()}
 
 
 @app.get("/api/evals/{run_id}")
